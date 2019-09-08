@@ -11,7 +11,7 @@ module.exports = bundler => {
     getOptions(bundle.entryAsset).then(opts => {
       let bundledFiles = [];
       addBundledFiles(bundle, bundledFiles);
-      writeFileSync(join(outDir, opts.filename || 'pwa-manifest.js'),  (opts.variableName || 'filesToCache')+'='+JSON.stringify(bundledFiles)+';');
+      writeFileSync(join(outDir, opts.filename || 'pwa-manifest.js'+(opts.asJSON ? 'on' : '')), opts.asJSON ? JSON.stringify(bundledFiles) : (opts.variableName || 'filesToCache')+'='+JSON.stringify(bundledFiles)+';');
     })
   )
 }
