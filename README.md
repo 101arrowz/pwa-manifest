@@ -10,17 +10,19 @@ In `service-worker.js`:
 ```javascript
 importScripts('/myFilename.js'); // path depends on publicUrl param given to Parcel 
 
-self.addEventListener('install', e => {
+self.addEventListener("install", e => {
   // Array containing URLs of everything in the bundle is added to global scope of service worker in pwa-manifest.js
-  e.waitUntil(() => caches.open('v1').then(cache => cache.addAll(myVariableName)));
-})
+  e.waitUntil(() =>
+    caches.open("v1").then(cache => cache.addAll(myVariableName))
+  );
+});
 ```
 
 In `package.json`:
 
 ```json
 {
-  "pwa-manifest": {
+  "pwaManifest": {
     "filename": "myFilename.js",
     "variableName": "myVariableName"
   }
@@ -32,16 +34,21 @@ If you're want to completely guarantee that you don't use an old version of the 
 In `service-worker.js`:
 
 ```javascript
-self.addEventListener('install', e => {
-  e.waitUntil(() => caches.open('v1').then(cache => 
-    fetch('/pwa-manifest.json', {cache: 'no-store'}).then(filesToCache => cache.addAll(filesToCache))));
-})
+self.addEventListener("install", e => {
+  e.waitUntil(() =>
+    caches.open("v1").then(cache =>
+      fetch("/pwa-manifest.json", { cache: "no-store" })
+        .then(res => res.json())
+        .then(filesToCache => cache.addAll(filesToCache))
+    )
+  );
+});
 ```
 
 In `package.json`:
 ```json
 {
-  "pwa-manifest": {
+  "pwaManifest": {
     "asJSON": true
   }
 }

@@ -1,10 +1,12 @@
 const { writeFileSync } = require('fs');
-const { join, basename } = require('path');
+const { join, relative } = require('path');
 module.exports = bundler => {
   const { publicURL, outDir } = bundler.options;
-  const getOptions = (entryAsset) => (typeof entryAsset.getPackage === 'function' ? entryAsset.getPackage() : Promise.resolve(entryAsset.package)).then(pkg => pkg['pwa-manifest'] || {});
+  if (!publicURL.endsWith('/'))
+    publicURL += '/';
+  const getOptions = (entryAsset) => (typeof entryAsset.getPackage === 'function' ? entryAsset.getPackage() : Promise.resolve(entryAsset.package)).then(pkg => pkg['pwaManifest'] || pkg['pwa-manifest'] || {});
   const addBundledFiles = (bundle, arr) => {
-    arr.push(join(publicURL, basename(bundle.name)));
+    arr.push(publicURL+relative(outDir, bundle.name));
     for (let childBundle of (bundle.childBundles || [])) addBundledFiles(childBundle, arr);
   }
   bundler.on('bundled', bundle => 
