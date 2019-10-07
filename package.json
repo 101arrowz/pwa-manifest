@@ -1,6 +1,6 @@
 {
   "name": "parcel-plugin-pwa-manifest",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "A simple Parcel plugin that generates a PWA manifest that can be imported by service workers",
   "main": "index.js",
   "author": "Arjun Barrett",
