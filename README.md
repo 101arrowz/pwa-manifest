@@ -22,7 +22,7 @@ In `package.json`:
 ```
 
 This will create a `manifest.webmanifest` similar to the following:
-```jsonc
+```json
 {
   "name": "My Awesome PWA",
   "description": "An awesome PWA to do awesome things",
@@ -30,16 +30,35 @@ This will create a `manifest.webmanifest` similar to the following:
   "theme_color": "#add8e6",
   "icons": [
     {
+      "src": "./my-awesome-icon-192x192.webp",
+      "sizes": "192x192",
+      "type": "image/webp"
+    },
+    {
       "src": "./my-awesome-icon-192x192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "./my-awesome-icon-192x192.webp",
-      "sizes": "192x192",
+      "src": "./my-awesome-icon-384x384.webp",
+      "sizes": "384x384",
       "type": "image/webp"
     },
-    // Rest of the icons
+    {
+      "src": "./my-awesome-icon-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png"
+    },
+    {
+      "src": "./my-awesome-icon-512x512.webp",
+      "sizes": "512x512",
+      "type": "image/webp"
+    },
+      {
+      "src": "./my-awesome-icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
   ]
 }
 ```
