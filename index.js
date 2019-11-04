@@ -1,17 +1,23 @@
 const { writeFileSync, existsSync, readFileSync } = require('fs');
 const { resolve, basename } = require('path');
 const { createHash } = require('crypto');
-const contentHash = buf =>
-  createHash('md5')
-    .update(buf)
-    .digest('hex')
-    .slice(-8); // Similar to (but not the same as) Parcel itself
+
 const logger = require('@parcel/logger');
 const sharp = require('sharp');
 
 // TODO: Add Safari Pinned Tab SVG - could prove to be challenging
 module.exports = bundler => {
-  let { outDir, publicURL } = bundler.options;
+  let { outDir, publicURL, contentHash } = bundler.options;
+  const hashedFilename = (filename, buf) => {
+    const i = filename.lastIndexOf('.');
+    const base = filename.slice(0, i);
+    const ext = filename.slice(i+1);
+    return base + '.' + createHash('md5')
+      .update(contentHash ? resolve('_parcel-plugin-pwa-manifest', filename) : ext+buf) // Need unique filepath :/
+      .digest('hex')
+      .slice(-8) + '.' + ext; // Similar to (but not the same as) Parcel itself
+  }
+
   if (!publicURL.endsWith('/')) publicURL += '/';
   const getPkg = entryAsset =>
     typeof entryAsset.getPackage === 'function'
@@ -81,19 +87,6 @@ module.exports = bundler => {
 
     logger.progress(`Generating icons for ${name}...`);
 
-    const msTileColor =
-      opts.msTileColor ||
-      opts['ms-tile-color'] ||
-      opts.microsoftTileColor ||
-      opts['microsoft-tile-color'] ||
-      theme;
-    if (typeof msTileColor !== 'string')
-      return err(
-        'The Microsoft tile color provided in the options must be a string representing the theme color for the application.'
-      );
-
-    let htmlOut = `<meta name="msapplication-config" content="${publicURL}browserconfig.xml">`;
-    let browserConfig = `<TileColor>${msTileColor}</TileColor>`;
     let icons = [];
     const genIconOpts =
       opts.genIcon ||
@@ -117,6 +110,19 @@ module.exports = bundler => {
       );
     }
 
+    const msTileColor =
+      genIconOpts.msTileColor ||
+      genIconOpts['ms-tile-color'] ||
+      genIconOpts.microsoftTileColor ||
+      genIconOpts['microsoft-tile-color'] ||
+      theme;
+    if (typeof msTileColor !== 'string')
+      return err(
+        'The Microsoft tile color provided in the options must be a string representing the theme color for the application.'
+      );
+    let browserConfig = `<TileColor>${msTileColor}</TileColor>`;
+    let htmlOut = `<meta name="msapplication-config" content="${publicURL}browserconfig.xml">`;
+
     const baseIconPath =
       genIconOpts.baseIcon ||
       genIconOpts['base-icon'] ||
@@ -130,7 +136,7 @@ module.exports = bundler => {
       );
     }
 
-    const baseIconFilename = basename(baseIconPath);
+    let baseIconName = basename(baseIconPath, baseIconPath.slice(baseIconPath.lastIndexOf('.')));
     const baseIconFullPath = resolve(pkg.pkgdir, baseIconPath);
     if (!existsSync(baseIconFullPath))
       return err(
@@ -194,14 +200,7 @@ module.exports = bundler => {
             'An unknown error ocurred during the icon creation process: ' + e
           );
         }
-        let filename =
-          baseIconFilename.slice(0, baseIconFilename.lastIndexOf('.')) +
-          '-' +
-          saveSize +
-          '.' +
-          contentHash(buf) +
-          '.' +
-          format;
+        let filename = hashedFilename(baseIconName + '-' + saveSize + '.' + format, buf);
         writeFileSync(resolve(outDir, filename), buf);
 
         icons.push({
@@ -261,7 +260,7 @@ module.exports = bundler => {
           e
       );
     }
-    let atiname = 'apple-touch-icon.' + contentHash(appleTouchIconBuf) + '.png';
+    let atiname = hashedFilename('apple-touch-icon.png', appleTouchIconBuf);
     writeFileSync(resolve(outDir, atiname), appleTouchIconBuf);
     htmlOut += `<link rel="apple-touch-icon" sizes="180x180" href="${publicURL +
       atiname}">`;
@@ -290,7 +289,7 @@ module.exports = bundler => {
           );
         }
         const sizes = size + 'x' + size;
-        let filename = 'favicon-' + sizes + '.' + contentHash(favicon) + '.png';
+        let filename = hashedFilename('favicon-' + sizes + '.png', favicon);
         writeFileSync(resolve(outDir, filename), favicon);
         htmlOut += `<link rel="icon" sizes="${sizes}" href="${publicURL +
           filename}">`;
@@ -312,7 +311,7 @@ module.exports = bundler => {
         );
       }
       let sizes = size + 'x' + size;
-      let filename = 'mstile-' + sizes + '.' + contentHash(msTile) + '.png';
+      let filename = hashedFilename('mstile-' + sizes + '.' + '.png', msTile);
       writeFileSync(resolve(outDir, filename), msTile);
       browserConfig += `<square${sizes}logo src="${publicURL + filename}"/>`;
     }
