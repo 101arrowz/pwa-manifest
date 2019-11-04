@@ -1,20 +1,30 @@
 {
   "name": "parcel-plugin-pwa-manifest",
-  "version": "1.0.2",
-  "description": "A simple Parcel plugin that generates a PWA manifest that can be imported by service workers",
+  "version": "2.0.0",
+  "description": "A Parcel plugin that generates a Web App Manifest, creates all necessary icons, and more!",
   "main": "index.js",
   "author": "Arjun Barrett",
   "license": "MIT",
   "keywords": [
     "pwa",
     "parcel-bundler",
-    "service-worker"
+    "parcel",
+    "webmanifest"
   ],
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/101arrowz/parcel-plugin-pwa-manifest.git"
+    "type": "git",
+    "url": "https://github.com/101arrowz/parcel-plugin-pwa-manifest.git"
+  },
+  "scripts": {
+    "prettify": "prettier --single-quote --trailing-comma none --write index.js"
+  },
+  "dependencies": {
+    "sharp": "^0.23.2"
   },
   "peerDependencies": {
-    "parcel-bundler": "^1.12.3"
+    "parcel-bundler": "^1.12.0"
+  },
+  "devDependencies": {
+    "prettier": "^1.18.2"
   }
 }
