@@ -25,6 +25,7 @@ This will create a `manifest.webmanifest` similar to the following:
 ```json
 {
   "name": "My Awesome PWA",
+  "short_name": "My PWA",
   "description": "An awesome PWA to do awesome things",
   "start_url": "./offline",
   "theme_color": "#add8e6",
@@ -54,7 +55,7 @@ This will create a `manifest.webmanifest` similar to the following:
       "sizes": "512x512",
       "type": "image/webp"
     },
-      {
+    {
       "src": "./my-awesome-icon-512x512.png",
       "sizes": "512x512",
       "type": "image/png"
@@ -90,19 +91,28 @@ The `name` and `description` will default to their counterparts in the outer lay
 The `theme_color` will default to white and will change the default behavior of some parts of the icon generation, such as the background color of the Microsoft Tile.
 
 Instead of manually setting an `icons` parameter containing a set of icons, you should use `genIconOpts`, which will contain the options for icon generation. The parameters for `genIconOpts` are as follows:
-- `msTileColor`: the background color for Microsoft Tiles. Defaults to the theme color.
-- `baseIcon`: the path to the icon to generate all other icons from. Path is relative to the placement of `package.json`.
-  - For best results, use a high-resolution (at least 512x512) PNG or an SVG.
-- `sizes`: an array of pixel values for the sizes to generate. Defaults to `[96, 152, 192, 384, 512]`.
-  - All PWAs need at least 192px and 512px icons, so those will be added in regardless of whether they are provided in the `sizes` parameter.
-- `formats`: an object whose keys are the desired output formats (in lowercase) and whose values are the configurations to use with the [`sharp`](https://sharp.pixelplumbing.com/en/stable/api-output/#png) package when generating icons of that type. By default, generates WebP and PNG images with somewhat high compression.
-  - If you prefer the user getting one format over another, put that format first in the object.
-  - All PWAs need at least PNG, so that's inserted first if you provide your own config. If you don't want it first, put your own `png` key-value pair in your config.
-- `appleTouchIconBG`: the background color for the Apple Touch Icon (to fill transparent regions). Defaults to the theme color.
-  - Useful because by default, Apple uses black for transparent regions, which doesn't look good with most icons.
-- `appleTouchIconPadding`: the number of pixels to pad the Apple Touch Icon with on all sides. Defaults to 12.
-  - Used to account for Apple's courner-rounding.
-- `genFavicons`: whether or not to generate 16x16 and 32x32 favicons and insert links in the HTML. Defaults to `false`.
+#### `msTileColor`
+The background color for Microsoft Tiles. Defaults to the theme color.
+#### `baseIcon`
+The path to the icon to generate all other icons from. Path is relative to the placement of `package.json`.
+- For best results, use a high-resolution (at least 512x512) PNG or an SVG.
+#### `sizes`
+An array of pixel values for the sizes to generate. Defaults to `[96, 152, 192, 384, 512]`.
+- All PWAs need at least 192px and 512px icons, so those will be added in regardless of whether they are provided in the `sizes` parameter.
+#### `formats`
+An object whose keys are the desired output formats (in lowercase) and whose values are the configurations to use with the [`sharp`](https://sharp.pixelplumbing.com/en/stable/api-output/#png) package when generating icons of that type. By default, generates WebP and PNG images with somewhat high compression.
+- If you prefer the user getting one format over another, put that format first in the object.
+- All PWAs need at least PNG, so that's inserted first if you provide your own config. If you don't want it first, put your own `png` key-value pair in your config.
+#### `appleTouchIconBG`
+The background color for the Apple Touch Icon (to fill transparent regions). Defaults to the theme color.
+- Useful because by default, Apple uses black for transparent regions, which doesn't look good with most icons.
+#### `appleTouchIconPadding`
+The number of pixels to pad the Apple Touch Icon with on all sides. Defaults to 12.
+- Used to account for Apple's courner-rounding.
+#### `genFavicons`
+Whether or not to generate 16x16 and 32x32 favicons and insert links in the HTML. Defaults to `false`.
+
+---
 
 All parameters that exist in the [MDN documentation for the Web App Manifest](https://developer.mozilla.org/en-US/docs/Web/Manifest) are aliased, type-checked, and insterted into the manifest whenever provided in `pwaManifest`. There are a few reasonable defaults, like `'.'` for `start_url`. 
 

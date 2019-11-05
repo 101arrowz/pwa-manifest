@@ -11,12 +11,22 @@ module.exports = bundler => {
   const hashedFilename = (filename, buf) => {
     const i = filename.lastIndexOf('.');
     const base = filename.slice(0, i);
-    const ext = filename.slice(i+1);
-    return base + '.' + createHash('md5')
-      .update(contentHash ? resolve('_parcel-plugin-pwa-manifest', filename) : ext+buf) // Need unique filepath :/
-      .digest('hex')
-      .slice(-8) + '.' + ext; // Similar to (but not the same as) Parcel itself
-  }
+    const ext = filename.slice(i + 1);
+    return (
+      base +
+      '.' +
+      createHash('md5')
+        .update(
+          contentHash
+            ? resolve('_parcel-plugin-pwa-manifest', filename)
+            : ext + buf
+        ) // Need unique filepath :/
+        .digest('hex')
+        .slice(-8) +
+      '.' +
+      ext
+    ); // Similar to (but not the same as) Parcel itself
+  };
 
   if (!publicURL.endsWith('/')) publicURL += '/';
   const getPkg = entryAsset =>
@@ -136,7 +146,10 @@ module.exports = bundler => {
       );
     }
 
-    let baseIconName = basename(baseIconPath, baseIconPath.slice(baseIconPath.lastIndexOf('.')));
+    let baseIconName = basename(
+      baseIconPath,
+      baseIconPath.slice(baseIconPath.lastIndexOf('.'))
+    );
     const baseIconFullPath = resolve(pkg.pkgdir, baseIconPath);
     if (!existsSync(baseIconFullPath))
       return err(
@@ -200,7 +213,10 @@ module.exports = bundler => {
             'An unknown error ocurred during the icon creation process: ' + e
           );
         }
-        let filename = hashedFilename(baseIconName + '-' + saveSize + '.' + format, buf);
+        let filename = hashedFilename(
+          baseIconName + '-' + saveSize + '.' + format,
+          buf
+        );
         writeFileSync(resolve(outDir, filename), buf);
 
         icons.push({
