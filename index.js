@@ -204,11 +204,13 @@ module.exports = bundler => {
       return err(
         "The resize method parameter in the icon generation options must be one of 'cover', 'contain', or 'fill'."
       );
+    const resizeOptions = {
+      fit: resizeMethod,
+      background: 'rgba(0, 0, 0, 0)'
+    }
     const baseIcon = sharp(baseIconFullPath).ensureAlpha();
     for (let size of sizes) {
-      const icon = baseIcon.clone().resize(size, size, {
-        fit: resizeMethod
-      });
+      const icon = baseIcon.clone().resize(size, size, resizeOptions);
       const saveSize = size + 'x' + size;
       for (let format in formats) {
         let buf;
@@ -264,9 +266,7 @@ module.exports = bundler => {
     try {
       const appleTouchIconTransparent = await baseIcon
         .clone()
-        .resize(atiSize, atiSize, {
-          fit: resizeMethod
-        })
+        .resize(atiSize, atiSize, resizeOptions)
         .extend({
           top: appleTouchIconPadding,
           bottom: appleTouchIconPadding,
@@ -305,9 +305,7 @@ module.exports = bundler => {
         try {
           favicon = await baseIcon
             .clone()
-            .resize(size, size, {
-              fit: resizeMethod
-            })
+            .resize(size, size, resizeOptions)
             .png(formats.png || {})
             .toBuffer();
         } catch (e) {
@@ -328,9 +326,7 @@ module.exports = bundler => {
       try {
         msTile = await baseIcon
           .clone()
-          .resize(size, size, {
-            fit: resizeMethod
-          })
+          .resize(size, size, resizeOptions)
           .png(formats.png || {})
           .toBuffer();
       } catch (e) {
@@ -348,9 +344,7 @@ module.exports = bundler => {
     try {
       rectMsTile = await baseIcon
         .clone()
-        .resize(310, 150, {
-          fit: resizeMethod
-        })
+        .resize(310, 150, resizeOptions)
         .png(formats.png || {})
         .toBuffer();
     } catch (e) {
