@@ -206,7 +206,7 @@ module.exports = bundler => {
       );
     const baseIcon = sharp(baseIconFullPath).ensureAlpha();
     for (let size of sizes) {
-      const icon = baseIcon.clone().resize(width, height, {
+      const icon = baseIcon.clone().resize(size, size, {
         fit: resizeMethod
       });
       const saveSize = Math.floor(ratio * size) + 'x' + size;
