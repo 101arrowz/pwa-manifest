@@ -73,7 +73,7 @@ Parcel fully supports web manifests, but creating them can be annoying and can i
 
 In the case of icon generation, you could manually do it with something like [Real Favicon Generator](https://realfavicongenerator.net), but if you ever change your main icon, you have to run through the entire process again. That's no fun.
 
-Integrating manifest generation into the build pipeline makes life easier. There's minimal configuration but everything is still completely configurable.
+Integrating manifest generation into the build pipeline makes life easier. Only minimal configuration is *required*, but if you want you can still customize to your heart's content.
 
 ## Are there any limitations?
 Yes. As of now, the plugin only supports applications that have a single HTML file, `index.html`, at their root paths. That should be almost all of them, but if you need the manifest served at multiple HTML files, you're out of luck. (If anyone needs this, you can make an issue and provide your use case.)
@@ -111,6 +111,8 @@ The number of pixels to pad the Apple Touch Icon with on all sides. Defaults to 
 - Used to account for Apple's courner-rounding.
 #### `genFavicons`
 Whether or not to generate 16x16 and 32x32 favicons and insert links in the HTML. Defaults to `false`.
+#### `resizeMethod`
+The method to use for resizing non-square images. Can be one of `'cover'` (default), `'contain'`, or `'fill'`.
 
 ---
 

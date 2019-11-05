@@ -131,7 +131,7 @@ module.exports = bundler => {
         'The Microsoft tile color provided in the options must be a string representing the theme color for the application.'
       );
     let browserConfig = `<TileColor>${msTileColor}</TileColor>`;
-    let htmlOut = `<meta name="msapplication-config" content="${publicURL}browserconfig.xml">`;
+    let htmlOut = `<meta name="msapplication-config" content="${publicURL}browserconfig.xml"><meta name="theme-color" content="${theme}">`;
 
     const baseIconPath =
       genIconOpts.baseIcon ||
@@ -195,11 +195,20 @@ module.exports = bundler => {
         'The formats parameter in the icon generation options must be an object with each key being a supported file type (png, webp, jpeg, or tiff) for the output images, and each value being the options to pass to sharp.'
       );
 
+    let resizeMethod =
+      genIconOpts.resizeMethod ||
+      genIconOpts['resize-method'] ||
+      genIconOpts.resize ||
+      'cover';
+    if (!['cover', 'contain', 'fill'].includes(resizeMethod))
+      return err(
+        "The resize method parameter in the icon generation options must be one of 'cover', 'contain', or 'fill'."
+      );
     const baseIcon = sharp(baseIconFullPath).ensureAlpha();
-    let { height, width } = await baseIcon.metadata();
-    let ratio = width / height;
     for (let size of sizes) {
-      const icon = baseIcon.clone().resize({ height: size });
+      const icon = baseIcon.clone().resize(width, height, {
+        fit: resizeMethod
+      });
       const saveSize = Math.floor(ratio * size) + 'x' + size;
       for (let format in formats) {
         let buf;
@@ -251,12 +260,12 @@ module.exports = bundler => {
       );
 
     let appleTouchIconBuf;
+    let atiSize = 180 - 2 * appleTouchIconPadding;
     try {
       const appleTouchIconTransparent = await baseIcon
         .clone()
-        .resize({
-          height: 180 - 2 * appleTouchIconPadding,
-          width: 180 - 2 * appleTouchIconPadding
+        .resize(atiSize, atiSize, {
+          fit: resizeMethod
         })
         .extend({
           top: appleTouchIconPadding,
@@ -296,7 +305,9 @@ module.exports = bundler => {
         try {
           favicon = await baseIcon
             .clone()
-            .resize({ height: size, width: size })
+            .resize(size, size, {
+              fit: resizeMethod
+            })
             .png(formats.png || {})
             .toBuffer();
         } catch (e) {
@@ -317,7 +328,9 @@ module.exports = bundler => {
       try {
         msTile = await baseIcon
           .clone()
-          .resize({ height: size, width: size })
+          .resize(size, size, {
+            fit: resizeMethod
+          })
           .png(formats.png || {})
           .toBuffer();
       } catch (e) {
@@ -331,6 +344,28 @@ module.exports = bundler => {
       writeFileSync(resolve(outDir, filename), msTile);
       browserConfig += `<square${sizes}logo src="${publicURL + filename}"/>`;
     }
+    let rectMsTile;
+    try {
+      rectMsTile = await baseIcon
+        .clone()
+        .resize(310, 150, {
+          fit: resizeMethod
+        })
+        .png(formats.png || {})
+        .toBuffer();
+    } catch (e) {
+      return err(
+        'An unknown error ocurred during the Microsoft Tile Icon creation process: ' +
+          e
+      );
+    }
+    let rectMsTileFilename = hashedFilename(
+      'mstile-310x150.' + '.png',
+      rectMsTile
+    );
+    writeFileSync(resolve(outDir, rectMsTileFilename), rectMsTile);
+    browserConfig += `<wide310x150logo src="${publicURL +
+      rectMsTileFilename}"/>`;
 
     logger.progress('Generating Microsoft config...');
     writeFileSync(

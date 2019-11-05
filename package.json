@@ -22,7 +22,7 @@
     "sharp": "^0.23.2"
   },
   "peerDependencies": {
-    "parcel-bundler": "^1.12.0"
+    "parcel-bundler": ">=1.9"
   },
   "devDependencies": {
     "prettier": "^1.18.2"
