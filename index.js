@@ -7,7 +7,8 @@ const sharp = require('sharp');
 
 // TODO: Add Safari Pinned Tab SVG - could prove to be challenging
 module.exports = bundler => {
-  let { outDir, publicURL, contentHash } = bundler.options;
+  let { outDir, publicURL, contentHash, target } = bundler.options;
+  if (target !== 'browser' || process.env.DISABLE_PWA_MANIFEST) return;
   const hashedFilename = (filename, buf) => {
     const i = filename.lastIndexOf('.');
     const base = filename.slice(0, i);
