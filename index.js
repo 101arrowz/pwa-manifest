@@ -209,7 +209,7 @@ module.exports = bundler => {
       const icon = baseIcon.clone().resize(size, size, {
         fit: resizeMethod
       });
-      const saveSize = Math.floor(ratio * size) + 'x' + size;
+      const saveSize = size + 'x' + size;
       for (let format in formats) {
         let buf;
         try {
