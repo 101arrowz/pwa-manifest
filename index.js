@@ -337,7 +337,7 @@ module.exports = bundler => {
         );
       }
       let sizes = size + 'x' + size;
-      let filename = hashedFilename('mstile-' + sizes + '.' + '.png', msTile);
+      let filename = hashedFilename('mstile-' + sizes + '.png', msTile);
       writeFileSync(resolve(outDir, filename), msTile);
       browserConfig += `<square${sizes}logo src="${publicURL + filename}"/>`;
     }
@@ -355,7 +355,7 @@ module.exports = bundler => {
       );
     }
     let rectMsTileFilename = hashedFilename(
-      'mstile-310x150.' + '.png',
+      'mstile-310x150.png',
       rectMsTile
     );
     writeFileSync(resolve(outDir, rectMsTileFilename), rectMsTile);
