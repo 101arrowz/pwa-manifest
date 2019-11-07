@@ -1,15 +1,32 @@
-const { writeFileSync, existsSync, readFileSync } = require('fs');
-const { resolve, basename } = require('path');
-const { createHash } = require('crypto');
+import { writeFileSync, existsSync, readFileSync } from 'fs';
+import { resolve, basename } from 'path';
+import { createHash } from 'crypto';
+import Bundler, { ParcelAsset, ParcelOptions } from 'parcel-bundler';
+// @ts-ignore No clue how to add types; PRs welcome
+import logger from '@parcel/logger';
+import sharp, {
+  PngOptions,
+  WebpOptions,
+  JpegOptions,
+  TiffOptions
+} from 'sharp';
 
-const logger = require('@parcel/logger');
-const sharp = require('sharp');
+interface FullBundler extends Bundler {
+  options: ParcelOptions;
+}
+interface FormatOptions {
+  png: PngOptions;
+  webp?: WebpOptions;
+  jpeg?: JpegOptions;
+  tiff?: TiffOptions;
+}
+type Verifier = (v: unknown) => boolean;
 
 // TODO: Add Safari Pinned Tab SVG - could prove to be challenging
-module.exports = bundler => {
-  let { outDir, publicURL, contentHash, target } = bundler.options;
+module.exports = (bundler: FullBundler) => {
+  let { outDir, publicUrl, contentHash, target } = bundler.options;
   if (target !== 'browser' || process.env.DISABLE_PWA_MANIFEST) return;
-  const hashedFilename = (filename, buf) => {
+  const hashedFilename = (filename: string, buf: Buffer) => {
     const i = filename.lastIndexOf('.');
     const base = filename.slice(0, i);
     const ext = filename.slice(i + 1);
@@ -28,19 +45,20 @@ module.exports = bundler => {
       ext
     ); // Similar to (but not the same as) Parcel itself
   };
-
-  if (!publicURL.endsWith('/')) publicURL += '/';
-  const getPkg = entryAsset =>
+  if (!publicUrl) publicUrl = '/';
+  else if (!publicUrl.endsWith('/')) publicUrl += '/';
+  const getPkg = (entryAsset: ParcelAsset) =>
     typeof entryAsset.getPackage === 'function'
       ? entryAsset.getPackage()
       : Promise.resolve(entryAsset.package);
-  const err = msg => {
+  const err = (msg: string) => {
     logger.clear();
     logger.error('Manifest creation failed! ' + msg);
   };
   logger.persistent('📄  PWA Manifest plugin initialized');
   bundler.on('bundled', async bundle => {
     const pkg = await getPkg(bundle.entryAsset);
+    if (!outDir) outDir = resolve(pkg.pkgdir, 'dist');
 
     const opts = pkg.pwaManifest || pkg['pwa-manifest'];
     if (typeof opts !== 'object') {
@@ -77,11 +95,11 @@ module.exports = bundler => {
       opts.startURL ||
       opts['start-url'] ||
       opts['start_url'] ||
-      publicURL;
+      publicUrl;
     if (typeof startURL !== 'string')
       return err('The start URL provided in the options must be a string.');
 
-    const scope = opts.scope || publicURL;
+    const scope = opts.scope || publicUrl;
     if (typeof scope !== 'string')
       return err('The scope provided in the options must be a string.');
 
@@ -132,7 +150,7 @@ module.exports = bundler => {
         'The Microsoft tile color provided in the options must be a string representing the theme color for the application.'
       );
     let browserConfig = `<TileColor>${msTileColor}</TileColor>`;
-    let htmlOut = `<meta name="msapplication-config" content="${publicURL}browserconfig.xml"><meta name="theme-color" content="${theme}">`;
+    let htmlOut = `<meta name="msapplication-config" content="${publicUrl}browserconfig.xml"><meta name="theme-color" content="${theme}">`;
 
     const baseIconPath =
       genIconOpts.baseIcon ||
@@ -160,16 +178,16 @@ module.exports = bundler => {
     let sizes = [96, 152, 192, 384, 512]; // Common sizes
     if (
       genIconOpts.sizes instanceof Array &&
-      genIconOpts.sizes.every(v => typeof v === 'number')
+      genIconOpts.sizes.every((v: unknown) => typeof v === 'number')
     )
-      sizes = [...new Set(genIconOpts.sizes.concat(192, 512))];
+      sizes = [...new Set(genIconOpts.sizes.concat(192, 512))] as number[];
     // Needed in all PWAs
     else if (typeof genIconOpts.sizes !== 'undefined')
       return err(
         'The sizes parameter in the icon generation options must be an array of numeric pixel values for sizes of the images.'
       );
 
-    let formats = {
+    let formats: FormatOptions = {
       webp: {
         quality: 60,
         reductionEffort: 6
@@ -185,11 +203,9 @@ module.exports = bundler => {
       )
     )
       formats = {
-        png: {
-          compressionLevel: 9
-        },
+        png: formats.png,
         ...genIconOpts.formats
-      };
+      } as FormatOptions;
     // PNG needed in all PWAs
     else if (typeof genIconOpts.formats !== 'undefined')
       return err(
@@ -208,17 +224,19 @@ module.exports = bundler => {
     const resizeOptions = {
       fit: resizeMethod,
       background: 'rgba(0, 0, 0, 0)'
-    }
+    };
     const baseIcon = sharp(baseIconFullPath).ensureAlpha();
     for (let size of sizes) {
       const icon = baseIcon.clone().resize(size, size, resizeOptions);
       const saveSize = size + 'x' + size;
-      for (let format in formats) {
+      for (let format of Object.keys(formats) as Array<keyof FormatOptions>) {
+        // Ugly but TS is not very smart
+        format = format;
         let buf;
         try {
           buf = await icon
             .clone()
-            [format](formats[format] || {})
+            [format](formats[format])
             .toBuffer();
         } catch (e) {
           return err(
@@ -232,7 +250,7 @@ module.exports = bundler => {
         writeFileSync(resolve(outDir, filename), buf);
 
         icons.push({
-          src: publicURL + filename,
+          src: publicUrl + filename,
           sizes: saveSize,
           type: 'image/' + format
         });
@@ -288,7 +306,7 @@ module.exports = bundler => {
     }
     let atiname = hashedFilename('apple-touch-icon.png', appleTouchIconBuf);
     writeFileSync(resolve(outDir, atiname), appleTouchIconBuf);
-    htmlOut += `<link rel="apple-touch-icon" sizes="180x180" href="${publicURL +
+    htmlOut += `<link rel="apple-touch-icon" sizes="180x180" href="${publicUrl +
       atiname}">`;
     const genFavicons =
       genIconOpts.genFavicons ||
@@ -317,7 +335,7 @@ module.exports = bundler => {
         const sizes = size + 'x' + size;
         let filename = hashedFilename('favicon-' + sizes + '.png', favicon);
         writeFileSync(resolve(outDir, filename), favicon);
-        htmlOut += `<link rel="icon" sizes="${sizes}" href="${publicURL +
+        htmlOut += `<link rel="icon" sizes="${sizes}" href="${publicUrl +
           filename}">`;
       }
     }
@@ -339,7 +357,7 @@ module.exports = bundler => {
       let sizes = size + 'x' + size;
       let filename = hashedFilename('mstile-' + sizes + '.png', msTile);
       writeFileSync(resolve(outDir, filename), msTile);
-      browserConfig += `<square${sizes}logo src="${publicURL + filename}"/>`;
+      browserConfig += `<square${sizes}logo src="${publicUrl + filename}"/>`;
     }
     let rectMsTile;
     try {
@@ -354,12 +372,9 @@ module.exports = bundler => {
           e
       );
     }
-    let rectMsTileFilename = hashedFilename(
-      'mstile-310x150.png',
-      rectMsTile
-    );
+    let rectMsTileFilename = hashedFilename('mstile-310x150.png', rectMsTile);
     writeFileSync(resolve(outDir, rectMsTileFilename), rectMsTile);
-    browserConfig += `<wide310x150logo src="${publicURL +
+    browserConfig += `<wide310x150logo src="${publicUrl +
       rectMsTileFilename}"/>`;
 
     logger.progress('Generating Microsoft config...');
@@ -370,8 +385,8 @@ module.exports = bundler => {
 
     logger.progress('Generating manifest...');
     // No custom modifications for the rest of the common parameters, so we just do type checking
-    let extraParams = {};
-    let extraTypes = [
+    let extraParams: any = {};
+    let extraTypes: [string[], string | Verifier, any?][] = [
       [
         [
           'background_color',
@@ -389,11 +404,14 @@ module.exports = bundler => {
       ],
       [
         ['dir', 'direction', 'textDirection', 'text-direction'],
-        v => ['rtl', 'ltr', 'auto'].includes(v)
+        v => ['rtl', 'ltr', 'auto'].includes(v as string)
       ],
       [
         ['display', 'displayMode', 'display-mode'],
-        v => ['standalone', 'minimal-ui', 'fullscreen', 'browser'].includes(v),
+        v =>
+          ['standalone', 'minimal-ui', 'fullscreen', 'browser'].includes(
+            v as string
+          ),
         'standalone'
       ],
       [
@@ -424,7 +442,7 @@ module.exports = bundler => {
             'portrait',
             'portrait-primary',
             'portrait-secondary'
-          ].includes(v)
+          ].includes(v as string)
       ],
       [
         [
@@ -453,7 +471,7 @@ module.exports = bundler => {
       ],
       [
         ['serviceworker', 'sw', 'serviceWorker', 'service-worker'],
-        v => typeof v === 'object' && v.src
+        v => typeof v === 'object' && !!v && v.hasOwnProperty('src')
       ]
     ];
     for (let type of extraTypes) {
@@ -468,7 +486,7 @@ module.exports = bundler => {
           extraParams[type[0][0]] = type[2];
         continue;
       }
-      let checker;
+      let checker: Verifier;
       if (typeof type[1] === 'string') checker = v => typeof v === type[1];
       else checker = type[1];
       if (!checker(val))
@@ -504,7 +522,7 @@ module.exports = bundler => {
       resolve(outDir, 'manifest.webmanifest'),
       JSON.stringify(manifest)
     );
-    htmlOut += `<link rel="manifest" href="${publicURL}manifest.webmanifest">`;
+    htmlOut += `<link rel="manifest" href="${publicUrl}manifest.webmanifest">`;
     logger.progress('Inserting links into HTML...');
     let html = readFileSync(insertInto)
       .toString()
@@ -512,7 +530,7 @@ module.exports = bundler => {
         /<link rel="(manifest|icon|apple-touch-icon)"(.*?)>|<meta name="msapplication(.*?)"(.*?)>/g,
         ''
       );
-    const insertBefore = html.search(/<head>|<\/head>/g); // Prefer at the start, but end is acceptable too.
+    const insertBefore = html.search(/(?<=<head>)|<\/head>/); // Prefer at the start, but end is acceptable too.
     if (insertBefore === -1)
       return err(
         'Could not find head tag in HTML file and therefore cannot insert necessary HTML.'

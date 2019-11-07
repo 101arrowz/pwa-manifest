@@ -1,0 +1,14 @@
+{
+  "files": ["index.ts"],
+  "compilerOptions": {
+    "alwaysStrict": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noImplicitAny": true,
+    "target": "es6",
+    "strict": true,
+    "esModuleInterop": true,
+    "outDir": "lib",
+    "pretty": true
+  }
+}
