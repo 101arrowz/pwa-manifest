@@ -8,7 +8,8 @@ import sharp, {
   PngOptions,
   WebpOptions,
   JpegOptions,
-  TiffOptions
+  TiffOptions,
+  ResizeOptions
 } from 'sharp';
 
 interface FullBundler extends Bundler {
@@ -21,7 +22,11 @@ interface FormatOptions {
   tiff?: TiffOptions;
 }
 type Verifier = (v: unknown) => boolean;
-
+interface IconEntry {
+  src: string;
+  sizes: string;
+  type: string;
+}
 // TODO: Add Safari Pinned Tab SVG - could prove to be challenging
 module.exports = (bundler: FullBundler) => {
   let { outDir, publicUrl, contentHash, target } = bundler.options;
@@ -47,11 +52,11 @@ module.exports = (bundler: FullBundler) => {
   };
   if (!publicUrl) publicUrl = '/';
   else if (!publicUrl.endsWith('/')) publicUrl += '/';
-  const getPkg = (entryAsset: ParcelAsset) =>
+  const getPkg = (entryAsset: ParcelAsset): any =>
     typeof entryAsset.getPackage === 'function'
       ? entryAsset.getPackage()
       : Promise.resolve(entryAsset.package);
-  const err = (msg: string) => {
+  const err = (msg: string): void => {
     logger.clear();
     logger.error('Manifest creation failed! ' + msg);
   };
@@ -60,7 +65,7 @@ module.exports = (bundler: FullBundler) => {
     const pkg = await getPkg(bundle.entryAsset);
     if (!outDir) outDir = resolve(pkg.pkgdir, 'dist');
 
-    const opts = pkg.pwaManifest || pkg['pwa-manifest'];
+    const opts: any = pkg.pwaManifest || pkg['pwa-manifest'];
     if (typeof opts !== 'object') {
       if (typeof opts === 'undefined')
         return err('No PWA Manifest options found in package.json.');
@@ -75,22 +80,23 @@ module.exports = (bundler: FullBundler) => {
         'No index.html found at the root of the build. This package does not yet support this scenario.'
       );
 
-    const name = opts.name || pkg.name;
+    const name: unknown = opts.name || pkg.name;
     if (typeof name !== 'string') {
       if (typeof name === 'undefined')
         return err('No name was found in the options.');
       return err('The name provided in the options must be a string.');
     }
-    const shortName =
+    const shortName: unknown =
       opts.shortName || opts['short-name'] || opts['short_name'] || name;
     if (typeof shortName !== 'string')
       return err('The short name provided in the options must be a string.');
 
-    const desc = opts.desc || opts.description || pkg.description || '';
+    const desc: unknown =
+      opts.desc || opts.description || pkg.description || '';
     if (typeof desc !== 'string')
       return err('The description provided in the options must be a string.');
 
-    const startURL =
+    const startURL: unknown =
       opts.startUrl ||
       opts.startURL ||
       opts['start-url'] ||
@@ -99,11 +105,11 @@ module.exports = (bundler: FullBundler) => {
     if (typeof startURL !== 'string')
       return err('The start URL provided in the options must be a string.');
 
-    const scope = opts.scope || publicUrl;
+    const scope: unknown = opts.scope || publicUrl;
     if (typeof scope !== 'string')
       return err('The scope provided in the options must be a string.');
 
-    const theme =
+    const theme: unknown =
       opts.theme_color ||
       opts.theme ||
       opts.themeColor ||
@@ -116,8 +122,8 @@ module.exports = (bundler: FullBundler) => {
 
     logger.progress(`Generating icons for ${name}...`);
 
-    let icons = [];
-    const genIconOpts =
+    let icons: Array<IconEntry> = [];
+    const genIconOpts: any =
       opts.genIcon ||
       opts['gen-icon'] ||
       opts.genIconOpts ||
@@ -139,7 +145,7 @@ module.exports = (bundler: FullBundler) => {
       );
     }
 
-    const msTileColor =
+    const msTileColor: unknown =
       genIconOpts.msTileColor ||
       genIconOpts['ms-tile-color'] ||
       genIconOpts.microsoftTileColor ||
@@ -152,7 +158,7 @@ module.exports = (bundler: FullBundler) => {
     let browserConfig = `<TileColor>${msTileColor}</TileColor>`;
     let htmlOut = `<meta name="msapplication-config" content="${publicUrl}browserconfig.xml"><meta name="theme-color" content="${theme}">`;
 
-    const baseIconPath =
+    const baseIconPath: unknown =
       genIconOpts.baseIcon ||
       genIconOpts['base-icon'] ||
       genIconOpts.fromIcon ||
@@ -205,24 +211,24 @@ module.exports = (bundler: FullBundler) => {
       formats = {
         png: formats.png,
         ...genIconOpts.formats
-      } as FormatOptions;
+      };
     // PNG needed in all PWAs
     else if (typeof genIconOpts.formats !== 'undefined')
       return err(
         'The formats parameter in the icon generation options must be an object with each key being a supported file type (png, webp, jpeg, or tiff) for the output images, and each value being the options to pass to sharp.'
       );
 
-    let resizeMethod =
+    let resizeMethod: unknown =
       genIconOpts.resizeMethod ||
       genIconOpts['resize-method'] ||
       genIconOpts.resize ||
       'cover';
-    if (!['cover', 'contain', 'fill'].includes(resizeMethod))
+    if (!['cover', 'contain', 'fill'].includes(resizeMethod as string))
       return err(
         "The resize method parameter in the icon generation options must be one of 'cover', 'contain', or 'fill'."
       );
-    const resizeOptions = {
-      fit: resizeMethod,
+    const resizeOptions: ResizeOptions = {
+      fit: resizeMethod as 'cover' | 'contain' | 'fill',
       background: 'rgba(0, 0, 0, 0)'
     };
     const baseIcon = sharp(baseIconFullPath).ensureAlpha();
@@ -257,7 +263,7 @@ module.exports = (bundler: FullBundler) => {
       }
     }
     logger.progress('Generating Apple Touch Icon...');
-    const appleTouchIconBG =
+    const appleTouchIconBG: unknown =
       genIconOpts.appleTouchIconBG ||
       genIconOpts.appleTouchIconBg ||
       genIconOpts['apple-touch-icon-bg'] ||
@@ -270,7 +276,7 @@ module.exports = (bundler: FullBundler) => {
         'The Apple Touch Icon background color parameter must be a string representing a valid CSS color.'
       );
 
-    const appleTouchIconPadding =
+    const appleTouchIconPadding: unknown =
       genIconOpts.appleTouchIconPadding ||
       genIconOpts['apple-touch-icon-padding'] ||
       genIconOpts.atip ||
@@ -280,7 +286,7 @@ module.exports = (bundler: FullBundler) => {
         'The Apple Touch Icon padding parameter must be a number of pixels to pad the image with on each side.'
       );
 
-    let appleTouchIconBuf;
+    let appleTouchIconBuf: Buffer;
     let atiSize = 180 - 2 * appleTouchIconPadding;
     try {
       const appleTouchIconTransparent = await baseIcon
@@ -308,7 +314,7 @@ module.exports = (bundler: FullBundler) => {
     writeFileSync(resolve(outDir, atiname), appleTouchIconBuf);
     htmlOut += `<link rel="apple-touch-icon" sizes="180x180" href="${publicUrl +
       atiname}">`;
-    const genFavicons =
+    const genFavicons: unknown =
       genIconOpts.genFavicons ||
       genIconOpts['gen-favicons'] ||
       genIconOpts.generateFavicons ||
@@ -320,7 +326,7 @@ module.exports = (bundler: FullBundler) => {
     if (genFavicons) {
       logger.progress('Generating favicons...');
       for (let size of [32, 16]) {
-        let favicon;
+        let favicon: Buffer;
         try {
           favicon = await baseIcon
             .clone()
@@ -341,7 +347,7 @@ module.exports = (bundler: FullBundler) => {
     }
     logger.progress('Generating Microsoft Tile Icons...');
     for (let size of [70, 150, 310]) {
-      let msTile;
+      let msTile: Buffer;
       try {
         msTile = await baseIcon
           .clone()
@@ -359,7 +365,7 @@ module.exports = (bundler: FullBundler) => {
       writeFileSync(resolve(outDir, filename), msTile);
       browserConfig += `<square${sizes}logo src="${publicUrl + filename}"/>`;
     }
-    let rectMsTile;
+    let rectMsTile: Buffer;
     try {
       rectMsTile = await baseIcon
         .clone()
@@ -499,7 +505,8 @@ module.exports = (bundler: FullBundler) => {
     }
 
     // When this config inevitably becomes outdated, use the include parameter to include any new parameters relevant to the Web App Manifest.
-    let include = opts.include || opts.includeParams || opts['include-params'];
+    let include: unknown =
+      opts.include || opts.includeParams || opts['include-params'];
     if (include instanceof Array && include.every(v => typeof v === 'string')) {
       for (let param of include) {
         extraParams[param] = opts[param];

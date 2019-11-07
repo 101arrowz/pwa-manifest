@@ -20,7 +20,8 @@
   },
   "scripts": {
     "prettify": "prettier --single-quote --trailing-comma none --write index.ts",
-    "prepack": "yarn prettify && tsc",
+    "build": "yarn prettify && tsc",
+    "prepack": "yarn build",
     "preversion": "yarn prettify"
   },
   "dependencies": {
