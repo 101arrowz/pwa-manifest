@@ -2,7 +2,7 @@ import { writeFileSync, existsSync, readFileSync } from 'fs';
 import { resolve, basename } from 'path';
 import { createHash } from 'crypto';
 import Bundler, { ParcelAsset, ParcelOptions } from 'parcel-bundler';
-// @ts-ignore No clue how to add types; PRs welcome
+// @ts-ignore No clue what's up with this; PRs welcome
 import logger from '@parcel/logger';
 import sharp, {
   PngOptions,
@@ -30,7 +30,10 @@ interface IconEntry {
 // TODO: Add Safari Pinned Tab SVG - could prove to be challenging
 module.exports = (bundler: FullBundler) => {
   let { outDir, publicUrl, contentHash, target } = bundler.options;
-  if (target !== 'browser' || process.env.DISABLE_PWA_MANIFEST) return;
+  if (target !== 'browser' || process.env.DISABLE_PWA_MANIFEST) {
+    bundler.on('buildEnd', () => logger.warn('Manifest creation disabled'));
+    return;
+  }
   const hashedFilename = (filename: string, buf: Buffer) => {
     const i = filename.lastIndexOf('.');
     const base = filename.slice(0, i);
@@ -60,7 +63,6 @@ module.exports = (bundler: FullBundler) => {
     logger.clear();
     logger.error('Manifest creation failed! ' + msg);
   };
-  logger.persistent('📄  PWA Manifest plugin initialized');
   bundler.on('bundled', async bundle => {
     const pkg = await getPkg(bundle.entryAsset);
     if (!outDir) outDir = resolve(pkg.pkgdir, 'dist');

@@ -8,7 +8,7 @@
     "target": "es6",
     "strict": true,
     "esModuleInterop": true,
-    "outDir": "lib",
-    "pretty": true
+    "pretty": true,
+    "noEmit": true
   }
 }

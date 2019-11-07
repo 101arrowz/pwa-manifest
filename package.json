@@ -20,12 +20,11 @@
   },
   "scripts": {
     "prettify": "prettier --single-quote --trailing-comma none --write index.ts",
-    "build": "yarn prettify && tsc",
+    "build": "tsc && yarn prettify && parcel build index.ts -t node --out-dir lib/ --detailed-report --no-source-maps --no-cache --experimental-scope-hoisting",
     "prepack": "yarn build",
     "preversion": "yarn prettify"
   },
   "dependencies": {
-    "@parcel/logger": "<=1.11.1",
     "sharp": "^0.23.2"
   },
   "peerDependencies": {
@@ -35,6 +34,8 @@
     "@types/node": "^12.12.6",
     "@types/parcel-bundler": "^1.12.1",
     "@types/sharp": "^0.23.0",
-    "prettier": "^1.18.2"
+    "parcel-bundler": "^1.12.4",
+    "prettier": "^1.18.2",
+    "typescript": "^3.7.2"
   }
 }
