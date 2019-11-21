@@ -12,7 +12,9 @@ import sharp, {
 } from 'sharp';
 
 type FullBundler = Bundler & {
-  options: ParcelOptions;
+  options: ParcelOptions & {
+    publicURL: string
+  };
 };
 type FormatOptions = {
   png: PngOptions;
@@ -37,7 +39,7 @@ type PackageJSON = {
 };
 // TODO: Add Safari Pinned Tab SVG - could prove to be challenging
 module.exports = (bundler: FullBundler): void => {
-  let { outDir, publicUrl, contentHash, target } = bundler.options;
+  let { outDir, publicURL, contentHash, target } = bundler.options;
   if (target !== 'browser' || process.env.DISABLE_PWA_MANIFEST) {
     bundler.on('buildEnd', () => logger.warn('Manifest creation disabled'));
     return;
@@ -61,8 +63,8 @@ module.exports = (bundler: FullBundler): void => {
       ext
     ); // Similar to (but not the same as) Parcel itself
   };
-  if (!publicUrl) publicUrl = '/';
-  else if (!publicUrl.endsWith('/')) publicUrl += '/';
+  if (!publicURL) publicURL = '/';
+  else if (!publicURL.endsWith('/')) publicURL += '/';
   const getPkg = (entryAsset: ParcelAsset): Promise<PackageJSON> =>
     typeof entryAsset.getPackage === 'function'
       ? entryAsset.getPackage()
@@ -112,11 +114,11 @@ module.exports = (bundler: FullBundler): void => {
       opts.startURL ||
       opts['start-url'] ||
       opts['start_url'] ||
-      publicUrl;
+      publicURL;
     if (typeof startURL !== 'string')
       return err('The start URL provided in the options must be a string.');
 
-    const scope = opts.scope || publicUrl;
+    const scope = opts.scope || publicURL;
     if (typeof scope !== 'string')
       return err('The scope provided in the options must be a string.');
 
@@ -167,7 +169,7 @@ module.exports = (bundler: FullBundler): void => {
         'The Microsoft tile color provided in the options must be a string representing the theme color for the application.'
       );
     let browserConfig = `<TileColor>${msTileColor}</TileColor>`;
-    let htmlOut = `<meta name="msapplication-config" content="${publicUrl}browserconfig.xml"><meta name="theme-color" content="${theme}">`;
+    let htmlOut = `<meta name="msapplication-config" content="${publicURL}browserconfig.xml"><meta name="theme-color" content="${theme}">`;
 
     const baseIconPath: unknown =
       genIconOpts.baseIcon ||
@@ -267,7 +269,7 @@ module.exports = (bundler: FullBundler): void => {
         writeFileSync(resolve(outDir, filename), buf);
 
         icons.push({
-          src: publicUrl + filename,
+          src: publicURL + filename,
           sizes: saveSize,
           type: 'image/' + format
         });
@@ -323,7 +325,7 @@ module.exports = (bundler: FullBundler): void => {
     }
     const atiname = hashedFilename('apple-touch-icon.png', appleTouchIconBuf);
     writeFileSync(resolve(outDir, atiname), appleTouchIconBuf);
-    htmlOut += `<link rel="apple-touch-icon" sizes="180x180" href="${publicUrl +
+    htmlOut += `<link rel="apple-touch-icon" sizes="180x180" href="${publicURL +
       atiname}">`;
     const genFavicons: unknown =
       genIconOpts.genFavicons ||
@@ -352,7 +354,7 @@ module.exports = (bundler: FullBundler): void => {
         const sizes = size + 'x' + size;
         const filename = hashedFilename('favicon-' + sizes + '.png', favicon);
         writeFileSync(resolve(outDir, filename), favicon);
-        htmlOut += `<link rel="icon" sizes="${sizes}" href="${publicUrl +
+        htmlOut += `<link rel="icon" sizes="${sizes}" href="${publicURL +
           filename}">`;
       }
     }
@@ -374,7 +376,7 @@ module.exports = (bundler: FullBundler): void => {
       const sizes = size + 'x' + size;
       const filename = hashedFilename('mstile-' + sizes + '.png', msTile);
       writeFileSync(resolve(outDir, filename), msTile);
-      browserConfig += `<square${sizes}logo src="${publicUrl + filename}"/>`;
+      browserConfig += `<square${sizes}logo src="${publicURL + filename}"/>`;
     }
     let rectMsTile: Buffer;
     try {
@@ -391,7 +393,7 @@ module.exports = (bundler: FullBundler): void => {
     }
     const rectMsTileFilename = hashedFilename('mstile-310x150.png', rectMsTile);
     writeFileSync(resolve(outDir, rectMsTileFilename), rectMsTile);
-    browserConfig += `<wide310x150logo src="${publicUrl +
+    browserConfig += `<wide310x150logo src="${publicURL +
       rectMsTileFilename}"/>`;
 
     logger.progress('Generating Microsoft config...');
@@ -540,7 +542,7 @@ module.exports = (bundler: FullBundler): void => {
       resolve(outDir, 'manifest.webmanifest'),
       JSON.stringify(manifest)
     );
-    htmlOut += `<link rel="manifest" href="${publicUrl}manifest.webmanifest">`;
+    htmlOut += `<link rel="manifest" href="${publicURL}manifest.webmanifest">`;
     logger.progress('Inserting links into HTML...');
     let html = readFileSync(insertInto)
       .toString()
