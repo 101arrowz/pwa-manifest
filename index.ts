@@ -64,7 +64,11 @@ export default (bundler: FullBundler) => {
     logger.error('Manifest creation failed! ' + msg);
   };
   bundler.on('bundled', async bundle => {
-    const pkg = await getPkg(bundle.entryAsset);
+    // parcel >= 1.8 single entry point OR multiple entry points
+    let mainAsset =
+      bundle.entryAsset || bundle.childBundles.values().next().value.entryAsset;
+
+    const pkg = await getPkg(mainAsset);
     if (!outDir) outDir = resolve(pkg.pkgdir, 'dist');
 
     const opts: any = pkg.pwaManifest || pkg['pwa-manifest'];
