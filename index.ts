@@ -28,7 +28,7 @@ interface IconEntry {
   type: string;
 }
 // TODO: Add Safari Pinned Tab SVG - could prove to be challenging
-module.exports = (bundler: FullBundler) => {
+export default (bundler: FullBundler) => {
   let { outDir, publicUrl, contentHash, target } = bundler.options;
   if (target !== 'browser' || process.env.DISABLE_PWA_MANIFEST) {
     bundler.on('buildEnd', () => logger.warn('Manifest creation disabled'));
@@ -536,7 +536,7 @@ module.exports = (bundler: FullBundler) => {
     let html = readFileSync(insertInto)
       .toString()
       .replace(
-        /<link rel="(manifest|icon|apple-touch-icon)"(.*?)>|<meta name="msapplication(.*?)"(.*?)>/g,
+        /<link rel="(manifest|icon|apple-touch-icon)"(.*?)>|<meta name="(msapplication(.*?)|theme-color)"(.*?)>/g,
         ''
       );
     const insertBefore = html.search(/(?<=<head>)|<\/head>/); // Prefer at the start, but end is acceptable too.
