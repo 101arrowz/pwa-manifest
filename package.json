@@ -19,10 +19,10 @@
     "url": "https://github.com/101arrowz/parcel-plugin-pwa-manifest.git"
   },
   "scripts": {
-    "prettify": "prettier --single-quote --trailing-comma none --write index.ts",
-    "build": "tsc && yarn prettify && parcel build index.ts -t node --out-dir lib/ --detailed-report --no-source-maps --no-cache --experimental-scope-hoisting",
+    "lint": "eslint --fix src/**/*.ts",
+    "build": "tsc && yarn lint && parcel build src/index.ts -t node --out-dir lib/ --detailed-report --no-source-maps --no-cache --experimental-scope-hoisting",
     "prepack": "yarn build",
-    "preversion": "yarn prettify"
+    "preversion": "yarn lint"
   },
   "dependencies": {
     "sharp": "^0.23.2"
@@ -34,6 +34,11 @@
     "@types/node": "^12.12.6",
     "@types/parcel-bundler": "^1.12.1",
     "@types/sharp": "^0.23.0",
+    "@typescript-eslint/eslint-plugin": "^2.8.0",
+    "@typescript-eslint/parser": "^2.8.0",
+    "eslint": "^6.6.0",
+    "eslint-config-prettier": "^6.7.0",
+    "eslint-plugin-prettier": "^3.1.1",
     "parcel-bundler": "^1.12.4",
     "prettier": "^1.18.2",
     "typescript": "^3.7.2"

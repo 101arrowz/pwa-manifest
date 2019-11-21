@@ -2,7 +2,6 @@ import { writeFileSync, existsSync, readFileSync } from 'fs';
 import { resolve, basename } from 'path';
 import { createHash } from 'crypto';
 import Bundler, { ParcelAsset, ParcelOptions } from 'parcel-bundler';
-// @ts-ignore No clue what's up with this; PRs welcome
 import logger from '@parcel/logger';
 import sharp, {
   PngOptions,
@@ -12,29 +11,38 @@ import sharp, {
   ResizeOptions
 } from 'sharp';
 
-interface FullBundler extends Bundler {
+type FullBundler = Bundler & {
   options: ParcelOptions;
-}
-interface FormatOptions {
+};
+type FormatOptions = {
   png: PngOptions;
   webp?: WebpOptions;
   jpeg?: JpegOptions;
   tiff?: TiffOptions;
-}
+};
 type Verifier = (v: unknown) => boolean;
-interface IconEntry {
+type IconEntry = {
   src: string;
   sizes: string;
   type: string;
-}
+};
+// TODO: Improve
+type PWAManifestOptions = any; // eslint-disable-line @typescript-eslint/no-explicit-any
+type PackageJSON = {
+  name?: string;
+  description?: string;
+  pkgdir: string;
+  pwaManifest?: PWAManifestOptions;
+  'pwa-manifest'?: PWAManifestOptions;
+};
 // TODO: Add Safari Pinned Tab SVG - could prove to be challenging
-export default (bundler: FullBundler) => {
+export default (bundler: FullBundler): void => {
   let { outDir, publicUrl, contentHash, target } = bundler.options;
   if (target !== 'browser' || process.env.DISABLE_PWA_MANIFEST) {
     bundler.on('buildEnd', () => logger.warn('Manifest creation disabled'));
     return;
   }
-  const hashedFilename = (filename: string, buf: Buffer) => {
+  const hashedFilename = (filename: string, buf: Buffer): string => {
     const i = filename.lastIndexOf('.');
     const base = filename.slice(0, i);
     const ext = filename.slice(i + 1);
@@ -55,7 +63,7 @@ export default (bundler: FullBundler) => {
   };
   if (!publicUrl) publicUrl = '/';
   else if (!publicUrl.endsWith('/')) publicUrl += '/';
-  const getPkg = (entryAsset: ParcelAsset): any =>
+  const getPkg = (entryAsset: ParcelAsset): Promise<PackageJSON> =>
     typeof entryAsset.getPackage === 'function'
       ? entryAsset.getPackage()
       : Promise.resolve(entryAsset.package);
@@ -64,14 +72,12 @@ export default (bundler: FullBundler) => {
     logger.error('Manifest creation failed! ' + msg);
   };
   bundler.on('bundled', async bundle => {
-    // parcel >= 1.8 single entry point OR multiple entry points
-    let mainAsset =
-      bundle.entryAsset || bundle.childBundles.values().next().value.entryAsset;
-
-    const pkg = await getPkg(mainAsset);
+    const pkg = await getPkg(
+      bundle.entryAsset || bundle.childBundles.values().next().value.entryAsset
+    );
     if (!outDir) outDir = resolve(pkg.pkgdir, 'dist');
 
-    const opts: any = pkg.pwaManifest || pkg['pwa-manifest'];
+    const opts = pkg.pwaManifest || pkg['pwa-manifest'];
     if (typeof opts !== 'object') {
       if (typeof opts === 'undefined')
         return err('No PWA Manifest options found in package.json.');
@@ -86,23 +92,22 @@ export default (bundler: FullBundler) => {
         'No index.html found at the root of the build. This package does not yet support this scenario.'
       );
 
-    const name: unknown = opts.name || pkg.name;
+    const name = opts.name || pkg.name;
     if (typeof name !== 'string') {
       if (typeof name === 'undefined')
         return err('No name was found in the options.');
       return err('The name provided in the options must be a string.');
     }
-    const shortName: unknown =
+    const shortName =
       opts.shortName || opts['short-name'] || opts['short_name'] || name;
     if (typeof shortName !== 'string')
       return err('The short name provided in the options must be a string.');
 
-    const desc: unknown =
-      opts.desc || opts.description || pkg.description || '';
+    const desc = opts.desc || opts.description || pkg.description || '';
     if (typeof desc !== 'string')
       return err('The description provided in the options must be a string.');
 
-    const startURL: unknown =
+    const startURL =
       opts.startUrl ||
       opts.startURL ||
       opts['start-url'] ||
@@ -111,11 +116,11 @@ export default (bundler: FullBundler) => {
     if (typeof startURL !== 'string')
       return err('The start URL provided in the options must be a string.');
 
-    const scope: unknown = opts.scope || publicUrl;
+    const scope = opts.scope || publicUrl;
     if (typeof scope !== 'string')
       return err('The scope provided in the options must be a string.');
 
-    const theme: unknown =
+    const theme =
       opts.theme_color ||
       opts.theme ||
       opts.themeColor ||
@@ -128,8 +133,8 @@ export default (bundler: FullBundler) => {
 
     logger.progress(`Generating icons for ${name}...`);
 
-    let icons: Array<IconEntry> = [];
-    const genIconOpts: any =
+    const icons: Array<IconEntry> = [];
+    const genIconOpts =
       opts.genIcon ||
       opts['gen-icon'] ||
       opts.genIconOpts ||
@@ -177,7 +182,7 @@ export default (bundler: FullBundler) => {
       );
     }
 
-    let baseIconName = basename(
+    const baseIconName = basename(
       baseIconPath,
       baseIconPath.slice(baseIconPath.lastIndexOf('.'))
     );
@@ -224,7 +229,7 @@ export default (bundler: FullBundler) => {
         'The formats parameter in the icon generation options must be an object with each key being a supported file type (png, webp, jpeg, or tiff) for the output images, and each value being the options to pass to sharp.'
       );
 
-    let resizeMethod: unknown =
+    const resizeMethod: unknown =
       genIconOpts.resizeMethod ||
       genIconOpts['resize-method'] ||
       genIconOpts.resize ||
@@ -238,7 +243,7 @@ export default (bundler: FullBundler) => {
       background: 'rgba(0, 0, 0, 0)'
     };
     const baseIcon = sharp(baseIconFullPath).ensureAlpha();
-    for (let size of sizes) {
+    for (const size of sizes) {
       const icon = baseIcon.clone().resize(size, size, resizeOptions);
       const saveSize = size + 'x' + size;
       for (let format of Object.keys(formats) as Array<keyof FormatOptions>) {
@@ -255,7 +260,7 @@ export default (bundler: FullBundler) => {
             'An unknown error ocurred during the icon creation process: ' + e
           );
         }
-        let filename = hashedFilename(
+        const filename = hashedFilename(
           baseIconName + '-' + saveSize + '.' + format,
           buf
         );
@@ -293,7 +298,7 @@ export default (bundler: FullBundler) => {
       );
 
     let appleTouchIconBuf: Buffer;
-    let atiSize = 180 - 2 * appleTouchIconPadding;
+    const atiSize = 180 - 2 * appleTouchIconPadding;
     try {
       const appleTouchIconTransparent = await baseIcon
         .clone()
@@ -316,7 +321,7 @@ export default (bundler: FullBundler) => {
           e
       );
     }
-    let atiname = hashedFilename('apple-touch-icon.png', appleTouchIconBuf);
+    const atiname = hashedFilename('apple-touch-icon.png', appleTouchIconBuf);
     writeFileSync(resolve(outDir, atiname), appleTouchIconBuf);
     htmlOut += `<link rel="apple-touch-icon" sizes="180x180" href="${publicUrl +
       atiname}">`;
@@ -331,7 +336,7 @@ export default (bundler: FullBundler) => {
       );
     if (genFavicons) {
       logger.progress('Generating favicons...');
-      for (let size of [32, 16]) {
+      for (const size of [32, 16]) {
         let favicon: Buffer;
         try {
           favicon = await baseIcon
@@ -345,14 +350,14 @@ export default (bundler: FullBundler) => {
           );
         }
         const sizes = size + 'x' + size;
-        let filename = hashedFilename('favicon-' + sizes + '.png', favicon);
+        const filename = hashedFilename('favicon-' + sizes + '.png', favicon);
         writeFileSync(resolve(outDir, filename), favicon);
         htmlOut += `<link rel="icon" sizes="${sizes}" href="${publicUrl +
           filename}">`;
       }
     }
     logger.progress('Generating Microsoft Tile Icons...');
-    for (let size of [70, 150, 310]) {
+    for (const size of [70, 150, 310]) {
       let msTile: Buffer;
       try {
         msTile = await baseIcon
@@ -366,8 +371,8 @@ export default (bundler: FullBundler) => {
             e
         );
       }
-      let sizes = size + 'x' + size;
-      let filename = hashedFilename('mstile-' + sizes + '.png', msTile);
+      const sizes = size + 'x' + size;
+      const filename = hashedFilename('mstile-' + sizes + '.png', msTile);
       writeFileSync(resolve(outDir, filename), msTile);
       browserConfig += `<square${sizes}logo src="${publicUrl + filename}"/>`;
     }
@@ -384,7 +389,7 @@ export default (bundler: FullBundler) => {
           e
       );
     }
-    let rectMsTileFilename = hashedFilename('mstile-310x150.png', rectMsTile);
+    const rectMsTileFilename = hashedFilename('mstile-310x150.png', rectMsTile);
     writeFileSync(resolve(outDir, rectMsTileFilename), rectMsTile);
     browserConfig += `<wide310x150logo src="${publicUrl +
       rectMsTileFilename}"/>`;
@@ -397,8 +402,8 @@ export default (bundler: FullBundler) => {
 
     logger.progress('Generating manifest...');
     // No custom modifications for the rest of the common parameters, so we just do type checking
-    let extraParams: any = {};
-    let extraTypes: [string[], string | Verifier, any?][] = [
+    const extraParams: PWAManifestOptions = {};
+    const extraTypes: [string[], string | Verifier, unknown?][] = [
       [
         [
           'background_color',
@@ -486,9 +491,9 @@ export default (bundler: FullBundler) => {
         v => typeof v === 'object' && !!v && v.hasOwnProperty('src')
       ]
     ];
-    for (let type of extraTypes) {
+    for (const type of extraTypes) {
       let val;
-      for (let paramName of type[0]) {
+      for (const paramName of type[0]) {
         val = opts[paramName];
         if (val) break;
       }
@@ -511,10 +516,10 @@ export default (bundler: FullBundler) => {
     }
 
     // When this config inevitably becomes outdated, use the include parameter to include any new parameters relevant to the Web App Manifest.
-    let include: unknown =
+    const include: unknown =
       opts.include || opts.includeParams || opts['include-params'];
     if (include instanceof Array && include.every(v => typeof v === 'string')) {
-      for (let param of include) {
+      for (const param of include) {
         extraParams[param] = opts[param];
       }
     } else if (typeof include !== 'undefined')

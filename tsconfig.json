@@ -1,5 +1,4 @@
 {
-  "files": ["index.ts"],
   "compilerOptions": {
     "alwaysStrict": true,
     "module": "commonjs",
@@ -10,5 +9,6 @@
     "esModuleInterop": true,
     "pretty": true,
     "noEmit": true
-  }
+  },
+  "include": ["src/**/*.ts"]
 }
