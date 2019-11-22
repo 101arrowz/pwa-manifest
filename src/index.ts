@@ -13,7 +13,7 @@ import sharp, {
 
 type FullBundler = Bundler & {
   options: ParcelOptions & {
-    publicURL: string
+    publicURL: string;
   };
 };
 type FormatOptions = {
@@ -38,7 +38,7 @@ type PackageJSON = {
   'pwa-manifest'?: PWAManifestOptions;
 };
 // TODO: Add Safari Pinned Tab SVG - could prove to be challenging
-module.exports = (bundler: FullBundler): void => {
+export = (bundler: FullBundler): void => {
   let { outDir, publicURL, contentHash, target } = bundler.options;
   if (target !== 'browser' || process.env.DISABLE_PWA_MANIFEST) {
     bundler.on('buildEnd', () => logger.warn('Manifest creation disabled'));

@@ -1,0 +1,12 @@
+[
+  {
+    "msg": "Default generation works correctly",
+    "config": {
+      "generateIconOptions": {
+        "baseIcon": "./sample/icon.svg",
+        "sizes": [152]
+      }
+    },
+    "result": []
+  }
+]
