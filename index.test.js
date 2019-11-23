@@ -12,7 +12,7 @@ const testConfigs = [
         baseIcon: './sample/icon.svg'
       }
     },
-    result: ['apple-touch-icon.d70cfcc7.png','browserconfig.xml','favicon-16x16.a73df5b8.png','favicon-32x32.f5ca64c1.png','icon-152x152.3285094d.webp','icon-152x152.975cad21.png','icon-192x192.013060f9.png','icon-192x192.45586afc.webp','icon-384x384.2b8c3a7e.webp','icon-384x384.db0b5dd3.png','icon-512x512.be0b61d5.png','icon-512x512.e926a4ea.webp','icon-96x96.2995c7c8.webp','icon-96x96.83cd9b6d.png','mstile-150x150.1f9e7ff5.png','mstile-310x150.b697926a.png','mstile-310x310.bced08bd.png','mstile-70x70.423d485b.png']
+    result: ['apple-touch-icon.105de2c5.png','icon-152x152.c0cccc53.webp','icon-152x152.c5e4d8cb.png','icon-192x192.3103561d.webp','icon-192x192.cab29cd7.png','icon-384x384.2b65be8b.png','icon-384x384.a54ab4a2.webp','icon-512x512.5c88cabb.webp','icon-512x512.b24e0d51.png','icon-96x96.00714ae7.webp','icon-96x96.b73322f2.png','mstile-150x150.df894f37.png','mstile-310x150.23817a3d.png','mstile-310x310.5f619e76.png','mstile-70x70.3bcf1bff.png']
   },
   {
     msg: 'Favicon generation works correctly',
@@ -22,7 +22,7 @@ const testConfigs = [
         genFavicons: true
       }
     },
-    result: ['apple-touch-icon.d70cfcc7.png','browserconfig.xml','favicon-16x16.a73df5b8.png','favicon-32x32.f5ca64c1.png','icon-152x152.3285094d.webp','icon-152x152.975cad21.png','icon-192x192.013060f9.png','icon-192x192.45586afc.webp','icon-384x384.2b8c3a7e.webp','icon-384x384.db0b5dd3.png','icon-512x512.be0b61d5.png','icon-512x512.e926a4ea.webp','icon-96x96.2995c7c8.webp','icon-96x96.83cd9b6d.png','mstile-150x150.1f9e7ff5.png','mstile-310x150.b697926a.png','mstile-310x310.bced08bd.png','mstile-70x70.423d485b.png']
+    result: ['apple-touch-icon.105de2c5.png','favicon-16x16.726e3e17.png','favicon-32x32.6326f01e.png','icon-152x152.c0cccc53.webp','icon-152x152.c5e4d8cb.png','icon-192x192.3103561d.webp','icon-192x192.cab29cd7.png','icon-384x384.2b65be8b.png','icon-384x384.a54ab4a2.webp','icon-512x512.5c88cabb.webp','icon-512x512.b24e0d51.png','icon-96x96.00714ae7.webp','icon-96x96.b73322f2.png','mstile-150x150.df894f37.png','mstile-310x150.23817a3d.png','mstile-310x310.5f619e76.png','mstile-70x70.3bcf1bff.png']
   }
 ];
 const bundler = new Bundler(join(__dirname, 'sample', 'index.html'), {
@@ -51,7 +51,7 @@ const testConfig = ({ config, result, msg, manifest, logOutput }) =>
         await manifestGen(bundle);
         const generatedFiles = readdirSync(outDir);
         if (logOutput) console.log(msg+': '+JSON.stringify(generatedFiles));
-        expect(generatedFiles).toEqual(expect.arrayContaining(result));
+        expect(generatedFiles).toEqual(expect.arrayContaining([...new Set(result.concat('browserconfig.xml', 'index.html', 'manifest.webmanifest'))]));
         if (manifest) {
           const newManifest = JSON.parse(readFileSync(join(outDir, 'manifest.webmanifest')).toString());
           expect(newManifest).toMatchObject(manifest);

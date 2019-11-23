@@ -1,5 +1,5 @@
 import { writeFileSync, existsSync, readFileSync } from 'fs';
-import { resolve, basename } from 'path';
+import { resolve, basename, sep } from 'path';
 import { createHash } from 'crypto';
 import Bundler, { ParcelAsset, ParcelOptions } from 'parcel-bundler';
 import logger from '@parcel/logger';
@@ -54,8 +54,8 @@ export = (bundler: FullBundler): void => {
       createHash('md5')
         .update(
           contentHash
-            ? resolve('_parcel-plugin-pwa-manifest', filename)
-            : ext + buf
+            ? ext + buf.toString()
+            : '_parcel-plugin-pwa-manifest' + sep + filename
         ) // Need unique filepath :/
         .digest('hex')
         .slice(-8) +
