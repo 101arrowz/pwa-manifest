@@ -91,8 +91,6 @@ The `name` and `description` will default to their counterparts in the outer lay
 The `theme_color` will default to white and will change the default behavior of some parts of the icon generation, such as the background color of the Microsoft Tile.
 
 Instead of manually setting an `icons` parameter containing a set of icons, you should use `genIconOpts`, which will contain the options for icon generation. The parameters for `genIconOpts` are as follows:
-#### `msTileColor`
-The background color for Microsoft Tiles. Defaults to the theme color.
 #### `baseIcon`
 The path to the icon to generate all other icons from. Path is relative to the placement of `package.json`.
 - For best results, use a high-resolution (at least 512x512) PNG or an SVG.
@@ -111,6 +109,8 @@ The number of pixels to pad the Apple Touch Icon with on all sides. Defaults to 
 - Used to account for Apple's courner-rounding.
 #### `genFavicons`
 Whether or not to generate 16x16 and 32x32 favicons and insert links in the HTML. Defaults to `false`.
+#### `msTileColor`
+The background color for Microsoft Tiles. Defaults to the theme color.
 #### `resizeMethod`
 The method to use for resizing non-square images. Can be one of `'cover'` (default), `'contain'`, or `'fill'`.
 

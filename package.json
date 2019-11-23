@@ -3,7 +3,7 @@
   "version": "2.5.4",
   "description": "A Parcel plugin that generates a Web App Manifest, creates all necessary icons, and more!",
   "main": "lib/index.js",
-  "author": "Arjun Barrett",
+  "author": "Arjun Barrett <arjunbarrett@gmail.com>",
   "license": "MIT",
   "keywords": [
     "pwa",
@@ -18,9 +18,14 @@
     "type": "git",
     "url": "https://github.com/101arrowz/parcel-plugin-pwa-manifest.git"
   },
+  "bugs": {
+    "email": "arjunbarrett@gmail.com",
+    "url": "https://github.com/101arrowz/parcel-plugin-pwa-manifest"
+  },
   "scripts": {
     "lint": "eslint --fix src/**/*.ts",
-    "test-built": "jest",
+    "test-built": "rm -rf test-build/ && cp -r lib/ test-build/ && jest",
+    "test": "parcel build src/index.ts -t node --out-dir test-build/ --no-source-maps --cache-dir .test-cache && jest",
     "build": "tsc && yarn lint && parcel build src/index.ts -t node --out-dir lib/ --detailed-report --no-source-maps --experimental-scope-hoisting && yarn test-built",
     "prepack": "yarn build",
     "preversion": "yarn build"
