@@ -31,7 +31,7 @@
     "test": "parcel build src/index.ts -t node --out-dir test-build/ --no-source-maps --cache-dir .test-cache && jest",
     "build": "tsc && yarn lint && parcel build src/index.ts -t node --out-dir lib/ --detailed-report --no-source-maps --experimental-scope-hoisting && yarn test-built",
     "prepack": "yarn build",
-    "preversion": "yarn build"
+    "preversion": "yarn lint && yarn test"
   },
   "dependencies": {
     "sharp": "^0.23.2"

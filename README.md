@@ -1,4 +1,4 @@
-# parcel-plugin-pwa-manifest
+# parcel-plugin-pwa-manifest [![Build Status](https://travis-ci.com/101arrowz/parcel-plugin-pwa-manifest.svg?branch=master)](https://travis-ci.com/101arrowz/parcel-plugin-pwa-manifest)
 A Parcel plugin that generates a Web App Manifest, creates all the icons you need, and more!
 
 ## Usage
