@@ -415,7 +415,8 @@ export = (bundler: FullBundler): void => {
           'bg-color',
           'bg'
         ],
-        'string'
+        'string',
+        theme
       ],
       [
         ['categories'],
