@@ -1,7 +1,7 @@
 import { tmpdir } from 'os';
 import attachManifestGenerator from '..';
 import { join } from 'path';
-import { readdirSync, readFileSync, writeFileSync, mkdirSync } from 'fs';
+import { readdirSync, readFileSync, writeFileSync, mkdirSync, existsSync } from 'fs';
 import { EventEmitter } from 'events';
 
 // Not quite a mock since it has completely different behavior to original, but should work for all purposes
@@ -27,18 +27,15 @@ class Bundler extends EventEmitter {
       }
     };
     const timeString = Date.now().toString(36);
-    let outDir = join(
-      tmpdir(),
-      '_parcel-plugin-pwa-manifest',
-      timeString
-    );
+    let outDir = join(tmpdir(), '_parcel-plugin-pwa-manifest', timeString);
     try {
       mkdirSync(outDir);
-    } catch(e) {
+    } catch (e) {
       // Travis CI
       const tmpDir = join(__dirname, 'tmp');
-      mkdirSync(tmpDir);
-      outDir = join(tmpDir, timeString)
+      if (!existsSync(tmpDir))
+        mkdirSync(tmpDir);
+      outDir = join(tmpDir, timeString);
       mkdirSync(outDir);
     }
     writeFileSync(join(outDir, 'index.html'), '<head></head>');
