@@ -1,7 +1,13 @@
 import { tmpdir } from 'os';
 import attachManifestGenerator from '..';
 import { join } from 'path';
-import { readdirSync, readFileSync, writeFileSync, mkdirSync, existsSync } from 'fs';
+import {
+  readdirSync,
+  readFileSync,
+  writeFileSync,
+  mkdirSync,
+  existsSync
+} from 'fs';
 import { EventEmitter } from 'events';
 
 // Not quite a mock since it has completely different behavior to original, but should work for all purposes
@@ -33,8 +39,7 @@ class Bundler extends EventEmitter {
     } catch (e) {
       // Travis CI
       const tmpDir = join(__dirname, 'tmp');
-      if (!existsSync(tmpDir))
-        mkdirSync(tmpDir);
+      if (!existsSync(tmpDir)) mkdirSync(tmpDir);
       outDir = join(tmpDir, timeString);
       mkdirSync(outDir);
     }
