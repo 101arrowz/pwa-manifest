@@ -26,12 +26,21 @@ class Bundler extends EventEmitter {
           })
       }
     };
-    const outDir = join(
+    const timeString = Date.now().toString(36);
+    let outDir = join(
       tmpdir(),
       '_parcel-plugin-pwa-manifest',
-      Date.now().toString(36)
+      timeString
     );
-    mkdirSync(outDir);
+    try {
+      mkdirSync(outDir);
+    } catch(e) {
+      // Travis CI
+      const tmpDir = join(__dirname, 'tmp');
+      mkdirSync(tmpDir);
+      outDir = join(tmpDir, timeString)
+      mkdirSync(outDir);
+    }
     writeFileSync(join(outDir, 'index.html'), '<head></head>');
     this.options = {
       outDir,

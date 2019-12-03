@@ -1,5 +1,4 @@
 node_modules/
 lib/
-test-build/
 .cache/
-.test-cache/
+tmp/
