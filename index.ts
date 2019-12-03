@@ -1,42 +1,10 @@
 import { writeFileSync, existsSync, readFileSync } from 'fs';
 import { resolve, basename, sep } from 'path';
 import { createHash } from 'crypto';
-import Bundler, { ParcelAsset, ParcelOptions } from 'parcel-bundler';
+import { ParcelAsset } from 'parcel-bundler';
 import logger from '@parcel/logger';
-import sharp, {
-  PngOptions,
-  WebpOptions,
-  JpegOptions,
-  TiffOptions,
-  ResizeOptions
-} from 'sharp';
+import sharp, { ResizeOptions } from 'sharp';
 
-type FullBundler = Bundler & {
-  options: ParcelOptions & {
-    publicURL: string;
-  };
-};
-type FormatOptions = {
-  png: PngOptions;
-  webp?: WebpOptions;
-  jpeg?: JpegOptions;
-  tiff?: TiffOptions;
-};
-type Verifier = (v: unknown) => boolean;
-type IconEntry = {
-  src: string;
-  sizes: string;
-  type: string;
-};
-// TODO: Improve
-type PWAManifestOptions = any; // eslint-disable-line @typescript-eslint/no-explicit-any
-type PackageJSON = {
-  name?: string;
-  description?: string;
-  pkgdir: string;
-  pwaManifest?: PWAManifestOptions;
-  'pwa-manifest'?: PWAManifestOptions;
-};
 // TODO: Add Safari Pinned Tab SVG - could prove to be challenging
 export = (bundler: FullBundler): void => {
   let { outDir, publicURL, contentHash, target } = bundler.options;

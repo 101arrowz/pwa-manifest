@@ -10,5 +10,5 @@
     "pretty": true,
     "noEmit": true
   },
-  "include": ["src/**/*.ts"]
+  "include": ["index.ts", "types/*.ts", "__tests__/*.ts"]
 }

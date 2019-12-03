@@ -1,0 +1,18 @@
+{
+  "name": "pwa-manifest-sample",
+  "version": "1.0.0",
+  "license": "MIT",
+  "pwaManifest": {
+    "name": "PWA Manifest Sample",
+    "shortName": "PMS",
+    "genIconOpts": {
+      "baseIcon": "./icon.svg",
+      "sizes": [
+        152
+      ],
+      "formats": {
+        "png": {}
+      }
+    }
+  }
+}
