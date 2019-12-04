@@ -32,6 +32,7 @@ export = (bundler: FullBundler): void => {
       ext
     ); // Similar to (but not the same as) Parcel itself
   };
+  // istanbul ignore next
   if (!publicURL) publicURL = '/';
   else if (!publicURL.endsWith('/')) publicURL += '/';
   const getPkg = (entryAsset: ParcelAsset): Promise<PackageJSON> =>
@@ -47,6 +48,7 @@ export = (bundler: FullBundler): void => {
     const pkg = await getPkg(
       bundle.entryAsset || bundle.childBundles.values().next().value.entryAsset
     );
+    // istanbul ignore next
     if (!outDir) outDir = resolve(pkg.pkgdir, 'dist');
 
     const opts = pkg.pwaManifest || pkg['pwa-manifest'];
