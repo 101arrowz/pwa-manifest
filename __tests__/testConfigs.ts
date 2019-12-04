@@ -181,6 +181,12 @@ const testConfigs: Config[] = [
       categories: ['a', 'test'],
       iarc: 'someString',
       screenOrientation: 'natural',
+      displayMode: 'standalone',
+      relatedApplications: [
+        {
+          url: '/aRelatedApp'
+        }
+      ],
       screenShots: [
         {
           src: './sc1.png'

@@ -8,6 +8,7 @@ import sharp, { ResizeOptions } from 'sharp';
 // TODO: Add Safari Pinned Tab SVG - could prove to be challenging
 export = (bundler: FullBundler): void => {
   let { outDir, publicURL, contentHash, target } = bundler.options;
+  // istanbul ignore next
   if (target !== 'browser' || process.env.DISABLE_PWA_MANIFEST) {
     bundler.on('buildEnd', () => logger.warn('Manifest creation disabled'));
     return;
@@ -37,6 +38,7 @@ export = (bundler: FullBundler): void => {
     typeof entryAsset.getPackage === 'function'
       ? entryAsset.getPackage()
       : Promise.resolve(entryAsset.package);
+  // istanbul ignore next
   const err = (msg: string): void => {
     logger.clear();
     logger.error('Manifest creation failed! ' + msg);
@@ -78,6 +80,7 @@ export = (bundler: FullBundler): void => {
       return err('The short name provided in the options must be a string.');
 
     const desc = opts.desc || opts.description || pkg.description || '';
+    // istanbul ignore next
     if (typeof desc !== 'string')
       return err('The description provided in the options must be a string.');
 
@@ -240,6 +243,7 @@ export = (bundler: FullBundler): void => {
             [format](formats[format])
             .toBuffer();
         } catch (e) {
+          // istanbul ignore next
           return err(
             'An unknown error ocurred during the icon creation process: ' + e
           );
@@ -333,6 +337,7 @@ export = (bundler: FullBundler): void => {
             .png(formats.png || {})
             .toBuffer();
         } catch (e) {
+          // istanbul ignore next
           return err(
             'An unknown error ocurred during the favicon creation process: ' + e
           );
@@ -354,6 +359,7 @@ export = (bundler: FullBundler): void => {
           .png(formats.png || {})
           .toBuffer();
       } catch (e) {
+        // istanbul ignore next
         return err(
           'An unknown error ocurred during the Microsoft Tile Icon creation process: ' +
             e
@@ -496,6 +502,7 @@ export = (bundler: FullBundler): void => {
       let checker: Verifier;
       if (typeof type[1] === 'string') checker = v => typeof v === type[1];
       else checker = type[1];
+      // istanbul ignore next
       if (!checker(val))
         return err(
           'Parameter "' +
@@ -540,6 +547,7 @@ export = (bundler: FullBundler): void => {
         ''
       );
     const insertBefore = html.search(/(?<=<head>)|<\/head>/); // Prefer at the start, but end is acceptable too.
+    // istanbul ignore next
     if (insertBefore === -1)
       return err(
         'Could not find head tag in HTML file and therefore cannot insert necessary HTML.'
