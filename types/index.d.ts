@@ -1,7 +1,7 @@
 import Bundler, { ParcelOptions } from 'parcel-bundler';
 import { PngOptions, WebpOptions, JpegOptions, TiffOptions } from 'sharp';
 declare global {
-  type CorrectedParcelOptions = ParcelOptions & {
+  type CorrectedParcelOptions = Omit<ParcelOptions, 'publicUrl'> & {
     publicURL: string;
   };
   type FullBundler = Bundler & {

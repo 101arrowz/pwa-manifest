@@ -1,4 +1,6 @@
-# parcel-plugin-pwa-manifest [![Build Status](https://travis-ci.com/101arrowz/parcel-plugin-pwa-manifest.svg?branch=master)](https://travis-ci.com/101arrowz/parcel-plugin-pwa-manifest) [![Coverage Status](https://coveralls.io/repos/github/101arrowz/parcel-plugin-pwa-manifest/badge.svg?branch=master)](https://coveralls.io/github/101arrowz/parcel-plugin-pwa-manifest?branch=master)
+# parcel-plugin-pwa-manifest
+[![Build Status](https://travis-ci.com/101arrowz/parcel-plugin-pwa-manifest.svg?branch=master)](https://travis-ci.com/101arrowz/parcel-plugin-pwa-manifest) [![Coverage Status](https://coveralls.io/repos/github/101arrowz/parcel-plugin-pwa-manifest/badge.svg?branch=master)](https://coveralls.io/github/101arrowz/parcel-plugin-pwa-manifest?branch=master) [![tested with jest](https://img.shields.io/badge/tested_with-jest-99424f.svg)](https://github.com/facebook/jest)
+
 A Parcel plugin that generates a Web App Manifest, creates all the icons you need, and more!
 
 ## Usage
