@@ -120,5 +120,9 @@ All parameters that exist in the [MDN documentation for the Web App Manifest](ht
 
 If you need to have a parameter not included in that list, put an array of parameter names to keep in the final manifest under the `include` key.
 
+## Known Issues
+- JPEG output has a black background by default. There's nothing I can do about this other than add a new option for background color because JPEG does not support transparency.
+  - I suggest that you don't output JPEG at all, I only offer it for those who may need it. 
+
 ## License
 MIT

@@ -9,7 +9,10 @@ import {
   existsSync
 } from 'fs';
 import { EventEmitter } from 'events';
-
+import logger from '@parcel/logger';
+import testConfigs, { Config } from './testConfigs';
+jest.mock('@parcel/logger');
+const mockedLogger = logger as jest.Mocked<typeof logger>;
 // Not quite a mock since it has completely different behavior to original, but should work for all purposes
 class Bundler extends EventEmitter {
   private fakeBundle: unknown;
@@ -61,93 +64,71 @@ class Bundler extends EventEmitter {
     return readdirSync(this.options.outDir);
   }
   getManifest(): unknown {
-    return readFileSync(join(this.options.outDir, 'manifest.webmanifest'));
+    return JSON.parse(
+      readFileSync(join(this.options.outDir, 'manifest.webmanifest')).toString()
+    );
+  }
+  getBrowserConfig(): string {
+    return readFileSync(join(this.options.outDir, 'browserconfig.xml'))
+      .toString()
+      .slice(74, -39);
+  }
+  getHTML(): string {
+    return readFileSync(join(this.options.outDir, 'index.html'))
+      .toString()
+      .slice(6, -7);
   }
 }
-const defaultResult = [
-  'apple-touch-icon.105de2c5.png',
-  'icon-152x152.c0cccc53.webp',
-  'icon-152x152.c5e4d8cb.png',
-  'icon-192x192.3103561d.webp',
-  'icon-192x192.cab29cd7.png',
-  'icon-384x384.2b65be8b.png',
-  'icon-384x384.a54ab4a2.webp',
-  'icon-512x512.5c88cabb.webp',
-  'icon-512x512.b24e0d51.png',
-  'icon-96x96.00714ae7.webp',
-  'icon-96x96.b73322f2.png',
-  'mstile-150x150.df894f37.png',
-  'mstile-310x150.23817a3d.png',
-  'mstile-310x310.5f619e76.png',
-  'mstile-70x70.3bcf1bff.png'
-];
-type Config = {
-  msg: string;
-  config: PWAManifestOptions;
-  result: string[];
-  manifest?: unknown;
-  logOutput?: boolean;
-};
-const testConfigs: Config[] = [
-  {
-    msg: 'Default generation works correctly',
-    config: {
-      generateIconOptions: {
-        baseIcon: './icon.svg'
-      }
-    },
-    result: defaultResult
-  },
-  {
-    msg: 'Favicon generation works correctly',
-    config: {
-      generateIconOptions: {
-        baseIcon: './icon.svg',
-        genFavicons: true
-      }
-    },
-    result: [
-      ...defaultResult,
-      'favicon-16x16.726e3e17.png',
-      'favicon-32x32.6326f01e.png'
-    ]
-  }
-];
 jest.setTimeout(30000);
+const DEFAULT_REQUIRED_FILES = [
+  'index.html',
+  'manifest.webmanifest',
+  'browserconfig.xml'
+];
 const testConfig = ({
   config,
   result,
   msg,
   manifest,
+  browserconfig,
+  html,
   logOutput
 }: Config): void =>
-  test.concurrent(msg || 'icons are correctly generated', () => {
+  test.concurrent(msg || 'icons are correctly generated', async () => {
     const bundler = new Bundler({
       name: 'tester',
       description: 'test',
       pwaManifest: config
     });
-    return bundler.genIcons().then(async () => {
-      const generatedFiles = bundler.getFileList();
-      if (logOutput)
-        console.log(
-          msg + ': ' + JSON.stringify(generatedFiles).replace(`"`, `'`)
-        );
-      expect(generatedFiles).toEqual(
-        expect.arrayContaining([
-          ...new Set(
-            result.concat(
-              'browserconfig.xml',
-              'index.html',
-              'manifest.webmanifest'
-            )
-          )
-        ])
+    await bundler.genIcons();
+    const generatedFiles = bundler.getFileList();
+    if (logOutput)
+      console.log(
+        msg +
+          '\nFiles: [' +
+          generatedFiles
+            .filter(str => !DEFAULT_REQUIRED_FILES.includes(str))
+            .map(str => "'" + str.replace(/'/, "\\'") + "'")
+            .join(', ') +
+          ']\nOutput at: ' +
+          bundler.options.outDir
       );
-      if (manifest) {
-        expect(bundler.getManifest()).toMatchObject(manifest as object);
-      }
-    });
+    if (mockedLogger.success.mock.calls.length === 0)
+      throw new Error(mockedLogger.error.mock.calls[0][0]);
+    expect(generatedFiles).toEqual(
+      expect.arrayContaining([
+        ...new Set(result.concat(...DEFAULT_REQUIRED_FILES))
+      ])
+    );
+    if (manifest) {
+      expect(bundler.getManifest()).toMatchObject(manifest as object);
+    }
+    if (browserconfig) {
+      expect(bundler.getBrowserConfig()).toMatch(new RegExp(browserconfig));
+    }
+    if (html) {
+      expect(bundler.getHTML()).toMatch(new RegExp(html));
+    }
   });
 for (const conf of testConfigs) {
   testConfig(conf);
