@@ -2,3 +2,4 @@ node_modules/
 lib/
 .cache/
 tmp/
+__tests__/coverageReport

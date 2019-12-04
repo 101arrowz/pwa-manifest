@@ -1,5 +1,5 @@
 import { tmpdir } from 'os';
-import attachManifestGenerator from '..';
+import attachManifestGenerator from '../index';
 import { join } from 'path';
 import {
   readdirSync,
