@@ -1,3 +1,5 @@
+## 2.5.11-2.5.12
+- Boosted rank
 ## 2.5.9-2.5.10
 - Improved README
 ## 2.5.8
