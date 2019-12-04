@@ -1,6 +1,6 @@
 import { tmpdir } from 'os';
-import attachManifestGenerator from '../index';
 import { join } from 'path';
+import attachManifestGenerator from '../index';
 import {
   readdirSync,
   readFileSync,
@@ -10,7 +10,7 @@ import {
 } from 'fs';
 import { EventEmitter } from 'events';
 import logger from '@parcel/logger';
-import testConfigs, { Config } from './testConfigs';
+import testConfigs, { Config, ResultConfig, BaseConfig, ErrorConfig } from './testConfigs';
 jest.mock('@parcel/logger');
 const mockedLogger = logger as jest.Mocked<typeof logger>;
 // Not quite a mock since it has completely different behavior to original, but should work for all purposes
@@ -87,20 +87,26 @@ const DEFAULT_REQUIRED_FILES = [
 ];
 const testConfig = ({
   config,
-  result,
   msg,
-  manifest,
-  browserconfig,
-  html,
-  logOutput
+  pkg,
+  ...props
 }: Config): void =>
-  test.concurrent(msg || 'icons are correctly generated', async () => {
+  test(msg || 'icons are correctly generated', async done => {
     const bundler = new Bundler({
       name: 'tester',
       description: 'test',
-      pwaManifest: config
+      pwaManifest: config,
+      ...pkg
     });
     await bundler.genIcons();
+    const errorCall = mockedLogger.error.mock.calls[0];
+    if (errorCall && errorCall.length) {
+      const error = errorCall[0].slice(26);
+      const throws = (props as Omit<ErrorConfig, keyof BaseConfig>).throws;
+      if (throws && new RegExp(throws).test(error)) return done();
+      throw new Error(error);
+    }
+    const { result, manifest, browserconfig, html, logOutput } = props as Omit<ResultConfig, keyof BaseConfig>
     const generatedFiles = bundler.getFileList();
     if (logOutput)
       console.log(
@@ -113,8 +119,6 @@ const testConfig = ({
           ']\nOutput at: ' +
           bundler.options.outDir
       );
-    if (mockedLogger.success.mock.calls.length === 0)
-      throw new Error(mockedLogger.error.mock.calls[0][0]);
     expect(generatedFiles).toEqual(
       expect.arrayContaining([
         ...new Set(result.concat(...DEFAULT_REQUIRED_FILES))
@@ -129,6 +133,7 @@ const testConfig = ({
     if (html) {
       expect(bundler.getHTML()).toMatch(new RegExp(html));
     }
+    done();
   });
 for (const conf of testConfigs) {
   testConfig(conf);

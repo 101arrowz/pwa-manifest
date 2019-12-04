@@ -1,12 +1,19 @@
-export type Config = {
+export type BaseConfig = {
   msg: string;
   config: PWAManifestOptions;
+  pkg?: object;
+}
+export type ResultConfig = BaseConfig & {
   result: string[];
   manifest?: unknown;
   browserconfig?: string;
   html?: string;
   logOutput?: boolean;
-};
+}
+export type ErrorConfig = BaseConfig & {
+  throws: string;
+}
+export type Config = ResultConfig | ErrorConfig;
 // All these do is check filenames. This works because we use content hashing,
 // so we can verify the contents with just the filename. Smart, right?
 const testConfigs: Config[] = [
@@ -225,6 +232,14 @@ const testConfigs: Config[] = [
       short_name: 'Test',
       description: 'Better test!'
     }
+  },
+  {
+    msg: 'Validated manifest',
+    config: {},
+    pkg: {
+      pwaManifest: undefined
+    },
+    throws: 'No PWA Manifest options'
   }
 ];
 export default testConfigs;
