@@ -10,7 +10,12 @@ import {
 } from 'fs';
 import { EventEmitter } from 'events';
 import logger from '@parcel/logger';
-import testConfigs, { Config, ResultConfig, BaseConfig, ErrorConfig } from './testConfigs';
+import testConfigs, {
+  Config,
+  ResultConfig,
+  BaseConfig,
+  ErrorConfig
+} from './testConfigs';
 jest.mock('@parcel/logger');
 const mockedLogger = logger as jest.Mocked<typeof logger>;
 // Not quite a mock since it has completely different behavior to original, but should work for all purposes
@@ -85,18 +90,12 @@ const DEFAULT_REQUIRED_FILES = [
   'manifest.webmanifest',
   'browserconfig.xml'
 ];
-const testConfig = ({
-  config,
-  msg,
-  pkg,
-  ...props
-}: Config): void =>
+const testConfig = ({ config, msg, ...props }: Config): void =>
   test(msg || 'icons are correctly generated', async done => {
     const bundler = new Bundler({
       name: 'tester',
       description: 'test',
-      pwaManifest: config,
-      ...pkg
+      pwaManifest: config
     });
     await bundler.genIcons();
     const errorCall = mockedLogger.error.mock.calls[0];
@@ -106,7 +105,10 @@ const testConfig = ({
       if (throws && new RegExp(throws).test(error)) return done();
       throw new Error(error);
     }
-    const { result, manifest, browserconfig, html, logOutput } = props as Omit<ResultConfig, keyof BaseConfig>
+    const { result, manifest, browserconfig, html, logOutput } = props as Omit<
+      ResultConfig,
+      keyof BaseConfig
+    >;
     const generatedFiles = bundler.getFileList();
     if (logOutput)
       console.log(

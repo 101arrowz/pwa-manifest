@@ -48,6 +48,7 @@ export = (bundler: FullBundler): void => {
     if (!outDir) outDir = resolve(pkg.pkgdir, 'dist');
 
     const opts = pkg.pwaManifest || pkg['pwa-manifest'];
+    // istanbul ignore next
     if (typeof opts !== 'object') {
       if (typeof opts === 'undefined')
         return err('No PWA Manifest options found in package.json.');
@@ -57,12 +58,14 @@ export = (bundler: FullBundler): void => {
     }
 
     const insertInto = resolve(outDir, 'index.html'); // TODO: support insertion into multiple HTML files
+    // istanbul ignore next
     if (!existsSync(insertInto))
       return err(
         'No index.html found at the root of the build. This package does not yet support this scenario.'
       );
 
     const name = opts.name || pkg.name;
+    // istanbul ignore next
     if (typeof name !== 'string') {
       if (typeof name === 'undefined')
         return err('No name was found in the options.');
@@ -70,6 +73,7 @@ export = (bundler: FullBundler): void => {
     }
     const shortName =
       opts.shortName || opts['short-name'] || opts['short_name'] || name;
+    // istanbul ignore next
     if (typeof shortName !== 'string')
       return err('The short name provided in the options must be a string.');
 
@@ -83,10 +87,12 @@ export = (bundler: FullBundler): void => {
       opts['start-url'] ||
       opts['start_url'] ||
       publicURL;
+    // istanbul ignore next
     if (typeof startURL !== 'string')
       return err('The start URL provided in the options must be a string.');
 
     const scope = opts.scope || publicURL;
+    // istanbul ignore next
     if (typeof scope !== 'string')
       return err('The scope provided in the options must be a string.');
 
@@ -96,6 +102,7 @@ export = (bundler: FullBundler): void => {
       opts.themeColor ||
       opts['theme-color'] ||
       'white';
+    // istanbul ignore next
     if (typeof theme !== 'string')
       return err(
         'The theme color provided in the options must be a string representing a valid CSS color.'
@@ -116,6 +123,7 @@ export = (bundler: FullBundler): void => {
       opts.generateIconOptions ||
       opts['generate-icon-options'] ||
       opts.icons;
+    // istanbul ignore next
     if (typeof genIconOpts !== 'object') {
       if (typeof genIconOpts === 'undefined')
         return err(
@@ -132,6 +140,7 @@ export = (bundler: FullBundler): void => {
       genIconOpts.microsoftTileColor ||
       genIconOpts['microsoft-tile-color'] ||
       theme;
+    // istanbul ignore next
     if (typeof msTileColor !== 'string')
       return err(
         'The Microsoft tile color provided in the options must be a string representing the theme color for the application.'
@@ -144,6 +153,7 @@ export = (bundler: FullBundler): void => {
       genIconOpts['base-icon'] ||
       genIconOpts.fromIcon ||
       genIconOpts['from-icon'];
+    // istanbul ignore next
     if (typeof baseIconPath !== 'string') {
       if (typeof baseIconPath === 'undefined')
         return err('No base icon was found in the icon generation options.');
@@ -157,12 +167,14 @@ export = (bundler: FullBundler): void => {
       baseIconPath.slice(baseIconPath.lastIndexOf('.'))
     );
     const baseIconFullPath = resolve(pkg.pkgdir, baseIconPath);
+    // istanbul ignore next
     if (!existsSync(baseIconFullPath))
       return err(
         'No icon was found at the base icon path ' + baseIconPath + '.'
       );
 
     let sizes = [96, 152, 192, 384, 512]; // Common sizes
+    // istanbul ignore next
     if (
       genIconOpts.sizes instanceof Array &&
       genIconOpts.sizes.every((v: unknown) => typeof v === 'number')
@@ -183,6 +195,7 @@ export = (bundler: FullBundler): void => {
         compressionLevel: 9
       }
     };
+    // istanbul ignore next
     if (
       genIconOpts.formats instanceof Object &&
       Object.keys(genIconOpts.formats).every(v =>
@@ -204,6 +217,7 @@ export = (bundler: FullBundler): void => {
       genIconOpts['resize-method'] ||
       genIconOpts.resize ||
       'cover';
+    // istanbul ignore next
     if (!['cover', 'contain', 'fill'].includes(resizeMethod as string))
       return err(
         "The resize method parameter in the icon generation options must be one of 'cover', 'contain', or 'fill'."
@@ -252,6 +266,7 @@ export = (bundler: FullBundler): void => {
       genIconOpts['apple-touch-icon-background'] ||
       genIconOpts.atib ||
       theme;
+    // istanbul ignore next
     if (typeof appleTouchIconBG !== 'string')
       return err(
         'The Apple Touch Icon background color parameter must be a string representing a valid CSS color.'
@@ -262,6 +277,7 @@ export = (bundler: FullBundler): void => {
       genIconOpts['apple-touch-icon-padding'] ||
       genIconOpts.atip ||
       12;
+    // istanbul ignore next
     if (typeof appleTouchIconPadding !== 'number')
       return err(
         'The Apple Touch Icon padding parameter must be a number of pixels to pad the image with on each side.'
@@ -286,6 +302,7 @@ export = (bundler: FullBundler): void => {
         .png(formats.png || {})
         .toBuffer();
     } catch (e) {
+      // istanbul ignore next
       return err(
         'An unknown error ocurred during the Apple Touch Icon creation process: ' +
           e
@@ -300,6 +317,7 @@ export = (bundler: FullBundler): void => {
       genIconOpts['gen-favicons'] ||
       genIconOpts.generateFavicons ||
       genIconOpts['generate-favicons'];
+    // istanbul ignore next
     if (!['boolean', 'undefined'].includes(typeof genFavicons))
       return err(
         'The favicon generation option in the icon generation options must be a boolean.'
@@ -354,6 +372,7 @@ export = (bundler: FullBundler): void => {
         .png(formats.png || {})
         .toBuffer();
     } catch (e) {
+      // istanbul ignore next
       return err(
         'An unknown error ocurred during the Microsoft Tile Icon creation process: ' +
           e
@@ -489,6 +508,7 @@ export = (bundler: FullBundler): void => {
     // When this config inevitably becomes outdated, use the include parameter to include any new parameters relevant to the Web App Manifest.
     const include: unknown =
       opts.include || opts.includeParams || opts['include-params'];
+    // istanbul ignore next
     if (include instanceof Array && include.every(v => typeof v === 'string')) {
       for (const param of include) {
         extraParams[param] = opts[param];
