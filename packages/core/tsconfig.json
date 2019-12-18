@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "alwaysStrict": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noImplicitAny": true,
+    "target": "es6",
+    "strict": true,
+    "esModuleInterop": true,
+    "pretty": true,
+    "noEmit": true,
+    "declaration": true,
+    "declarationDir": "lib/"
+  },
+  "include": ["index.ts", "__tests__/*.ts"]
+}

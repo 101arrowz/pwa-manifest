@@ -1,0 +1,54 @@
+{
+  "name": "@pwa-manifest/core",
+  "version": "2.6.0",
+  "description": "Core generation for a Web App Manifest, all necessary icons, and more!",
+  "main": "lib/index.js",
+  "author": "Arjun Barrett <arjunbarrett@gmail.com>",
+  "license": "MIT",
+  "keywords": [
+    "pwa",
+    "manifest",
+    "webmanifest",
+    "favicon",
+    "icon"
+  ],
+  "engines": {
+    "node": ">=10"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/101arrowz/pwa-manifest"
+  },
+  "bugs": {
+    "email": "arjunbarrett@gmail.com",
+    "url": "https://github.com/101arrowz/pwa-manifest"
+  },
+  "scripts": {
+    "lint": "eslint --fix index.ts types/*.ts __tests__/*.ts",
+    "test": "jest",
+    "test-cov": "yarn test && cat __tests__/coverageReport/lcov.info | coveralls",
+    "build": "tsc && yarn lint && yarn test && parcel build index.ts -t node --out-dir lib/ --detailed-report --no-source-maps --experimental-scope-hoisting",
+    "prepack": "yarn build",
+    "preversion": "yarn lint && yarn test"
+  },
+  "dependencies": {
+    "sharp": "^0.23.2"
+  },
+  "devDependencies": {
+    "@types/jest": "^24.0.23",
+    "@types/node": "^12.12.6",
+    "@types/parcel-bundler": "^1.12.1",
+    "@types/sharp": "^0.23.0",
+    "@typescript-eslint/eslint-plugin": "^2.8.0",
+    "@typescript-eslint/parser": "^2.8.0",
+    "coveralls": "^3.0.9",
+    "eslint": "^6.6.0",
+    "eslint-config-prettier": "^6.7.0",
+    "eslint-plugin-prettier": "^3.1.1",
+    "jest": "^24.9.0",
+    "parcel-bundler": "^1.12.4",
+    "prettier": "^1.18.2",
+    "ts-jest": "^24.2.0",
+    "typescript": "^3.7.2"
+  }
+}
