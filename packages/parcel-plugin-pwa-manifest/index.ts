@@ -48,7 +48,7 @@ export = (bundler: FullBundler): void => {
     );
     generator.on('*', (ev: string, ...args) => {
       bundler.emit(`pwa${ev.slice(0, 1).toUpperCase() + ev.slice(1)}`, ...args);
-      if (ev.slice(0, 5) === 'start') {
+      if (ev.endsWith('Start')) {
         logger.progress(args[0]);
       }
     });
