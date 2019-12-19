@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Report an issue to help us improve the plugin
+about: Report an issue to help us improve
 title: "[BUG]"
 labels: ''
 assignees: ''
@@ -14,7 +14,7 @@ Insert a precise description of what the issue is here
 Insert a clear and concise description of what you expected to happen here.
 
 ## Actual behavior
-Insert the actual behavior of the plugin here.
+Insert the actual behavior of the manifest generator here.
 
 
 ## To reproduce

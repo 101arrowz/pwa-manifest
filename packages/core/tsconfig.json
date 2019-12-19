@@ -1,16 +1,10 @@
 {
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "alwaysStrict": true,
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "noImplicitAny": true,
-    "target": "es6",
-    "strict": true,
-    "esModuleInterop": true,
-    "pretty": true,
-    "noEmit": true,
+    "emitDeclarationOnly": true,
     "declaration": true,
-    "declarationDir": "lib/"
+    "declarationDir": "lib/",
+    "target": "ES2016"
   },
-  "include": ["index.ts", "__tests__/*.ts"]
+  "include": ["index.ts"]
 }

@@ -1,5 +1,5 @@
-**/node_modules/
-**/lib/
-**/.cache/
+packages/*/lib/
+packages/*/.cache/
+packages/*/__tests__/coverageReport
 **/tmp/
-**/__tests__/coverageReport
+**/node_modules/

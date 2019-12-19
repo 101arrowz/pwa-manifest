@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "alwaysStrict": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noImplicitAny": true,
+    "target": "ES6",
+    "strict": true,
+    "esModuleInterop": true,
+    "pretty": true
+  }
+}

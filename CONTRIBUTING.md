@@ -13,4 +13,4 @@ Steps for creating a PR:
 3. Push your changes to a fork of this repo.
 4. Go to the "Pull requests" tab in GitHub and click on "New pull request".
 5. Click "compare across forks" and select your fork.
-6. Tell us what you changed. If you'd like your PR merged quickly, consider writing tests in `__tests__/iconGeneration.test.ts`.
+6. Tell us what you changed. If you'd like your PR merged quickly, consider writing tests before submitting changes.

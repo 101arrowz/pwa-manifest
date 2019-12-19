@@ -1,0 +1,10 @@
+{
+  "name": "my-pwa",
+  "description": "A PWA",
+  "pwaManifest": {
+    "genIconOpts": {
+      "baseIcon": "icon.svg",
+      "sizes": []
+    }
+  }
+}
