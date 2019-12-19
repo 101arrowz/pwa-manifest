@@ -34,8 +34,5 @@
   },
   "dependencies": {
     "sharp": "^0.23.2"
-  },
-  "browserslist": [
-    "node 13"
-  ]
+  }
 }
