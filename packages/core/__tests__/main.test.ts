@@ -2,7 +2,7 @@ import PWAManifestGenerator, { Manifest } from '../index';
 import testConfigs, { Config, ResultConfig, ErrorConfig } from './testConfigs';
 jest.setTimeout(30000);
 const testConfig = ({ config, msg, ...props }: Config): void =>
-  test.concurrent(msg || 'icons are correctly generated', async () => {
+  test(msg || 'icons are correctly generated', async () => {
     let generator: PWAManifestGenerator;
     let generatedHTML: string;
     let generatedIcons: string[];

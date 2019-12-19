@@ -29,7 +29,7 @@
     "lint": "eslint --fix index.ts types/*.ts __tests__/*.ts",
     "test": "jest",
     "test-cov": "yarn test && cat __tests__/coverageReport/lcov.info | coveralls",
-    "build": "tsc && yarn lint && yarn test &&",
+    "build": "tsc && yarn lint && yarn test && yarn build-unchecked",
     "build-unchecked": "parcel build index.ts -t node --out-dir lib/ --detailed-report --no-source-maps",
     "prepack": "yarn build",
     "preversion": "yarn lint && yarn test"

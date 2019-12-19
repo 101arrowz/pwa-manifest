@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Correct file list 1`] = `
+exports[`Properly generated for real-world case 1`] = `
 Array [
   "apple-touch-icon.67e6641c.png",
   "browserconfig.xml",
@@ -17,7 +17,7 @@ Array [
 ]
 `;
 
-exports[`Correct file list 2`] = `
+exports[`Properly generated for real-world case 2`] = `
 "<!DOCTYPE html>
 <html lang=\\"en\\">
 <head><meta name=\\"msapplication-config\\" content=\\"/browserconfig.xml\\"><meta name=\\"theme-color\\" content=\\"white\\"><link rel=\\"apple-touch-icon\\" sizes=\\"180x180\\" href=\\"/apple-touch-icon.67e6641c.png\\"><link rel=\\"manifest\\" href=\\"/manifest.webmanifest\\">
@@ -31,9 +31,9 @@ exports[`Correct file list 2`] = `
 </html>"
 `;
 
-exports[`Correct file list 3`] = `"<?xml version=\\"1.0\\" encoding=\\"utf-8\\"?><browserconfig><msapplication><tile><TileColor>white</TileColor><square70x70logo src=\\"/mstile-70x70.d4870be2.png\\"/><square150x150logo src=\\"/mstile-150x150.db75c4ea.png\\"/><square310x310logo src=\\"/mstile-310x310.7d35cb45.png\\"/><wide310x150logo src=\\"/mstile-310x150.5f1296f5.png\\"/></tile></msapplication></browserconfig>"`;
+exports[`Properly generated for real-world case 3`] = `"<?xml version=\\"1.0\\" encoding=\\"utf-8\\"?><browserconfig><msapplication><tile><TileColor>white</TileColor><square70x70logo src=\\"/mstile-70x70.d4870be2.png\\"/><square150x150logo src=\\"/mstile-150x150.db75c4ea.png\\"/><square310x310logo src=\\"/mstile-310x310.7d35cb45.png\\"/><wide310x150logo src=\\"/mstile-310x150.5f1296f5.png\\"/></tile></msapplication></browserconfig>"`;
 
-exports[`Correct file list 4`] = `
+exports[`Properly generated for real-world case 4`] = `
 Object {
   "background_color": "white",
   "description": "A PWA",
