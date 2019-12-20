@@ -49,7 +49,7 @@ export = (bundler: FullBundler): void => {
     generator.on('*', (ev: string, ...args) => {
       bundler.emit(`pwa${ev.slice(0, 1).toUpperCase() + ev.slice(1)}`, ...args);
       if (ev.endsWith('Start')) {
-        logger.progress(args[0]);
+        console.log(args[0]);
       }
     });
     if (contentHash) generator.hashMethod = 'content';
