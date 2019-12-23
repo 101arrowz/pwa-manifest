@@ -5,6 +5,7 @@ import { resolve } from 'path';
 import { writeFileSync, readFileSync } from 'fs';
 const headSearch = /(?<=<head(.*?)>)|<\/head>/;
 const htmlSearch = /(?<=<html(.*?)>)/;
+const oldInjectionSearch = /<link rel="(manifest|icon|apple-touch-icon)"(.*?)>|<meta name="(msapplication(.*?)|theme-color)"(.*?)>/g;
 
 export = (bundler: FullBundler): void => {
   let { outDir, publicURL, contentHash, target } = bundler.options;
@@ -89,7 +90,7 @@ export = (bundler: FullBundler): void => {
           generator.manifest.name
         }</title>${html}</head>${origHTML.slice(htmlInd)}`;
       } else {
-        origHTML = `${origHTML.slice(0, ind)}${html}${origHTML.slice(ind)}`;
+        origHTML = `${origHTML.slice(0, ind)}${html}${origHTML.slice(ind).replace(oldInjectionSearch, '')}`;
       }
       writeFileSync(filename, origHTML);
     }
