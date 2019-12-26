@@ -41,6 +41,32 @@ export type Generation = {
   html: string;
   manifest: Manifest;
 };
+export type EmittedGenEvent = {
+  content: Promise<Buffer>;
+  filename: Promise<string | undefined>;
+};
+export type StartEvent =
+  | 'defaultIconsStart'
+  | 'appleTouchIconStart'
+  | 'faviconStart'
+  | 'msTileStart';
+export type GenerationEvent =
+  | 'defaultIconsGen'
+  | 'appleTouchIconGen'
+  | 'faviconGen'
+  | 'msTileGen';
+export type EndEvent =
+  | 'defaultIconsEnd'
+  | 'appleTouchIconEnd'
+  | 'faviconEnd'
+  | 'msTileEnd';
+export type BaseEvent = 'start' | 'end';
+export type Event = StartEvent | GenerationEvent | EndEvent | BaseEvent;
+type AwaitableBuffer = Buffer | Promise<Buffer>;
+const createEvent = (img: AwaitableBuffer): EmittedGenEvent => ({
+  filename: Promise.resolve(undefined),
+  content: Promise.resolve(img)
+});
 export default class PWAManifestGenerator extends EventEmitter {
   private disabled: boolean;
   private name: string;
@@ -443,10 +469,24 @@ export default class PWAManifestGenerator extends EventEmitter {
     this.extraParams = extraParams;
   }
 
+  emit(ev: StartEvent, msg: string): boolean;
+  emit(ev: GenerationEvent, data: EmittedGenEvent): boolean;
+  emit(ev: EndEvent): boolean;
+  emit(ev: BaseEvent): boolean;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  emit(ev: string, ...args: any[]): boolean {
+  emit(ev: Event | '*', ...args: any[]): boolean {
     if (ev !== '*') super.emit('*', ev, ...args); // Allows attaching a listener to all events
     return super.emit(ev, ...args);
+  }
+  on(ev: StartEvent, listener: (msg: string) => void): this;
+  on(ev: GenerationEvent, listener: (data: EmittedGenEvent) => void): this;
+  on(ev: EndEvent, listener: () => void): this;
+  on(ev: BaseEvent, listener: () => void): this;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  on(ev: '*', listener: (ev: Event, ...args: any[]) => void): this;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  on(ev: Event | '*', listener: (...args: any[]) => void): this {
+    return super.on(ev, listener);
   }
 
   private fingerprint(
@@ -501,10 +541,9 @@ export default class PWAManifestGenerator extends EventEmitter {
       for (const format of Object.keys(this.formats) as Array<
         keyof FormatOptions
       >) {
-        // Ugly but TS is not very smart
-        let buf;
+        let buf: AwaitableBuffer;
         try {
-          buf = await icon
+          buf = icon
             .clone()
             [format](this.formats[format])
             .toBuffer();
@@ -513,10 +552,15 @@ export default class PWAManifestGenerator extends EventEmitter {
           throw 'An unknown error ocurred during the icon creation process: ' +
             e;
         }
-        const filename = this.fingerprint(
-          this.baseIconName + '-' + saveSize + '.' + format,
-          buf
-        );
+        const ev = createEvent(buf);
+        this.emit('defaultIconsGen', ev);
+        buf = await ev.content;
+        const filename =
+          (await ev.filename) ||
+          this.fingerprint(
+            this.baseIconName + '-' + saveSize + '.' + format,
+            buf
+          );
         this.generatedIcons[filename] = buf;
         this.icons.push({
           src: this.meta.baseURL + filename,
@@ -529,7 +573,7 @@ export default class PWAManifestGenerator extends EventEmitter {
   }
   async genAppleTouchIcon(): Promise<void> {
     this.emit('appleTouchIconStart', 'Generating Apple Touch Icon...');
-    let buf: Buffer;
+    let buf: AwaitableBuffer;
     const atiSize = 180 - 2 * this.appleTouchIconPadding;
     try {
       const appleTouchIconTransparent = await this.baseIcon
@@ -543,7 +587,7 @@ export default class PWAManifestGenerator extends EventEmitter {
           background: 'rgba(0, 0, 0, 0)'
         })
         .toBuffer();
-      buf = await sharp(appleTouchIconTransparent)
+      buf = sharp(appleTouchIconTransparent)
         .flatten({ background: this.appleTouchIconBG })
         .png(this.formats.png || {})
         .toBuffer();
@@ -552,7 +596,11 @@ export default class PWAManifestGenerator extends EventEmitter {
       throw 'An unknown error ocurred during the Apple Touch Icon creation process: ' +
         e;
     }
-    const atiname = this.fingerprint('apple-touch-icon.png', buf);
+    const ev = createEvent(buf);
+    this.emit('appleTouchIconGen', ev);
+    buf = await ev.content;
+    const atiname =
+      (await ev.filename) || this.fingerprint('apple-touch-icon.png', buf);
     this.generatedIcons[atiname] = buf;
     this.html += `<link rel="apple-touch-icon" sizes="180x180" href="${this.meta
       .baseURL + atiname}">`;
@@ -561,9 +609,9 @@ export default class PWAManifestGenerator extends EventEmitter {
   async genFavicons(): Promise<void> {
     this.emit('faviconStart', 'Generating favicons...');
     for (const size of [32, 16]) {
-      let favicon: Buffer;
+      let favicon: AwaitableBuffer;
       try {
-        favicon = await this.baseIcon
+        favicon = this.baseIcon
           .clone()
           .resize(size, size, this.resizeOptions)
           .png(this.formats.png || {})
@@ -574,7 +622,12 @@ export default class PWAManifestGenerator extends EventEmitter {
           e;
       }
       const sizes = size + 'x' + size;
-      const filename = this.fingerprint('favicon-' + sizes + '.png', favicon);
+      const ev = createEvent(favicon);
+      this.emit('faviconGen', ev);
+      favicon = await ev.content;
+      const filename =
+        (await ev.filename) ||
+        this.fingerprint('favicon-' + sizes + '.png', favicon);
       this.generatedIcons[filename] = favicon;
       this.html += `<link rel="icon" sizes="${sizes}" href="${this.meta
         .baseURL + filename}">`;
@@ -584,9 +637,9 @@ export default class PWAManifestGenerator extends EventEmitter {
   async genMsTileIcons(): Promise<void> {
     this.emit('msTileStart', 'Generating Microsoft Tile Icons...');
     for (const size of [70, 150, 310]) {
-      let msTile: Buffer;
+      let msTile: AwaitableBuffer;
       try {
-        msTile = await this.baseIcon
+        msTile = this.baseIcon
           .clone()
           .resize(size, size, this.resizeOptions)
           .png(this.formats.png || {})
@@ -597,14 +650,19 @@ export default class PWAManifestGenerator extends EventEmitter {
           e;
       }
       const sizes = size + 'x' + size;
-      const filename = this.fingerprint('mstile-' + sizes + '.png', msTile);
+      const ev = createEvent(msTile);
+      this.emit('msTileGen', ev);
+      msTile = await ev.content;
+      const filename =
+        (await ev.filename) ||
+        this.fingerprint('mstile-' + sizes + '.png', msTile);
       this.generatedIcons[filename] = msTile;
       this.intBrowserConfig += `<square${sizes}logo src="${this.meta.baseURL +
         filename}"/>`;
     }
-    let rectMsTile: Buffer;
+    let rectMsTile: AwaitableBuffer;
     try {
-      rectMsTile = await this.baseIcon
+      rectMsTile = this.baseIcon
         .clone()
         .resize(310, 150, this.resizeOptions)
         .png(this.formats.png || {})
@@ -614,10 +672,11 @@ export default class PWAManifestGenerator extends EventEmitter {
       throw 'An unknown error ocurred during the Microsoft Tile Icon creation process: ' +
         e;
     }
-    const rectMsTileFilename = this.fingerprint(
-      'mstile-310x150.png',
-      rectMsTile
-    );
+    const ev = createEvent(rectMsTile);
+    this.emit('msTileGen', ev);
+    rectMsTile = await ev.content;
+    const rectMsTileFilename =
+      (await ev.filename) || this.fingerprint('mstile-310x150.png', rectMsTile);
     this.generatedIcons[rectMsTileFilename] = rectMsTile;
     this.intBrowserConfig += `<wide310x150logo src="${this.meta.baseURL +
       rectMsTileFilename}"/>`;

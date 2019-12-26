@@ -47,10 +47,10 @@ export = (bundler: FullBundler): void => {
         desc: pkg.description
       }
     );
-    generator.on('*', (ev: string, ...args) => {
+    generator.on('*', (ev, ...args) => {
       bundler.emit(`pwa${ev.slice(0, 1).toUpperCase() + ev.slice(1)}`, ...args);
       if (ev.endsWith('Start')) {
-        console.log(args[0]);
+        logger.progress(args[0]);
       }
     });
     if (contentHash) generator.hashMethod = 'content';
