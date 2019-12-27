@@ -6,7 +6,7 @@ import PWAManifestGenerator, {
   EndEvent,
   BaseEvent,
   EmittedGenEvent
-} from '@pwa-manifest/core';
+} from '@pwa-manifest/core/lib';
 import { Hooks as HtmlWebpackPluginHooks } from 'html-webpack-plugin';
 import { Compiler, compilation } from 'webpack';
 import { AsyncParallelHook, SyncHook } from 'tapable';
