@@ -1,4 +1,4 @@
-import PWAManifestGenerator from '@pwa-manifest/core/lib';
+import PWAManifestGenerator from '@pwa-manifest/core';
 import logger from '@parcel/logger';
 import { ParcelAsset, ParcelBundle } from 'parcel-bundler';
 import { resolve } from 'path';
