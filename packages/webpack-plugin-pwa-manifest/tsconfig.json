@@ -5,5 +5,5 @@
     "declaration": true,
     "declarationDir": "lib/"
   },
-  "include": ["index.ts", "types/*.ts"]
+  "include": ["index.ts"]
 }

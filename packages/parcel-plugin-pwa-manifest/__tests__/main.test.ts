@@ -14,8 +14,8 @@ const bundler = new Bundler(resolve(__dirname, 'sample', 'index.html'), {
 }) as ParcelBundler & EventEmitter;
 attachManifestGenerator(bundler as FullBundler);
 jest.setTimeout(10000);
-test.concurrent('Properly generated for real-world case', async () => {
-  return new Promise(res =>
+test('Integrated correctly', async done => {
+  new Promise(res =>
     bundler.on('pwaBuildEnd', () => {
       expect(readdirSync(outDir)).toMatchSnapshot();
       expect(
@@ -31,6 +31,6 @@ test.concurrent('Properly generated for real-world case', async () => {
       ).toMatchSnapshot();
       res();
     })
-  );
+  ).then(done);
 });
 bundler.bundle();

@@ -1,4 +1,12 @@
-import PWAManifestGenerator, { PWAManifestOptions, HashMethod, StartEvent, GenerationEvent, EndEvent, BaseEvent, EmittedGenEvent } from '@pwa-manifest/core';
+import PWAManifestGenerator, {
+  PWAManifestOptions,
+  HashMethod,
+  StartEvent,
+  GenerationEvent,
+  EndEvent,
+  BaseEvent,
+  EmittedGenEvent
+} from '@pwa-manifest/core';
 import { Hooks as HtmlWebpackPluginHooks } from 'html-webpack-plugin';
 import { Compiler, compilation } from 'webpack';
 import { AsyncParallelHook, SyncHook } from 'tapable';
@@ -10,12 +18,12 @@ type HtmlWebpackPluginV4 = {
   };
 };
 type HtmlWebpackPluginV3 = {};
+type Hooks = { [k in StartEvent]: AsyncParallelHook<string> } &
+  { [k in GenerationEvent]: SyncHook<EmittedGenEvent> } &
+  { [k in EndEvent]: AsyncParallelHook } &
+  { [k in BaseEvent]: AsyncParallelHook };
 // TODO: fix
 type Data = any; // eslint-disable-line @typescript-eslint/no-explicit-any
-type Hooks = { [k in StartEvent]: AsyncParallelHook<string> } &
-    { [k in GenerationEvent]: SyncHook<EmittedGenEvent> } &
-    { [k in EndEvent]: AsyncParallelHook } &
-    { [k in BaseEvent]: AsyncParallelHook };
 let HtmlWebpackPlugin: HtmlWebpackPluginV3 | HtmlWebpackPluginV4;
 const isV4 = (
   plugin: typeof HtmlWebpackPlugin
@@ -43,7 +51,7 @@ const createHooks = (): Hooks => ({
   defaultIconsEnd: new AsyncParallelHook(),
   appleTouchIconStart: new AsyncParallelHook(['msg']),
   appleTouchIconGen: new SyncHook(['data']),
-  appleTouchIconEnd: new AsyncParallelHook(), 
+  appleTouchIconEnd: new AsyncParallelHook(),
   faviconStart: new AsyncParallelHook(['msg']),
   faviconGen: new SyncHook(['data']),
   faviconEnd: new AsyncParallelHook(),
@@ -107,7 +115,7 @@ class WebpackPluginPWAManifest {
       return data;
     };
   }
-  apply(compiler: Compiler) {
+  apply(compiler: Compiler): void {
     compiler.hooks.compilation.tap(NAME, compilation => {
       if (isV4(HtmlWebpackPlugin)) {
         HtmlWebpackPlugin.getHooks(compilation).beforeEmit.tapPromise(
@@ -120,7 +128,9 @@ class WebpackPluginPWAManifest {
           data => this.cb(compilation, data)
         );
       } else {
-        compiler.hooks.make.tapPromise(NAME, compilation => this.cb(compilation, null));
+        compiler.hooks.make.tapPromise(NAME, compilation =>
+          this.cb(compilation, null)
+        );
       }
     });
   }

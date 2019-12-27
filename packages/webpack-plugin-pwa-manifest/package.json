@@ -14,7 +14,7 @@
   "author": "Arjun Barrett <arjunbarrett@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "lint": "eslint --fix index.ts types/*.ts __tests__/*.ts",
+    "lint": "eslint --fix index.ts __tests__/*.ts",
     "test": "jest",
     "test-cov": "yarn test && cat __tests__/coverageReport/lcov.info | coveralls",
     "build": "tsc && yarn lint && yarn test && yarn build-unchecked",

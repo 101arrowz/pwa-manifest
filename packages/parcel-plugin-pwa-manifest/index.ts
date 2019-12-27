@@ -17,6 +17,7 @@ export = (bundler: FullBundler): void => {
   // istanbul ignore next
   if (!publicURL) publicURL = '/';
   else if (!publicURL.endsWith('/')) publicURL += '/';
+  // istanbul ignore next
   const getPkg = (entryAsset: ParcelAsset): Promise<PackageJSON> =>
     typeof entryAsset.getPackage === 'function'
       ? entryAsset.getPackage()
@@ -26,8 +27,6 @@ export = (bundler: FullBundler): void => {
     const pkg = await getPkg(
       bundle.entryAsset || bundle.childBundles.values().next().value.entryAsset
     );
-    // istanbul ignore next
-
     const opts = pkg.pwaManifest || pkg['pwa-manifest'];
 
     // istanbul ignore next
@@ -75,8 +74,7 @@ export = (bundler: FullBundler): void => {
       let origHTML: string;
       try {
         origHTML = readFileSync(filename).toString();
-      } catch (e) {
-        // istanbul ignore next
+      } catch (e) /* istanbul ignore next */ {
         throw `HTML file ${filename} does not exist.`;
       }
       const ind = origHTML.search(headSearch);
@@ -90,17 +88,21 @@ export = (bundler: FullBundler): void => {
           generator.manifest.name
         }</title>${html}</head>${origHTML.slice(htmlInd)}`;
       } else {
-        origHTML = `${origHTML.slice(0, ind)}${html}${origHTML.slice(ind).replace(oldInjectionSearch, '')}`;
+        origHTML = `${origHTML.slice(0, ind)}${html}${origHTML
+          .slice(ind)
+          .replace(oldInjectionSearch, '')}`;
       }
       writeFileSync(filename, origHTML);
     }
     logger.success('Manifest creation successful.');
     bundler.emit('pwaBuildEnd');
   };
-  bundler.on('bundled', bundle =>
-    onBundled(bundle).catch(msg => {
+  bundler.on('bundled', async bundle => {
+    try {
+      return await onBundled(bundle);
+    } catch (msg) /* istanbul ignore next */ {
       logger.clear();
       logger.error('Manifest creation failed! ' + msg);
-    })
-  );
+    }
+  });
 };

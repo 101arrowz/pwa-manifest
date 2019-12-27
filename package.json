@@ -19,11 +19,15 @@
     "ts-jest": "^24.2.0",
     "typescript": "^3.7.2"
   },
+  "dependencies": {
+    "@pwa-manifest/core": "file:packages/core",
+    "parcel-plugin-pwa-manifest": "file:packages/parcel-plugin-pwa-manifest",
+    "webpack-plugin-pwa-manifest": "file:packages/webpack-plugin-pwa-manifest"
+  },
   "workspaces": [
     "packages/*"
   ],
-  "dependencies": {
-    "@pwa-manifest/core": "file:packages/core",
-    "parcel-plugin-pwa-manifest": "file:packages/parcel-plugin-pwa-manifest"
+  "scripts": {
+    "test": "jest && cat ./coverageReport/lcov.info | coveralls"
   }
 }
