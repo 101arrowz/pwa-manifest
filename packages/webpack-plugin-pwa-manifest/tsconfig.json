@@ -3,7 +3,8 @@
   "compilerOptions": {
     "emitDeclarationOnly": true,
     "declaration": true,
-    "declarationDir": "lib/"
+    "declarationDir": "lib/",
+    "target": "ES2016"
   },
   "include": ["index.ts"]
 }
