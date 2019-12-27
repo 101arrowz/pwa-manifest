@@ -39,5 +39,6 @@
   },
   "peerDependencies": {
     "parcel-bundler": ">=1.9"
-  }
+  },
+  "devDependencies": {}
 }
