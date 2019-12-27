@@ -1,4 +1,5 @@
 module.exports = {
+  preset: 'ts-jest',
   projects: [
     {
       preset: 'ts-jest',
@@ -16,7 +17,15 @@ module.exports = {
       testMatch: ['<rootDir>/packages/webpack-plugin-pwa-manifest/__tests__/*.test.ts']
     }
   ],
+  globals: {
+    'ts-jest': {
+      tsConfig: "tsconfig.json"
+    }
+  },
   collectCoverage: true,
   coverageDirectory: 'coverageReport',
   testEnvironment: 'node',
+  moduleNameMapper: {
+    '@pwa-manifest/core': '<rootDir>/packages/core/lib'
+  }
 }
