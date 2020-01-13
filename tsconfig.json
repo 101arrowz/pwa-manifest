@@ -7,6 +7,7 @@
     "target": "ES6",
     "strict": true,
     "esModuleInterop": true,
-    "pretty": true
+    "pretty": true,
+    "preserveSymlinks": true
   }
 }
