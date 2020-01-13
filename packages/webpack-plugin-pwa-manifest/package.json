@@ -23,7 +23,7 @@
     "preversion": "yarn lint && yarn test"
   },
   "dependencies": {
-    "@pwa-manifest/core": "file:../core"
+    "@pwa-manifest/core": "^1.1.0"
   },
   "peerDependencies": {
     "html-webpack-plugin": "^3.2.0",
