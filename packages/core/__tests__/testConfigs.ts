@@ -119,6 +119,16 @@ const testConfigs: Config[] = [
         baseIcon: './icon.svg'
       }
     }
+  },
+  {
+    msg: 'Purpose modification works',
+    config: {
+      genIconOpts: {
+        baseIcon: './icon.svg',
+        sizes: [],
+        purposes: ['maskable', 'any']
+      }
+    }
   }
 ];
 export default testConfigs;
