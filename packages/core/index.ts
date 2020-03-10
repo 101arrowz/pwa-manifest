@@ -21,6 +21,7 @@ export type IconEntry = {
   src: string;
   sizes: string;
   type: string;
+  purpose?: string;
 };
 // TODO: Improve
 export type PWAManifestOptions = any; // eslint-disable-line @typescript-eslint/no-explicit-any
@@ -88,6 +89,7 @@ export default class PWAManifestGenerator extends EventEmitter {
   }
   private baseIcon: Sharp;
   private sizes: number[];
+  private purposes?: string[];
   private formats: FormatOptions;
   private resizeOptions: ResizeOptions;
   private appleTouchIconBG: string;
@@ -307,7 +309,11 @@ export default class PWAManifestGenerator extends EventEmitter {
       background: 'rgba(0, 0, 0, 0)'
     };
     this.baseIcon = sharp(baseIconFullPath).ensureAlpha();
-
+    const purposes = opt(genIconOpts, ['purpose', 'purposes']);
+    if (typeof purposes !== 'undefined')
+      if (!(purposes instanceof Array && purposes.every(val => ['badge', 'maskable', 'any'].includes(val))))
+        throw "The purposes parameter in the icon generation options must be an array for which each element is one of 'badge', 'maskable', or 'any'.";
+      this.purposes = purposes;
     this.html = `<meta name="msapplication-config" content="${baseURL}browserconfig.xml"><meta name="theme-color" content="${theme}">`;
     const appleTouchIconBG =
       opt(genIconOpts, [
@@ -535,6 +541,8 @@ export default class PWAManifestGenerator extends EventEmitter {
   }
   async genDefaultIcons(): Promise<void> {
     this.emit('defaultIconsStart', `Generating icons for ${this.name}...`);
+    let purpose: string | undefined;
+    if (this.purposes) purpose = this.purposes.join(' ')
     for (const size of this.sizes) {
       const icon = this.baseIcon.clone().resize(size, size, this.resizeOptions);
       const saveSize = size + 'x' + size;
@@ -562,11 +570,13 @@ export default class PWAManifestGenerator extends EventEmitter {
             buf
           );
         this.generatedIcons[filename] = buf;
-        this.icons.push({
+        const iconEntry: IconEntry = {
           src: this.meta.baseURL + filename,
           sizes: saveSize,
           type: 'image/' + format
-        });
+        };
+        if (purpose) iconEntry.purpose = purpose;
+        this.icons.push(iconEntry);
       }
     }
     this.emit('defaultIconsEnd');

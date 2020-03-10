@@ -114,6 +114,8 @@ Whether or not to generate 16x16 and 32x32 favicons and insert links in the HTML
 The background color for Microsoft Tiles. Defaults to the theme color.
 #### `resizeMethod`
 The method to use for resizing non-square images. Can be one of `'cover'` (default), `'contain'`, or `'fill'`.
+#### `purpose`
+An array of possible purposes for the icons. Each element should be one of `'badge'`, `'maskable'`, or `'any'`
 #### `disabled`
 Disables the manifest creation with no warning.
 - Used to speed up builds when icon generation isn't needed (i.e. when developing with HMR)

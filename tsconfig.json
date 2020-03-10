@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "alwaysStrict": true,
-    "module": "commonjs",
+    "module": "CommonJS",
     "moduleResolution": "node",
     "noImplicitAny": true,
     "target": "ES6",
