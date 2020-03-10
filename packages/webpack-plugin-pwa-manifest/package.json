@@ -1,6 +1,6 @@
 {
   "name": "webpack-plugin-pwa-manifest",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "A Webpack plugin that generates a Web App Manifest, creates all necessary icons, and more!",
   "main": "lib/index.js",
   "repository": {
