@@ -6,7 +6,7 @@ import sharp, {
   ResizeOptions,
   Sharp
 } from 'sharp';
-import { existsSync } from 'fs';
+import { existsSync, readFileSync } from 'fs';
 import { basename, resolve } from 'path';
 import { EventEmitter } from 'events';
 import { createHash } from 'crypto';
@@ -17,6 +17,10 @@ export type FormatOptions = {
   tiff?: TiffOptions;
 };
 export type Verifier = (v: unknown) => boolean;
+export type Screenshot = {
+  src: string;
+  type: string;
+};
 export type IconEntry = {
   src: string;
   sizes: string;
@@ -29,7 +33,7 @@ export type MetaConfig = {
   resolveDir?: string;
   baseURL?: string;
 };
-export type GeneratedIcons = {
+export type GeneratedFiles = {
   [k: string]: Buffer;
 };
 // TODO: Improve
@@ -38,7 +42,7 @@ export type HashFunction = (v: string) => string;
 export type HashMethod = 'name' | 'content' | 'none';
 export type Generation = {
   browserConfig: string;
-  generatedIcons: GeneratedIcons;
+  generatedFiles: GeneratedFiles;
   html: string;
   manifest: Manifest;
 };
@@ -68,6 +72,14 @@ const createEvent = (img: AwaitableBuffer): EmittedGenEvent => ({
   filename: Promise.resolve(undefined),
   content: Promise.resolve(img)
 });
+const isValidURL = (url: string): boolean => {
+  try {
+    new URL(url);
+    return true;
+  } catch (e) {
+    return false;
+  }
+};
 export default class PWAManifestGenerator extends EventEmitter {
   private disabled: boolean;
   private name: string;
@@ -101,7 +113,7 @@ export default class PWAManifestGenerator extends EventEmitter {
   set hashMethod(v: HashMethod) {
     this.defaultHashMethod = v;
   }
-  generatedIcons: GeneratedIcons = {};
+  generatedFiles: GeneratedFiles = {};
   manifest: Manifest = {};
   html: string;
   private intBrowserConfig: string;
@@ -116,6 +128,7 @@ export default class PWAManifestGenerator extends EventEmitter {
     fallback: PWAManifestOptions = {}
   ) {
     super();
+    if (!baseURL.endsWith('/')) baseURL += '/';
     this.meta = {
       baseURL,
       resolveDir
@@ -202,6 +215,36 @@ export default class PWAManifestGenerator extends EventEmitter {
     if (typeof theme !== 'string')
       throw 'The theme color provided in the options must be a string representing a valid CSS color.';
     this.theme = theme;
+    const extraParams: PWAManifestOptions = {};
+    const screenshots = opt(opts, [
+      'screenshots',
+      'screenShots',
+      'screen-shots'
+    ]);
+    // istanbul ignore next
+    if (
+      screenshots instanceof Array &&
+      screenshots.every(v => typeof v === 'string')
+    ) {
+      const manifestScreenshots: Screenshot[] = [];
+      for (let sc of screenshots) {
+        let ext = sc.slice(sc.lastIndexOf('.') + 1);
+        if (ext === 'jpg') ext = 'jpeg';
+        else if (!['png', 'jpeg', 'webp'].includes(ext))
+          throw 'Each screenshot in the screenshots must be of type PNG, WebP, or JPEG. Ensure that the filenames have the correct extensions.';
+        if (isValidURL(sc))
+          manifestScreenshots.push({ src: sc, type: 'image/' + ext });
+        else if (existsSync((sc = resolve(resolveDir, sc)))) {
+          const data = readFileSync(sc);
+          const fn = this.fingerprint(basename(sc), data);
+          this.generatedFiles[fn] = data;
+          manifestScreenshots.push({ src: baseURL + fn, type: 'image/' + ext });
+        } else
+          throw 'Every screenshot in the screenshots array must be a valid filepath or absolute URL to a screenshot image.';
+      }
+      extraParams.screenshots = manifestScreenshots;
+    } else if (typeof screenshots !== 'undefined')
+      throw 'The screenshots provided in the options must be an array of screenshot filepaths or absolute URLs.';
 
     const genIconOpts = opt(opts, [
       'genIcon',
@@ -310,6 +353,7 @@ export default class PWAManifestGenerator extends EventEmitter {
     };
     this.baseIcon = sharp(baseIconFullPath).ensureAlpha();
     const purposes = opt(genIconOpts, ['purpose', 'purposes']);
+    // istanbul ignore next
     if (typeof purposes !== 'undefined')
       if (
         !(
@@ -354,7 +398,6 @@ export default class PWAManifestGenerator extends EventEmitter {
       throw 'The favicon generation option in the icon generation options must be a boolean.';
     this.doGenFavicons = genFavicons;
     // No custom modifications for the rest of the common parameters, so we just do type checking
-    const extraParams: PWAManifestOptions = {};
     const extraTypes: [string[], string | Verifier, unknown?][] = [
       [
         [
@@ -369,7 +412,7 @@ export default class PWAManifestGenerator extends EventEmitter {
         theme
       ],
       [
-        ['categories'],
+        ['categories', 'ctgs'],
         v => v instanceof Array && v.every(el => typeof el === 'string')
       ],
       [
@@ -432,16 +475,15 @@ export default class PWAManifestGenerator extends EventEmitter {
           'related-applications'
         ],
         v =>
-          v instanceof Array && v.every(el => typeof el === 'object' && el.url)
-      ],
-      [
-        ['screenshots', 'screenShots', 'screen-shots'],
-        v =>
-          v instanceof Array && v.every(el => typeof el === 'object' && el.src)
-      ],
-      [
-        ['serviceworker', 'sw', 'serviceWorker', 'service-worker'],
-        v => typeof v === 'object' && !!v && v.hasOwnProperty('src')
+          v instanceof Array &&
+          v.every(el => {
+            if (typeof el !== 'object' || typeof el.platform !== 'string')
+              return false;
+            if (typeof el.id === 'string')
+              return typeof el.url === 'undefined' || isValidURL(el.url);
+            if (isValidURL(el.url)) return typeof el.id === 'undefined';
+            return false;
+          })
       ]
     ];
     for (const type of extraTypes) {
@@ -526,7 +568,7 @@ export default class PWAManifestGenerator extends EventEmitter {
     if (this.disabled)
       return {
         browserConfig: '',
-        generatedIcons: {},
+        generatedFiles: {},
         html: '',
         manifest: {}
       };
@@ -539,7 +581,7 @@ export default class PWAManifestGenerator extends EventEmitter {
     this.emit('end');
     return {
       browserConfig: this.browserConfig,
-      generatedIcons: this.generatedIcons,
+      generatedFiles: this.generatedFiles,
       html: this.html,
       manifest: this.manifest
     };
@@ -574,7 +616,7 @@ export default class PWAManifestGenerator extends EventEmitter {
             this.baseIconName + '-' + saveSize + '.' + format,
             buf
           );
-        this.generatedIcons[filename] = buf;
+        this.generatedFiles[filename] = buf;
         const iconEntry: IconEntry = {
           src: this.meta.baseURL + filename,
           sizes: saveSize,
@@ -616,7 +658,7 @@ export default class PWAManifestGenerator extends EventEmitter {
     buf = await ev.content;
     const atiname =
       (await ev.filename) || this.fingerprint('apple-touch-icon.png', buf);
-    this.generatedIcons[atiname] = buf;
+    this.generatedFiles[atiname] = buf;
     this.html += `<link rel="apple-touch-icon" sizes="180x180" href="${this.meta
       .baseURL + atiname}">`;
     this.emit('appleTouchIconEnd');
@@ -643,7 +685,7 @@ export default class PWAManifestGenerator extends EventEmitter {
       const filename =
         (await ev.filename) ||
         this.fingerprint('favicon-' + sizes + '.png', favicon);
-      this.generatedIcons[filename] = favicon;
+      this.generatedFiles[filename] = favicon;
       this.html += `<link rel="icon" sizes="${sizes}" href="${this.meta
         .baseURL + filename}">`;
     }
@@ -671,7 +713,7 @@ export default class PWAManifestGenerator extends EventEmitter {
       const filename =
         (await ev.filename) ||
         this.fingerprint('mstile-' + sizes + '.png', msTile);
-      this.generatedIcons[filename] = msTile;
+      this.generatedFiles[filename] = msTile;
       this.intBrowserConfig += `<square${sizes}logo src="${this.meta.baseURL +
         filename}"/>`;
     }
@@ -692,7 +734,7 @@ export default class PWAManifestGenerator extends EventEmitter {
     rectMsTile = await ev.content;
     const rectMsTileFilename =
       (await ev.filename) || this.fingerprint('mstile-310x150.png', rectMsTile);
-    this.generatedIcons[rectMsTileFilename] = rectMsTile;
+    this.generatedFiles[rectMsTileFilename] = rectMsTile;
     this.intBrowserConfig += `<wide310x150logo src="${this.meta.baseURL +
       rectMsTileFilename}"/>`;
     this.emit('msTileEnd');

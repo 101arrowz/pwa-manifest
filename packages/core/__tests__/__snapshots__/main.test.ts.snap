@@ -248,6 +248,61 @@ exports[`Default generation works correctly 3`] = `"<?xml version=\\"1.0\\" enco
 
 exports[`Default generation works correctly 4`] = `"<meta name=\\"msapplication-config\\" content=\\"./browserconfig.xml\\"><meta name=\\"theme-color\\" content=\\"white\\"><link rel=\\"apple-touch-icon\\" sizes=\\"180x180\\" href=\\"./apple-touch-icon.67e6641c.png\\"><link rel=\\"manifest\\" href=\\"./manifest.webmanifest\\">"`;
 
+exports[`Favicon generation works correctly 1`] = `
+Array [
+  "icon-192x192.634db135.webp",
+  "icon-192x192.ba2e3c32.png",
+  "icon-512x512.b0f68593.webp",
+  "icon-512x512.8d04d761.png",
+  "favicon-32x32.743f0ca1.png",
+  "favicon-16x16.d8c5885e.png",
+  "apple-touch-icon.67e6641c.png",
+  "mstile-70x70.d4870be2.png",
+  "mstile-150x150.db75c4ea.png",
+  "mstile-310x310.7d35cb45.png",
+  "mstile-310x150.5f1296f5.png",
+]
+`;
+
+exports[`Favicon generation works correctly 2`] = `
+Object {
+  "background_color": "white",
+  "description": "test",
+  "display": "standalone",
+  "icons": Array [
+    Object {
+      "sizes": "192x192",
+      "src": "./icon-192x192.634db135.webp",
+      "type": "image/webp",
+    },
+    Object {
+      "sizes": "192x192",
+      "src": "./icon-192x192.ba2e3c32.png",
+      "type": "image/png",
+    },
+    Object {
+      "sizes": "512x512",
+      "src": "./icon-512x512.b0f68593.webp",
+      "type": "image/webp",
+    },
+    Object {
+      "sizes": "512x512",
+      "src": "./icon-512x512.8d04d761.png",
+      "type": "image/png",
+    },
+  ],
+  "name": "tester",
+  "scope": "./",
+  "short_name": "tester",
+  "start_url": "./",
+  "theme_color": "white",
+}
+`;
+
+exports[`Favicon generation works correctly 3`] = `"<?xml version=\\"1.0\\" encoding=\\"utf-8\\"?><browserconfig><msapplication><tile><TileColor>white</TileColor><square70x70logo src=\\"./mstile-70x70.d4870be2.png\\"/><square150x150logo src=\\"./mstile-150x150.db75c4ea.png\\"/><square310x310logo src=\\"./mstile-310x310.7d35cb45.png\\"/><wide310x150logo src=\\"./mstile-310x150.5f1296f5.png\\"/></tile></msapplication></browserconfig>"`;
+
+exports[`Favicon generation works correctly 4`] = `"<meta name=\\"msapplication-config\\" content=\\"./browserconfig.xml\\"><meta name=\\"theme-color\\" content=\\"white\\"><link rel=\\"icon\\" sizes=\\"32x32\\" href=\\"./favicon-32x32.743f0ca1.png\\"><link rel=\\"icon\\" sizes=\\"16x16\\" href=\\"./favicon-16x16.d8c5885e.png\\"><link rel=\\"apple-touch-icon\\" sizes=\\"180x180\\" href=\\"./apple-touch-icon.67e6641c.png\\"><link rel=\\"manifest\\" href=\\"./manifest.webmanifest\\">"`;
+
 exports[`Formats work correctly 1`] = `
 Array [
   "icon-192x192.ba2e3c32.png",
@@ -476,6 +531,70 @@ exports[`Resize method option works correctly 3`] = `"<?xml version=\\"1.0\\" en
 
 exports[`Resize method option works correctly 4`] = `"<meta name=\\"msapplication-config\\" content=\\"./browserconfig.xml\\"><meta name=\\"theme-color\\" content=\\"white\\"><link rel=\\"apple-touch-icon\\" sizes=\\"180x180\\" href=\\"./apple-touch-icon.03f60dde.png\\"><link rel=\\"manifest\\" href=\\"./manifest.webmanifest\\">"`;
 
+exports[`Screenshot injection works 1`] = `
+Array [
+  "screenshot.db3e932d.png",
+  "icon-192x192.634db135.webp",
+  "icon-192x192.ba2e3c32.png",
+  "icon-512x512.b0f68593.webp",
+  "icon-512x512.8d04d761.png",
+  "apple-touch-icon.67e6641c.png",
+  "mstile-70x70.d4870be2.png",
+  "mstile-150x150.db75c4ea.png",
+  "mstile-310x310.7d35cb45.png",
+  "mstile-310x150.5f1296f5.png",
+]
+`;
+
+exports[`Screenshot injection works 2`] = `
+Object {
+  "background_color": "white",
+  "description": "test",
+  "display": "standalone",
+  "icons": Array [
+    Object {
+      "sizes": "192x192",
+      "src": "./icon-192x192.634db135.webp",
+      "type": "image/webp",
+    },
+    Object {
+      "sizes": "192x192",
+      "src": "./icon-192x192.ba2e3c32.png",
+      "type": "image/png",
+    },
+    Object {
+      "sizes": "512x512",
+      "src": "./icon-512x512.b0f68593.webp",
+      "type": "image/webp",
+    },
+    Object {
+      "sizes": "512x512",
+      "src": "./icon-512x512.8d04d761.png",
+      "type": "image/png",
+    },
+  ],
+  "name": "tester",
+  "scope": "./",
+  "screenshots": Array [
+    Object {
+      "src": "https://myfakesite.com/screenshot0.webp",
+      "type": "image/webp",
+    },
+    Object {
+      "src": "./screenshot.db3e932d.png",
+      "type": "image/png",
+    },
+  ],
+  "short_name": "tester",
+  "start_url": "./",
+  "theme_color": "white",
+}
+`;
+
+exports[`Screenshot injection works 3`] = `"<?xml version=\\"1.0\\" encoding=\\"utf-8\\"?><browserconfig><msapplication><tile><TileColor>white</TileColor><square70x70logo src=\\"./mstile-70x70.d4870be2.png\\"/><square150x150logo src=\\"./mstile-150x150.db75c4ea.png\\"/><square310x310logo src=\\"./mstile-310x310.7d35cb45.png\\"/><wide310x150logo src=\\"./mstile-310x150.5f1296f5.png\\"/></tile></msapplication></browserconfig>"`;
+
+exports[`Screenshot injection works 4`] = `"<meta name=\\"msapplication-config\\" content=\\"./browserconfig.xml\\"><meta name=\\"theme-color\\" content=\\"white\\"><link rel=\\"apple-touch-icon\\" sizes=\\"180x180\\" href=\\"./apple-touch-icon.67e6641c.png\\"><link rel=\\"manifest\\" href=\\"./manifest.webmanifest\\">"`;
+
 exports[`Specifying sizes works properly 1`] = `
 Array [
   "icon-57x57.8df5d215.webp",
@@ -565,7 +684,7 @@ exports[`Specifying sizes works properly 3`] = `"<?xml version=\\"1.0\\" encodin
 
 exports[`Specifying sizes works properly 4`] = `"<meta name=\\"msapplication-config\\" content=\\"./browserconfig.xml\\"><meta name=\\"theme-color\\" content=\\"white\\"><link rel=\\"apple-touch-icon\\" sizes=\\"180x180\\" href=\\"./apple-touch-icon.67e6641c.png\\"><link rel=\\"manifest\\" href=\\"./manifest.webmanifest\\">"`;
 
-exports[`Theme color works correctly and propogates properly 1`] = `
+exports[`Standard parameters work properly 1`] = `
 Array [
   "icon-192x192.634db135.webp",
   "icon-192x192.ba2e3c32.png",
@@ -579,11 +698,17 @@ Array [
 ]
 `;
 
-exports[`Theme color works correctly and propogates properly 2`] = `
+exports[`Standard parameters work properly 2`] = `
 Object {
-  "background_color": "skyblue",
+  "background_color": "red",
+  "categories": Array [
+    "pwa",
+    "amazing",
+  ],
   "description": "test",
-  "display": "standalone",
+  "dir": "ltr",
+  "display": "fullscreen",
+  "iarc_rating_id": "someIarcRating",
   "icons": Array [
     Object {
       "sizes": "192x192",
@@ -606,14 +731,27 @@ Object {
       "type": "image/png",
     },
   ],
-  "name": "tester",
-  "scope": "./",
-  "short_name": "tester",
-  "start_url": "./",
+  "lang": "en",
+  "name": "My Amazing PWA",
+  "orientation": "portrait-primary",
+  "prefer_related_applications": true,
+  "related_applications": Array [
+    Object {
+      "platform": "chrome_web_store",
+      "url": "https://chrome.google.com/webstore/detail/my-amazing-pwa/jlkzsdheuahoidu3idjfakj",
+    },
+    Object {
+      "id": "com.myamazingpwa.myamazingpwa",
+      "platform": "play",
+    },
+  ],
+  "scope": "/",
+  "short_name": "My PWA",
+  "start_url": "./test",
   "theme_color": "skyblue",
 }
 `;
 
-exports[`Theme color works correctly and propogates properly 3`] = `"<?xml version=\\"1.0\\" encoding=\\"utf-8\\"?><browserconfig><msapplication><tile><TileColor>skyblue</TileColor><square70x70logo src=\\"./mstile-70x70.d4870be2.png\\"/><square150x150logo src=\\"./mstile-150x150.db75c4ea.png\\"/><square310x310logo src=\\"./mstile-310x310.7d35cb45.png\\"/><wide310x150logo src=\\"./mstile-310x150.5f1296f5.png\\"/></tile></msapplication></browserconfig>"`;
+exports[`Standard parameters work properly 3`] = `"<?xml version=\\"1.0\\" encoding=\\"utf-8\\"?><browserconfig><msapplication><tile><TileColor>skyblue</TileColor><square70x70logo src=\\"./mstile-70x70.d4870be2.png\\"/><square150x150logo src=\\"./mstile-150x150.db75c4ea.png\\"/><square310x310logo src=\\"./mstile-310x310.7d35cb45.png\\"/><wide310x150logo src=\\"./mstile-310x150.5f1296f5.png\\"/></tile></msapplication></browserconfig>"`;
 
-exports[`Theme color works correctly and propogates properly 4`] = `"<meta name=\\"msapplication-config\\" content=\\"./browserconfig.xml\\"><meta name=\\"theme-color\\" content=\\"skyblue\\"><link rel=\\"apple-touch-icon\\" sizes=\\"180x180\\" href=\\"./apple-touch-icon.636f8a01.png\\"><link rel=\\"manifest\\" href=\\"./manifest.webmanifest\\">"`;
+exports[`Standard parameters work properly 4`] = `"<meta name=\\"msapplication-config\\" content=\\"./browserconfig.xml\\"><meta name=\\"theme-color\\" content=\\"skyblue\\"><link rel=\\"apple-touch-icon\\" sizes=\\"180x180\\" href=\\"./apple-touch-icon.636f8a01.png\\"><link rel=\\"manifest\\" href=\\"./manifest.webmanifest\\">"`;

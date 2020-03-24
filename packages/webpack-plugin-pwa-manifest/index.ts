@@ -91,7 +91,7 @@ class WebpackPluginPWAManifest {
         }
         const {
           html,
-          generatedIcons,
+          generatedFiles,
           browserConfig,
           manifest
         } = await gen.generate();
@@ -100,8 +100,8 @@ class WebpackPluginPWAManifest {
           data.html = data.html.slice(0, ind) + html + data.html.slice(ind);
         }
         logger.group('Writing files...');
-        for (const icon in generatedIcons)
-          compilation.assets[icon] = toAsset(generatedIcons[icon]);
+        for (const file in generatedFiles)
+          compilation.assets[file] = toAsset(generatedFiles[file]);
         compilation.assets['browserconfig.xml'] = toAsset(browserConfig);
         compilation.assets['manifest.webmanifest'] = toAsset(
           JSON.stringify(manifest)

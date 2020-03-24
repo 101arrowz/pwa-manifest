@@ -50,6 +50,16 @@ const testConfigs: Config[] = [
     }
   },
   {
+    msg: 'Favicon generation works correctly',
+    config: {
+      genIconOpts: {
+        baseIcon: './icon.svg',
+        sizes: [],
+        genFavicons: true
+      }
+    }
+  },
+  {
     msg: 'Apple Touch Icon generation options work correctly',
     config: {
       genIconOpts: {
@@ -67,16 +77,6 @@ const testConfigs: Config[] = [
         baseIcon: './icon.svg',
         sizes: [],
         msTileColor: 'red'
-      }
-    }
-  },
-  {
-    msg: 'Theme color works correctly and propogates properly',
-    config: {
-      theme: 'skyblue',
-      genIconOpts: {
-        baseIcon: './icon.svg',
-        sizes: []
       }
     }
   },
@@ -127,6 +127,49 @@ const testConfigs: Config[] = [
         baseIcon: './icon.svg',
         sizes: [],
         purposes: ['maskable', 'any']
+      }
+    }
+  },
+  {
+    msg: 'Screenshot injection works',
+    config: {
+      screenshots: [
+        'https://myfakesite.com/screenshot0.webp',
+        'screenshot.png'
+      ],
+      genIconOpts: {
+        baseIcon: './icon.svg',
+        sizes: []
+      }
+    }
+  },
+  {
+    msg: 'Standard parameters work properly',
+    config: {
+      name: 'My Amazing PWA',
+      shortName: 'My PWA',
+      startURL: './test',
+      scope: '/',
+      bg: 'red',
+      categories: ['pwa', 'amazing'],
+      dir: 'ltr',
+      display: 'fullscreen',
+      iarc: 'someIarcRating',
+      lang: 'en',
+      orientation: 'portrait-primary',
+      preferRelated: true,
+      related: [
+        {
+          platform: 'chrome_web_store',
+          url:
+            'https://chrome.google.com/webstore/detail/my-amazing-pwa/jlkzsdheuahoidu3idjfakj'
+        },
+        { platform: 'play', id: 'com.myamazingpwa.myamazingpwa' }
+      ],
+      theme: 'skyblue',
+      genIconOpts: {
+        baseIcon: './icon.svg',
+        sizes: []
       }
     }
   }

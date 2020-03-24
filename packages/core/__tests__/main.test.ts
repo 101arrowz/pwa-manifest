@@ -5,7 +5,7 @@ const testConfig = ({ config, msg, ...props }: Config): void =>
   test(msg || 'icons are correctly generated', async () => {
     let generator: PWAManifestGenerator;
     let generatedHTML: string;
-    let generatedIcons: string[];
+    let generatedFiles: string[];
     let generatedBrowserConfig: string;
     let generatedManifest: Manifest;
     try {
@@ -23,7 +23,7 @@ const testConfig = ({ config, msg, ...props }: Config): void =>
       generator.hashMethod = 'content';
       const result = await generator.generate();
       generatedHTML = result.html;
-      generatedIcons = Object.keys(result.generatedIcons);
+      generatedFiles = Object.keys(result.generatedFiles);
       generatedBrowserConfig = result.browserConfig;
       generatedManifest = result.manifest;
     } catch (e) {
@@ -37,12 +37,12 @@ const testConfig = ({ config, msg, ...props }: Config): void =>
       console.log(
         msg +
           '\nFiles: [' +
-          generatedIcons
+          generatedFiles
             .map(str => "'" + str.replace(/'/, "\\'") + "'")
             .join(', ') +
           ']'
       );
-    expect(generatedIcons).toMatchSnapshot();
+    expect(generatedFiles).toMatchSnapshot();
     expect(generatedManifest).toMatchSnapshot();
     expect(generatedBrowserConfig).toMatchSnapshot();
     expect(generatedHTML).toMatchSnapshot();

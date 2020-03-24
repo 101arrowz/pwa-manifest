@@ -1,5 +1,10 @@
-## 2.6.0
+# 2.9.3
+- Removed deprecated `serviceworker` option support; added screenshot resolution
+# 2.9.2
+- Added purpose support
+## 2.6.0-2.9.1
 - Added `disabled` and custom `NODE_ENV` options
+- Boosted rank
 ## 2.5.11-2.5.13
 - Boosted rank
 ## 2.5.9-2.5.10

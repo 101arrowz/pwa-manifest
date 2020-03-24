@@ -91,6 +91,8 @@ The `name` and `description` will default to their counterparts in the outer lay
 
 The `theme_color` will default to white and will change the default behavior of some parts of the icon generation, such as the background color of the Microsoft Tile.
 
+The `screenshots`, unlike in a normal web app manifest, should be an array of string screenshot image filepaths or absolute URLs. Do not use relative URLs or they will be confused for filepaths. Each image should be a PNG, JPEG, or WebP file.
+
 Instead of manually setting an `icons` parameter containing a set of icons, you should use `genIconOpts`, which will contain the options for icon generation. The parameters for `genIconOpts` are as follows:
 #### `baseIcon`
 The path to the icon to generate all other icons from. Path is relative to the placement of `package.json`.

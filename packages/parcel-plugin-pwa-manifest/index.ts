@@ -5,13 +5,13 @@ import { resolve } from 'path';
 import { writeFileSync, readFileSync } from 'fs';
 const headSearch = /(?<=<head(.*?)>)|<\/head>/;
 const htmlSearch = /(?<=<html(.*?)>)/;
-const oldInjectionSearch = /<link rel="(manifest|icon|apple-touch-icon)"(.*?)>|<meta name="(msapplication(.*?)|theme-color)"(.*?)>/g;
+const oldInjectionSearch = /<link rel="(manifest|icon|apple-touch-icon|mask-icon)"(.*?)>|<meta name="(msapplication(.*?)|theme-color)"(.*?)>/g;
 
 export = (bundler: FullBundler): void => {
   let { outDir, publicURL, contentHash, target } = bundler.options;
   // istanbul ignore next
-  if (target !== 'browser' || process.env.DISABLE_PWA_MANIFEST) {
-    bundler.on('buildEnd', () => logger.warn('Manifest creation disabled'));
+  if (target !== 'browser') {
+    bundler.on('buildEnd', () => logger.warn('Manifest creation disabled: target is not \'browser\''));
     return;
   }
   // istanbul ignore next
@@ -55,13 +55,13 @@ export = (bundler: FullBundler): void => {
     if (contentHash) generator.hashMethod = 'content';
     const {
       html,
-      generatedIcons,
+      generatedFiles,
       browserConfig,
       manifest
     } = await generator.generate();
     logger.progress('Writing files...');
-    for (const k in generatedIcons) {
-      writeFileSync(resolve(outDir, k), generatedIcons[k]);
+    for (const k in generatedFiles) {
+      writeFileSync(resolve(outDir, k), generatedFiles[k]);
     }
     writeFileSync(resolve(outDir, 'browserconfig.xml'), browserConfig);
     writeFileSync(

@@ -1690,6 +1690,18 @@
     ora "^2.1.0"
     strip-ansi "^4.0.0"
 
+"@parcel/plugin@^2.0.0-alpha.3":
+  version "2.0.0-alpha.3"
+  resolved "https://registry.yarnpkg.com/@parcel/plugin/-/plugin-2.0.0-alpha.3.tgz#ff9215d0c522ff60692aca7ef6abaa95243f564a"
+  integrity sha512-2nfjd7ujL042gP7ssJ4JRyxEirp5Fuz+Vf4sk4aky3oWVuY9YmUqce0UNUMaIlh911xERo5uagy1jYOSa7gp6g==
+  dependencies:
+    "@parcel/types" "^2.0.0-alpha.3"
+
+"@parcel/types@^2.0.0-alpha.3":
+  version "2.0.0-alpha.3"
+  resolved "https://registry.yarnpkg.com/@parcel/types/-/types-2.0.0-alpha.3.tgz#b2911c0e3b7756b70cbfc79a432b464b41d214c1"
+  integrity sha512-n4c346lpwhEUFJ3Xv4DUAATLnAqdKkNfEqFW+bfnS8WFBl3bUlaJW4JqHYQ63enoEvMKoD5Rs9/WrhqZ71X8Dg==
+
 "@parcel/utils@^1.11.0":
   version "1.11.0"
   resolved "https://registry.yarnpkg.com/@parcel/utils/-/utils-1.11.0.tgz#539e08fff8af3b26eca11302be80b522674b51ea"
