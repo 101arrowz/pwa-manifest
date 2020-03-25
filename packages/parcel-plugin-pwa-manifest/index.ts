@@ -11,7 +11,9 @@ export = (bundler: FullBundler): void => {
   let { outDir, publicURL, contentHash, target } = bundler.options;
   // istanbul ignore next
   if (target !== 'browser') {
-    bundler.on('buildEnd', () => logger.warn('Manifest creation disabled: target is not \'browser\''));
+    bundler.on('buildEnd', () =>
+      logger.warn("Manifest creation disabled: target is not 'browser'")
+    );
     return;
   }
   // istanbul ignore next
