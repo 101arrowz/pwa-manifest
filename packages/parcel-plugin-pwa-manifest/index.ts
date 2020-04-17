@@ -28,6 +28,7 @@ class PWAManifestAsset extends Asset {
   generateBundleName(): string {
     return this.srcName;
   }
+  load(): void {}
 }
 
 export = (bundler: FullBundler): void => {
