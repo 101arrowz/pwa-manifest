@@ -13,7 +13,7 @@ class PWAManifestAsset extends Asset {
   constructor(
     private srcName: string,
     outDir: string,
-    trueContents: Buffer | string
+    private trueContents: Buffer | string
   ) {
     super(join('__pwaManifest', srcName) + '.raw', {
       outDir,
@@ -28,7 +28,9 @@ class PWAManifestAsset extends Asset {
   generateBundleName(): string {
     return this.srcName;
   }
-  load(): void {}
+  async load(): Promise<Buffer> {
+    return this.trueContents instanceof Buffer ? this.trueContents : Buffer.from(this.trueContents);
+  }
 }
 
 export = (bundler: FullBundler): void => {
