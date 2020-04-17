@@ -81,18 +81,21 @@ Integrating manifest generation into the build pipeline makes life easier. Only 
 Safari pinned tab support would also require an autotracer to get an SVG output, which is too large an addition for a small plugin like this. If you absolutely need pinned tab support, you have to manually insert it into the original HTML file.
 
 ## Documentation
-All configuration is done in `package.json` under the `pwaManifest` key.
+All configuration is done in `package.json` under the `pwaManifest` (or `pwa-manifest`) key.
 
-Anything that usually goes in a `manifest.json` file besides `icons` can go into `pwaManifest`. All parameter names have aliases (e.g. `start_url` can also be `startURL`, `startUrl`, or `start-url`). If you see any inconsistencies in the documentation, it's probably fine; you can use multiple names for the same value.
+Almost anything that usually goes in a `manifest.json` file can go into `pwaManifest`. All parameter names have aliases in the original form from the spec (like `start_url`), in camel case (recommended, like `startUrl`), in kebab case (like `start-url`), and in other reasonable forms (like `startURL`). If you see any inconsistencies in the documentation, it's probably fine; you can use multiple names for the same value.
+
+All parameters that exist in the [MDN documentation for the Web App Manifest](https://developer.mozilla.org/en-US/docs/Web/Manifest) are aliased, type-checked, and insterted into the manifest whenever provided in `pwaManifest`. There are a few reasonable defaults, like `'.'` for `start_url`. Watch out for two changes, though: the removal of the `icons` option to allow icon generation and the modification of the `screenshots` option's behavior (detailed below).
+
+If you need to have a parameter not included in that list, put an array of parameter names to keep in the final manifest under the `include` key. If you use an unknown parameter name and don't put it in `include`, the generation will throw an error.
 
 ### Changes from standard manifest
-The `name` and `description` will default to their counterparts in the outer layer of `package.json`.
 
-The `theme_color` will default to white and will change the default behavior of some parts of the icon generation, such as the background color of the Microsoft Tile.
+The `theme_color` (aka `theme`) will default to white and will change the default behavior of some parts of the icon generation, such as the background color of the Microsoft Tile.
 
 The `screenshots`, unlike in a normal web app manifest, should be an array of string screenshot image filepaths or absolute URLs. Do not use relative URLs or they will be confused for filepaths. Each image should be a PNG, JPEG, or WebP file.
 
-Instead of manually setting an `icons` parameter containing a set of icons, you should use `genIconOpts`, which will contain the options for icon generation. The parameters for `genIconOpts` are as follows:
+Instead of manually setting an `icons` parameter containing a set of icons, you should use `genIconOpts` (aka `iconGenerationOptions`, `iconGenOpts`, ...you get the gist). `genIconOpts` will contain the options for icon generation. The parameters for `genIconOpts` are as follows:
 #### `baseIcon`
 The path to the icon to generate all other icons from. Path is relative to the placement of `package.json`.
 - For best results, use a high-resolution (at least 512x512) PNG or an SVG.
@@ -106,9 +109,11 @@ An object whose keys are the desired output formats (in lowercase) and whose val
 #### `appleTouchIconBG`
 The background color for the Apple Touch Icon (to fill transparent regions). Defaults to the theme color.
 - Useful because by default, Apple uses black for transparent regions, which doesn't look good with most icons.
+- Recommended to use `atib` alias for brevity.
 #### `appleTouchIconPadding`
 The number of pixels to pad the Apple Touch Icon with on all sides. Defaults to 12.
 - Used to account for Apple's courner-rounding.
+- Recommended to use `atip` alias for brevity.
 #### `genFavicons`
 Whether or not to generate 16x16 and 32x32 favicons and insert links in the HTML. Defaults to `false`.
 #### `msTileColor`
@@ -125,11 +130,9 @@ The parameters to use when `NODE_ENV` is a certain value. Merged with the outer 
 - Useful for disabling/generating less icons in development
 - Case-insensitive - use lowercase in options
 - Can be anything. `production` and `development` are common, but you could hypothetically set your `NODE_ENV` to `asdf` and have an `asdf` key with custom manifest generation options
----
 
-All parameters that exist in the [MDN documentation for the Web App Manifest](https://developer.mozilla.org/en-US/docs/Web/Manifest) are aliased, type-checked, and insterted into the manifest whenever provided in `pwaManifest`. There are a few reasonable defaults, like `'.'` for `start_url`. 
-
-If you need to have a parameter not included in that list, put an array of parameter names to keep in the final manifest under the `include` key.
+## Advanced: Events
+See the [events section for the core package](https://github.com/101arrowz/pwa-manifest/tree/master/packages/core/README.md#Advanced-Events). The only difference is that all event names are prefixed with the string `'pwa'` and there is no `'*'` (wildcard) event.
 
 ## Known Issues
 - JPEG output has a black background by default. There's nothing I can do about this other than add a new option for background color because JPEG does not support transparency.

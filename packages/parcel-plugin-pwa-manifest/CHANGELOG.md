@@ -1,10 +1,15 @@
-# 3.0.0
+## 3.03
+- Removed `pwaBuildStart` and `pwaBuildEnd` events, since they are no longer useful
+- Improved documentation
+# 3.0.0-3.02
 - Now automatically inserts links into every HTML file
 - Speed dramatically improved (begin at build start rather than end)
+  - Could see zero impact on performance, unlike ANY other Parcel plugin out there
 - Images are included in final logs
-# 2.9.3
+- Fixed bugs
+## 2.9.3
 - Removed deprecated `serviceworker` option support; added screenshot resolution
-# 2.9.2
+## 2.9.2
 - Added purpose support
 ## 2.6.0-2.9.1
 - Added `disabled` and custom `NODE_ENV` options
@@ -56,5 +61,5 @@
 - Fixed README format
 ## 2.0.1
 - Created README with documentation
-## 2.0.0
+# 2.0.0
 - Now an actual PWA manifest generator, rather than [what it was before](https://github.com/101arrowz/parcel-plugin-precache-manifest)

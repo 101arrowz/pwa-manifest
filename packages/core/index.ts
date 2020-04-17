@@ -81,8 +81,25 @@ const isValidURL = (url: string): boolean => {
     return false;
   }
 };
+
+/**
+ * Stringifies an HTML insert. Can be used to convert each element of
+ * `generator.html` to pure HTML. Not safe for custom HTML inserts.
+ * @param insert The HTML insert to stringify
+ * @returns The HTML string from the insert
+ */
+export const htmlInsertToString = (insert: HTMLInsert): string => {
+  let out = '<' + insert[0];
+  for (const k in insert[1]) out += ' ' + k + '="' + insert[1][k] + '"';
+  return out + '>';
+};
+
+/**
+ * A manifest generator and icon builder for progressive web apps
+ */
 export default class PWAManifestGenerator extends EventEmitter {
-  private disabled: boolean;
+  /** Whether the building has been disabled. You can use this to abort disabled generation. */
+  disabled: boolean; // Allow third parties to modify logging based on disabled state
   private name: string;
   private shortName: string;
   private desc: string;
@@ -111,13 +128,27 @@ export default class PWAManifestGenerator extends EventEmitter {
   private extraParams: PWAManifestOptions;
   private defaultHashMethod: HashMethod = 'name';
   private icons: IconEntry[] = [];
+  /**
+   * The hash method for the icon filename fingerprints. Can be 'none' (no
+   * fingerprinting), 'name' (fingerprint based on filename), or 'content' (
+   * fingerprint based on content of the file). Defaults to 'name', but using
+   * 'content' is strongly encouraged. Write-only.
+   */
   set hashMethod(v: HashMethod) {
     this.defaultHashMethod = v;
   }
+  /** The object mapping of filename to content for each generated icon file. */
   generatedFiles: GeneratedFiles = {};
+  /** The generated object that can be stringified and written to `manifest.webmanifest` */
   manifest: Manifest = {};
+  /**
+   * The HTML insertion values. Should all be inserted into the <head>.
+   * To convert to a string, just iterate through each element and use
+   * the `htmlInsertToString` function.
+   */
   html: HTMLInsert[] = [];
   private intBrowserConfig: string;
+  /** The generated `browserconfig.xml` string. Do not try to modify this property. */
   get browserConfig(): string {
     return `<?xml version="1.0" encoding="utf-8"?><browserconfig><msapplication><tile>${this.intBrowserConfig}</tile></msapplication></browserconfig>`;
   }
@@ -569,6 +600,10 @@ export default class PWAManifestGenerator extends EventEmitter {
     ); // Similar to (but not the same as) Parcel itself
   }
 
+  /**
+   * Generates the icon files, browser config, HTML, and web manifest
+   * @returns The generated manifest data
+   */
   async generate(): Promise<Generation> {
     if (this.disabled)
       return {
@@ -591,6 +626,11 @@ export default class PWAManifestGenerator extends EventEmitter {
       manifest: this.manifest
     };
   }
+
+  /**
+   * Generates the default icons (i.e. the ones that appear in the manifest),
+   * adding them to the `generatedFiles` property.
+   */
   async genDefaultIcons(): Promise<void> {
     this.emit('defaultIconsStart', `Generating icons for ${this.name}...`);
     let purpose: string | undefined;
@@ -633,7 +673,12 @@ export default class PWAManifestGenerator extends EventEmitter {
     }
     this.emit('defaultIconsEnd');
   }
-  async genAppleTouchIcon(): Promise<void> {
+
+  /**
+   * Generates the Apple Touch Icon for this config, adding it to the
+   * `generatedFiles` property.
+   */
+  async genAppleTouchIcon(): Promise<Buffer> {
     this.emit('appleTouchIconStart', 'Generating Apple Touch Icon...');
     let buf: AwaitableBuffer;
     const atiSize = 180 - 2 * this.appleTouchIconPadding;
@@ -673,7 +718,13 @@ export default class PWAManifestGenerator extends EventEmitter {
       }
     ]);
     this.emit('appleTouchIconEnd');
+    return buf;
   }
+
+  /**
+   * Generates the favicons for this config, adding them to the
+   * `generatedFiles` property.
+   */
   async genFavicons(): Promise<void> {
     this.emit('faviconStart', 'Generating favicons...');
     for (const size of [32, 16]) {
@@ -704,6 +755,11 @@ export default class PWAManifestGenerator extends EventEmitter {
     }
     this.emit('faviconEnd');
   }
+
+  /**
+   * Generates the Microsoft Tile icons for this config, adding them to the
+   * `generatedFiles` property.
+   */
   async genMsTileIcons(): Promise<void> {
     this.emit('msTileStart', 'Generating Microsoft Tile Icons...');
     for (const size of [70, 150, 310]) {
@@ -752,6 +808,11 @@ export default class PWAManifestGenerator extends EventEmitter {
       rectMsTileFilename}"/>`;
     this.emit('msTileEnd');
   }
+
+  /**
+   * Generates the manifest object for this config, setting it into the
+   * `manifest` property.
+   */
   async genManifest(): Promise<void> {
     this.manifest = {
       name: this.name,

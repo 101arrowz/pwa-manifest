@@ -1,6 +1,5 @@
 import PWAManifestGenerator from '@pwa-manifest/core';
 import posthtml from 'posthtml';
-import { walk, match } from 'posthtml/lib/api';
 import logger from '@parcel/logger';
 import { resolve, dirname, join } from 'path';
 import { readFileSync, existsSync } from 'fs';
@@ -50,7 +49,6 @@ export = (bundler: FullBundler): void => {
   else if (!publicURL.endsWith('/')) publicURL += '/';
   bundler.on('buildStart', entryFiles => {
     try {
-      bundler.emit('pwaBuildStart');
       let pkgDir = resolve(dirname(entryFiles[0]));
       // If root directory, dirname(pkgDir) === pkgDir
       while (!existsSync(join(pkgDir, 'package.json'))) {
@@ -79,6 +77,7 @@ export = (bundler: FullBundler): void => {
           desc: pkg.description
         }
       );
+      if (generator.disabled) return;
       generator.on('*', (ev, ...args) => {
         bundler.emit(
           `pwa${ev.slice(0, 1).toUpperCase() + ev.slice(1)}`,
@@ -117,12 +116,12 @@ export = (bundler: FullBundler): void => {
                     this.injectedPWAManifest = true;
                     tree.match({ tag: 'head' }, node => {
                       node.content!.push(
-                        ...pwaManifestInjection.map(([tag, attrs]) => ({
-                          tag,
-                          attrs,
-                          walk,
-                          match
-                        }))
+                        ...pwaManifestInjection.map(([tag, attrs]) => {
+                          return ({
+                            tag,
+                            attrs
+                          } as unknown) as string; // suppress stupid TypeScript errors
+                        })
                       );
                       return node;
                     });
@@ -138,7 +137,14 @@ export = (bundler: FullBundler): void => {
           }
         );
         let addedAssets = false;
-        const { name: fakePath, options: { rootDir } } = (bundle.entryAsset ? bundle : bundle.childBundles.values().next().value as unknown as CorrectedParcelBundle).entryAsset;
+        const {
+          name: fakePath,
+          options: { rootDir }
+        } = (bundle.entryAsset
+          ? bundle
+          : ((bundle.childBundles.values().next()
+              .value as unknown) as CorrectedParcelBundle)
+        ).entryAsset;
         const modBundle = (localBundle: CorrectedParcelBundle): void => {
           const _package = localBundle._package;
           const packageFn = localBundle.package;
@@ -160,14 +166,23 @@ export = (bundler: FullBundler): void => {
                 )
               );
               localBundle.createChildBundle(
-                new PWAManifestAsset('browserconfig.xml', [fakePath, rootDir], outDir, browserConfig)
+                new PWAManifestAsset(
+                  'browserconfig.xml',
+                  [fakePath, rootDir],
+                  outDir,
+                  browserConfig
+                )
               );
               for (const file in generatedFiles)
                 localBundle.createChildBundle(
-                  new PWAManifestAsset(file, [fakePath, rootDir], outDir, generatedFiles[file])
+                  new PWAManifestAsset(
+                    file,
+                    [fakePath, rootDir],
+                    outDir,
+                    generatedFiles[file]
+                  )
                 );
               logger.success('Manifest creation successful.');
-              bundler.emit('pwaBuildEnd');
             }
             localBundle.package = packageFn;
             return await localBundle.package(...args);
@@ -175,7 +190,6 @@ export = (bundler: FullBundler): void => {
           localBundle._package = async () => {
             await bundlerPatch;
             localBundle._package = _package;
-            // VERY hacky solution - TODO: modify PostHTML args instead
             await localBundle._package(bundler);
           };
           for (const childBundle of localBundle.childBundles.values())
