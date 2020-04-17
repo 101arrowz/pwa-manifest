@@ -16,7 +16,7 @@ attachManifestGenerator(bundler as FullBundler);
 jest.setTimeout(10000);
 test('Integrated correctly', async done => {
   new Promise(res =>
-    bundler.on('pwaBuildEnd', () => {
+    bundler.on('buildEnd', () => {
       expect(readdirSync(outDir)).toMatchSnapshot();
       expect(
         readFileSync(resolve(outDir, 'index.html')).toString()

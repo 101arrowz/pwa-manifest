@@ -1,10 +1,10 @@
-import PWAManifestGenerator, { Manifest } from '../index';
+import PWAManifestGenerator, { Manifest, HTMLInsert } from '../index';
 import testConfigs, { Config, ResultConfig, ErrorConfig } from './testConfigs';
 jest.setTimeout(30000);
 const testConfig = ({ config, msg, ...props }: Config): void =>
   test(msg || 'icons are correctly generated', async () => {
     let generator: PWAManifestGenerator;
-    let generatedHTML: string;
+    let generatedHTML: HTMLInsert[];
     let generatedFiles: string[];
     let generatedBrowserConfig: string;
     let generatedManifest: Manifest;

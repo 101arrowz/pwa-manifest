@@ -43,7 +43,7 @@ export type HashMethod = 'name' | 'content' | 'none';
 export type Generation = {
   browserConfig: string;
   generatedFiles: GeneratedFiles;
-  html: string;
+  html: HTMLInsert[];
   manifest: Manifest;
 };
 export type EmittedGenEvent = {
@@ -67,6 +67,7 @@ export type EndEvent =
   | 'msTileEnd';
 export type BaseEvent = 'start' | 'end';
 export type Event = StartEvent | GenerationEvent | EndEvent | BaseEvent;
+export type HTMLInsert = [string, Record<string, string>];
 type AwaitableBuffer = Buffer | Promise<Buffer>;
 const createEvent = (img: AwaitableBuffer): EmittedGenEvent => ({
   filename: Promise.resolve(undefined),
@@ -115,7 +116,7 @@ export default class PWAManifestGenerator extends EventEmitter {
   }
   generatedFiles: GeneratedFiles = {};
   manifest: Manifest = {};
-  html: string;
+  html: HTMLInsert[] = [];
   private intBrowserConfig: string;
   get browserConfig(): string {
     return `<?xml version="1.0" encoding="utf-8"?><browserconfig><msapplication><tile>${this.intBrowserConfig}</tile></msapplication></browserconfig>`;
@@ -363,7 +364,11 @@ export default class PWAManifestGenerator extends EventEmitter {
       )
         throw "The purposes parameter in the icon generation options must be an array for which each element is one of 'badge', 'maskable', or 'any'.";
     this.purposes = purposes;
-    this.html = `<meta name="msapplication-config" content="${baseURL}browserconfig.xml"><meta name="theme-color" content="${theme}">`;
+    this.html.push([
+      'meta',
+      { name: 'msapplication-config', content: baseURL + 'browserconfig.xml' }
+    ]);
+    this.html.push(['meta', { name: 'theme-color', content: theme }]);
     const appleTouchIconBG =
       opt(genIconOpts, [
         'appleTouchIconBG',
@@ -569,7 +574,7 @@ export default class PWAManifestGenerator extends EventEmitter {
       return {
         browserConfig: '',
         generatedFiles: {},
-        html: '',
+        html: [],
         manifest: {}
       };
     this.emit('start');
@@ -659,8 +664,14 @@ export default class PWAManifestGenerator extends EventEmitter {
     const atiname =
       (await ev.filename) || this.fingerprint('apple-touch-icon.png', buf);
     this.generatedFiles[atiname] = buf;
-    this.html += `<link rel="apple-touch-icon" sizes="180x180" href="${this.meta
-      .baseURL + atiname}">`;
+    this.html.push([
+      'link',
+      {
+        rel: 'apple-touch-icon',
+        sizes: '180x180',
+        href: this.meta.baseURL + atiname
+      }
+    ]);
     this.emit('appleTouchIconEnd');
   }
   async genFavicons(): Promise<void> {
@@ -686,8 +697,10 @@ export default class PWAManifestGenerator extends EventEmitter {
         (await ev.filename) ||
         this.fingerprint('favicon-' + sizes + '.png', favicon);
       this.generatedFiles[filename] = favicon;
-      this.html += `<link rel="icon" sizes="${sizes}" href="${this.meta
-        .baseURL + filename}">`;
+      this.html.push([
+        'link',
+        { rel: 'icon', sizes, href: this.meta.baseURL + filename }
+      ]);
     }
     this.emit('faviconEnd');
   }
@@ -750,6 +763,9 @@ export default class PWAManifestGenerator extends EventEmitter {
       theme_color: this.theme,
       ...this.extraParams
     };
-    this.html += `<link rel="manifest" href="${this.meta.baseURL}manifest.webmanifest">`;
+    this.html.push([
+      'link',
+      { rel: 'manifest', href: this.meta.baseURL + 'manifest.webmanifest' }
+    ]);
   }
 }

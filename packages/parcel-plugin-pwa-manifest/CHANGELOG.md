@@ -1,3 +1,7 @@
+# 3.0.0
+- Now automatically inserts links into every HTML file
+- Speed dramatically improved (begin at build start rather than end)
+- Images are included in final logs
 # 2.9.3
 - Removed deprecated `serviceworker` option support; added screenshot resolution
 # 2.9.2

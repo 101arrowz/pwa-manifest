@@ -3,7 +3,7 @@
   "description": "A PWA",
   "pwaManifest": {
     "genIconOpts": {
-      "baseIcon": "icon.svg",
+      "baseIcon": "icons/icon.svg",
       "sizes": []
     }
   }

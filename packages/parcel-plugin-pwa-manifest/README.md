@@ -77,7 +77,6 @@ In the case of icon generation, you could manually do it with something like [Re
 Integrating manifest generation into the build pipeline makes life easier. Only minimal configuration is *required*, but if you want you can still customize to your heart's content.
 
 ## Are there any limitations?
-Yes. As of now, the plugin only supports applications that have a single HTML file, `index.html`, at their root paths. That should be almost all of them, but if you need the manifest served at multiple HTML files, you're out of luck. (If anyone needs this, you can make an issue and provide your use case.)
 
 Safari pinned tab support would also require an autotracer to get an SVG output, which is too large an addition for a small plugin like this. If you absolutely need pinned tab support, you have to manually insert it into the original HTML file.
 
