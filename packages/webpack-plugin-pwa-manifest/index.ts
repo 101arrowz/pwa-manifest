@@ -1,4 +1,5 @@
 import PWAManifestGenerator, {
+  htmlInsertToString,
   PWAManifestOptions,
   HashMethod,
   StartEvent,
@@ -97,7 +98,7 @@ class WebpackPluginPWAManifest {
         } = await gen.generate();
         if (HtmlWebpackPlugin) {
           const ind = data.html.search(headSearch);
-          data.html = data.html.slice(0, ind) + html + data.html.slice(ind);
+          data.html = data.html.slice(0, ind) + html.map(htmlInsertToString).join('') + data.html.slice(ind);
         }
         logger.group('Writing files...');
         for (const file in generatedFiles)

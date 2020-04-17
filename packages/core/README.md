@@ -43,7 +43,10 @@ After you create the generator, you can generate the manifest, HTML to be inject
 
 To convert the HTML insertion array into a string, use the `htmlInsertToString` method:
 ```js
-const { default: PWAManifestGenerator, htmlInsertToString } = require('@pwa-manifest/core');
+const {
+  default: PWAManifestGenerator,
+  htmlInsertToString
+} = require('@pwa-manifest/core');
 /* Use the following for ES Modules:
 import PWAManifestGenerator, { htmlInsertToString } from '@pwa-manifest/core';
 */
@@ -162,3 +165,6 @@ generator.on('faviconGen', ev => {
   ev.content = ev.content.then(buf => tintRed(buf))
 });
 ```
+
+## License
+MIT
