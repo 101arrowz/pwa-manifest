@@ -3,6 +3,8 @@ declare module 'parcel-bundler' {
     constructor(name: string, options: object);
     generated: Record<string, unknown>;
     type: string;
+    name: string;
+    options: { rootDir: string };
   }
 }
 export {};

@@ -6,21 +6,22 @@ import { resolve, dirname, join } from 'path';
 import { readFileSync, existsSync } from 'fs';
 import { CorrectedParcelBundle } from './types';
 import { Asset } from 'parcel-bundler';
-
 class PWAManifestAsset extends Asset {
   hash: string;
   generated: { raw: Buffer | string };
   constructor(
     private srcName: string,
+    [fakePath, rootDir]: [string, string],
     outDir: string,
     private trueContents: Buffer | string
   ) {
-    super(join('__pwaManifest', srcName) + '.raw', {
+    super(fakePath, {
       outDir,
-      rootDir: '__pwaManifest'
+      rootDir
     });
     const noExt = srcName.slice(0, srcName.lastIndexOf('.'));
     this.hash = noExt.slice(noExt.lastIndexOf('.'));
+    this.type = 'raw';
     this.generated = {
       raw: trueContents
     };
@@ -29,7 +30,9 @@ class PWAManifestAsset extends Asset {
     return this.srcName;
   }
   async load(): Promise<Buffer> {
-    return this.trueContents instanceof Buffer ? this.trueContents : Buffer.from(this.trueContents);
+    return this.trueContents instanceof Buffer
+      ? this.trueContents
+      : Buffer.from(this.trueContents);
   }
 }
 
@@ -82,7 +85,7 @@ export = (bundler: FullBundler): void => {
           ...args
         );
         if (ev.endsWith('Start')) {
-          logger.progress(args[0]);
+          setTimeout(() => logger.progress(args[0]), 0);
         }
       });
       if (contentHash) generator.hashMethod = 'content';
@@ -135,6 +138,7 @@ export = (bundler: FullBundler): void => {
           }
         );
         let addedAssets = false;
+        const { name: fakePath, options: { rootDir } } = (bundle.entryAsset ? bundle : bundle.childBundles.values().next().value as unknown as CorrectedParcelBundle).entryAsset;
         const modBundle = (localBundle: CorrectedParcelBundle): void => {
           const _package = localBundle._package;
           const packageFn = localBundle.package;
@@ -150,16 +154,17 @@ export = (bundler: FullBundler): void => {
               localBundle.createChildBundle(
                 new PWAManifestAsset(
                   'manifest.webmanifest',
+                  [fakePath, rootDir],
                   outDir,
                   JSON.stringify(manifest)
                 )
               );
               localBundle.createChildBundle(
-                new PWAManifestAsset('browserconfig.xml', outDir, browserConfig)
+                new PWAManifestAsset('browserconfig.xml', [fakePath, rootDir], outDir, browserConfig)
               );
               for (const file in generatedFiles)
                 localBundle.createChildBundle(
-                  new PWAManifestAsset(file, outDir, generatedFiles[file])
+                  new PWAManifestAsset(file, [fakePath, rootDir], outDir, generatedFiles[file])
                 );
               logger.success('Manifest creation successful.');
               bundler.emit('pwaBuildEnd');
