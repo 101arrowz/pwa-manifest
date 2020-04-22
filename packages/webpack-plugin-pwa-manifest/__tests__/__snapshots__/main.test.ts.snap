@@ -29,12 +29,12 @@ exports[`Integrated correctly 2`] = `"<?xml version=\\"1.0\\" encoding=\\"utf-8\
 exports[`Integrated correctly 3`] = `
 "<!DOCTYPE html>
 <html>
-  <head><meta name=\\"msapplication-config\\" content=\\"/browserconfig.xml\\"><meta name=\\"theme-color\\" content=\\"white\\"><link rel=\\"apple-touch-icon\\" sizes=\\"180x180\\" href=\\"/apple-touch-icon.a9f2329b.png\\"><link rel=\\"manifest\\" href=\\"/manifest.webmanifest\\">
-    <meta charset=\\"UTF-8\\">
+  <head>
+    <meta charset=\\"utf-8\\">
     <title>Webpack App</title>
-  </head>
+  <meta name=\\"viewport\\" content=\\"width=device-width, initial-scale=1\\"><meta name=\\"msapplication-config\\" content=\\"/browserconfig.xml\\"><meta name=\\"theme-color\\" content=\\"white\\"><link rel=\\"apple-touch-icon\\" sizes=\\"180x180\\" href=\\"/apple-touch-icon.a9f2329b.png\\"><link rel=\\"manifest\\" href=\\"/manifest.webmanifest\\"></head>
   <body>
-  <script type=\\"text/javascript\\" src=\\"main.js\\"></script></body>
+  <script src=\\"main.js\\"></script></body>
 </html>"
 `;
 

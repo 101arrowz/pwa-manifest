@@ -93,7 +93,7 @@ If you need to have a parameter not included in that list, put an array of param
 
 The `theme_color` (aka `theme`) will default to white and will change the default behavior of some parts of the icon generation, such as the background color of the Microsoft Tile.
 
-The `screenshots`, unlike in a normal web app manifest, should be an array of string screenshot image filepaths or absolute URLs. Do not use relative URLs or they will be confused for filepaths. Each image should be a PNG, JPEG, or WebP file.
+The `screenshots`, unlike in a normal web app manifest, should be an array of screenshot image filepaths or absolute URLs. Do not use relative URLs or they will be confused for filepaths. Each image should be a PNG, JPEG, or WebP file.
 
 Instead of manually setting an `icons` parameter containing a set of icons, you should use `genIconOpts` (aka `iconGenerationOptions`, `iconGenOpts`, ...you get the gist). `genIconOpts` will contain the options for icon generation. The parameters for `genIconOpts` are as follows:
 #### `baseIcon`
@@ -132,11 +132,18 @@ The parameters to use when `NODE_ENV` is a certain value. Merged with the outer 
 - Can be anything. `production` and `development` are common, but you could hypothetically set your `NODE_ENV` to `asdf` and have an `asdf` key with custom manifest generation options
 
 ## Advanced: Events
-See the [events section for the core package](https://github.com/101arrowz/pwa-manifest/tree/master/packages/core/README.md#Advanced-Events). The only difference is that all event names are prefixed with the string `'pwa'` and there is no `'*'` (wildcard) event.
+See the [events section for the core package](https://github.com/101arrowz/pwa-manifest/tree/master/packages/core/README.md#Advanced-Events). All events are emitted on the bundler. The only difference is that all event names are prefixed with the string `'pwa'` and there is no `'*'` (wildcard) event. Events are still camelCase, though. For example, `start` becomes `pwaStart`, `appleTouchIconGen` becomes `pwaAppleTouchIconGen`, etc.
 
-## Known Issues
-- JPEG output has a black background by default. There's nothing I can do about this other than add a new option for background color because JPEG does not support transparency.
-  - I suggest that you don't output JPEG at all, I only offer it for those who may need it. 
+If you have the plugin configured in `package.json`, you can do this in a custom build script:
+```js
+const Bundler = require('parcel-bundler');
+
+const bundler = new Bundler('index.html');
+bundler.on('pwaAppleTouchIconGen', data => {
+  // Prevent filename hashing for Apple Touch Icon
+  data.filename = Promise.resolve('apple-touch-icon.png');
+})
+```
 
 ## License
 MIT

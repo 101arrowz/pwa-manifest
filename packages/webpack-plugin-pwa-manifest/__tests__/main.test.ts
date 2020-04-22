@@ -9,6 +9,7 @@ test('Integrated correctly', async done => {
   const out = join(__dirname, 'tmp', Date.now().toString(36));
   await new Promise((res, rej) => {
     webpack({
+      mode: 'development',
       plugins: [
         new HtmlWebpackPlugin(),
         new WebpackPluginPWAManifest({

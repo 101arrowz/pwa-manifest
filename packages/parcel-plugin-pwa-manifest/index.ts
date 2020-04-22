@@ -156,7 +156,6 @@ export = (bundler: FullBundler): void => {
             } = await generationPromise;
             if (!addedAssets) {
               addedAssets = true;
-              logger.progress('Writing files...');
               localBundle.createChildBundle(
                 new PWAManifestAsset(
                   'manifest.webmanifest',
