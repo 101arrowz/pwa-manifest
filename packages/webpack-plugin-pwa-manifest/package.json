@@ -1,15 +1,16 @@
 {
   "name": "webpack-plugin-pwa-manifest",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A Webpack plugin that generates a Web App Manifest, creates all necessary icons, and more!",
   "main": "lib/index.js",
+  "homepage": "https://github.com/101arrowz/pwa-manifest/tree/master/packages/webpack-plugin-pwa-manifest",
   "repository": {
     "type": "git",
-    "url": "https://github.com/101arrowz/parcel-plugin-pwa-manifest.git"
+    "url": "https://github.com/101arrowz/pwa-manifest.git"
   },
   "bugs": {
     "email": "arjunbarrett@gmail.com",
-    "url": "https://github.com/101arrowz/parcel-plugin-pwa-manifest"
+    "url": "https://github.com/101arrowz/pwa-manifest/issues"
   },
   "author": "Arjun Barrett <arjunbarrett@gmail.com>",
   "license": "MIT",

@@ -46,7 +46,10 @@ const createHooks = (): Hooks => ({
 
 class WebpackPluginPWAManifest extends EventEmitter {
   private resolveDir: string;
-  constructor(private opts: PWAManifestOptions, private conf: { fingerprint: boolean } = { fingerprint: true }) {
+  constructor(
+    private opts: PWAManifestOptions,
+    private conf: { fingerprint: boolean } = { fingerprint: true }
+  ) {
     super();
     const cs = callsite()[1];
     this.resolveDir = cs ? dirname(cs.getFileName()) : '.';
@@ -59,23 +62,20 @@ class WebpackPluginPWAManifest extends EventEmitter {
         gen = new PWAManifestGenerator(this.opts, {
           baseURL: compilation.outputOptions.publicPath
         });
-      } catch(e) {
+      } catch (e) {
         compilation.errors.push(new Error(e));
         return;
       }
       if (this.conf.fingerprint)
-        gen.hashMethod = process.env.NODE_ENV === 'production' ? 'content' : 'name';
-      else
-        gen.hashMethod = 'none';
+        gen.hashMethod =
+          process.env.NODE_ENV === 'production' ? 'content' : 'name';
+      else gen.hashMethod = 'none';
       const hooks = WebpackPluginPWAManifest.getHooks(compilation);
       gen.on('*', (ev, ...args) => {
-        if (ev.endsWith('Start'))
-          logger.status(args[0]);
+        if (ev.endsWith('Start')) logger.status(args[0]);
         const hook = hooks[ev];
-        if (hook instanceof SyncHook)
-          hook.call(...args);
-        else
-          hook.promise(...args);
+        if (hook instanceof SyncHook) hook.call(...args);
+        else hook.promise(...args);
         this.emit(ev, ...args);
       });
       const genProm = gen.generate();
@@ -85,7 +85,7 @@ class WebpackPluginPWAManifest extends EventEmitter {
           let generation: Generation;
           try {
             generation = await genProm;
-          } catch(e) {
+          } catch (e) {
             compilation.errors.push(e);
             return data;
           }
@@ -93,8 +93,16 @@ class WebpackPluginPWAManifest extends EventEmitter {
           for (const filename in generatedFiles)
             compilation.assets[filename] = toAsset(generatedFiles[filename]);
           compilation.assets['browserconfig.xml'] = toAsset(browserConfig);
-          compilation.assets['manifest.webmanifest'] = toAsset(JSON.stringify(manifest));
-          data.headTags = data.headTags.concat(...html.map(([tagName, attributes]) => ({ tagName, attributes, voidTag: true })));
+          compilation.assets['manifest.webmanifest'] = toAsset(
+            JSON.stringify(manifest)
+          );
+          data.headTags = data.headTags.concat(
+            ...html.map(([tagName, attributes]) => ({
+              tagName,
+              attributes,
+              voidTag: true
+            }))
+          );
           return data;
         }
       );
