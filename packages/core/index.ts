@@ -345,14 +345,16 @@ export default class PWAManifestGenerator extends EventEmitter {
       throw 'The sizes parameter in the icon generation options must be an array of numeric pixel values for sizes of the images.';
     this.sizes = sizes;
 
+    const png = {
+      compressionLevel: 9
+    };
+
     let formats: FormatOptions = {
       webp: {
-        quality: 60,
+        quality: 85,
         reductionEffort: 6
       },
-      png: {
-        compressionLevel: 9
-      }
+      png
     };
     const tmpFormats = opt(genIconOpts, [
       'formats',
@@ -365,11 +367,12 @@ export default class PWAManifestGenerator extends EventEmitter {
       Object.keys(tmpFormats).every(v =>
         ['png', 'jpeg', 'webp', 'tiff'].includes(v)
       )
-    )
+    ) {
       formats = {
-        png: formats.png,
         ...tmpFormats
       };
+      if (!tmpFormats.png) formats.png = png;
+    }
     // PNG needed in all PWAs
     else if (typeof tmpFormats !== 'undefined')
       throw 'The formats parameter in the icon generation options must be an object with each key being a supported file type (png, webp, jpeg, or tiff) for the output images, and each value being the options to pass to sharp.';
@@ -696,7 +699,7 @@ export default class PWAManifestGenerator extends EventEmitter {
         .toBuffer();
       buf = sharp(appleTouchIconTransparent)
         .flatten({ background: this.appleTouchIconBG })
-        .png(this.formats.png || {})
+        .png(this.formats.png)
         .toBuffer();
     } catch (e) {
       // istanbul ignore next
@@ -733,7 +736,7 @@ export default class PWAManifestGenerator extends EventEmitter {
         favicon = this.baseIcon
           .clone()
           .resize(size, size, this.resizeOptions)
-          .png(this.formats.png || {})
+          .png(this.formats.png)
           .toBuffer();
       } catch (e) {
         // istanbul ignore next
@@ -768,7 +771,7 @@ export default class PWAManifestGenerator extends EventEmitter {
         msTile = this.baseIcon
           .clone()
           .resize(size, size, this.resizeOptions)
-          .png(this.formats.png || {})
+          .png(this.formats.png)
           .toBuffer();
       } catch (e) {
         // istanbul ignore next
@@ -791,7 +794,7 @@ export default class PWAManifestGenerator extends EventEmitter {
       rectMsTile = this.baseIcon
         .clone()
         .resize(310, 150, this.resizeOptions)
-        .png(this.formats.png || {})
+        .png(this.formats.png)
         .toBuffer();
     } catch (e) {
       // istanbul ignore next

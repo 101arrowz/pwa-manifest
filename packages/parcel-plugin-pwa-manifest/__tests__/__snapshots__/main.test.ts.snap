@@ -5,9 +5,9 @@ Array [
   "apple-touch-icon.67e6641c.png",
   "browserconfig.xml",
   "icon-192x192.1421700b.png",
-  "icon-192x192.634db135.webp",
+  "icon-192x192.60385309.webp",
   "icon-512x512.03718fd9.png",
-  "icon-512x512.b0f68593.webp",
+  "icon-512x512.53c5ad04.webp",
   "index.html",
   "manifest.webmanifest",
   "mstile-150x150.db75c4ea.png",
@@ -40,7 +40,7 @@ Object {
   "icons": Array [
     Object {
       "sizes": "192x192",
-      "src": "/icon-192x192.634db135.webp",
+      "src": "/icon-192x192.60385309.webp",
       "type": "image/webp",
     },
     Object {
@@ -50,7 +50,7 @@ Object {
     },
     Object {
       "sizes": "512x512",
-      "src": "/icon-512x512.b0f68593.webp",
+      "src": "/icon-512x512.53c5ad04.webp",
       "type": "image/webp",
     },
     Object {

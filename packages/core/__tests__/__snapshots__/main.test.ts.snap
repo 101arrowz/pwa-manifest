@@ -2,9 +2,9 @@
 
 exports[`Apple Touch Icon generation options work correctly 1`] = `
 Array [
-  "icon-192x192.634db135.webp",
+  "icon-192x192.60385309.webp",
   "icon-192x192.1421700b.png",
-  "icon-512x512.b0f68593.webp",
+  "icon-512x512.53c5ad04.webp",
   "icon-512x512.03718fd9.png",
   "apple-touch-icon.55a3a855.png",
   "mstile-70x70.d4870be2.png",
@@ -22,7 +22,7 @@ Object {
   "icons": Array [
     Object {
       "sizes": "192x192",
-      "src": "./icon-192x192.634db135.webp",
+      "src": "./icon-192x192.60385309.webp",
       "type": "image/webp",
     },
     Object {
@@ -32,7 +32,7 @@ Object {
     },
     Object {
       "sizes": "512x512",
-      "src": "./icon-512x512.b0f68593.webp",
+      "src": "./icon-512x512.53c5ad04.webp",
       "type": "image/webp",
     },
     Object {
@@ -87,9 +87,9 @@ Array [
 
 exports[`Config overrides package.json properties 1`] = `
 Array [
-  "icon-192x192.634db135.webp",
+  "icon-192x192.60385309.webp",
   "icon-192x192.1421700b.png",
-  "icon-512x512.b0f68593.webp",
+  "icon-512x512.53c5ad04.webp",
   "icon-512x512.03718fd9.png",
   "apple-touch-icon.67e6641c.png",
   "mstile-70x70.d4870be2.png",
@@ -107,7 +107,7 @@ Object {
   "icons": Array [
     Object {
       "sizes": "192x192",
-      "src": "./icon-192x192.634db135.webp",
+      "src": "./icon-192x192.60385309.webp",
       "type": "image/webp",
     },
     Object {
@@ -117,7 +117,7 @@ Object {
     },
     Object {
       "sizes": "512x512",
-      "src": "./icon-512x512.b0f68593.webp",
+      "src": "./icon-512x512.53c5ad04.webp",
       "type": "image/webp",
     },
     Object {
@@ -172,9 +172,9 @@ Array [
 
 exports[`Custom NODE_ENV options work 1`] = `
 Array [
-  "icon-192x192.634db135.webp",
+  "icon-192x192.60385309.webp",
   "icon-192x192.1421700b.png",
-  "icon-512x512.b0f68593.webp",
+  "icon-512x512.53c5ad04.webp",
   "icon-512x512.03718fd9.png",
   "apple-touch-icon.67e6641c.png",
   "mstile-70x70.d4870be2.png",
@@ -192,7 +192,7 @@ Object {
   "icons": Array [
     Object {
       "sizes": "192x192",
-      "src": "./icon-192x192.634db135.webp",
+      "src": "./icon-192x192.60385309.webp",
       "type": "image/webp",
     },
     Object {
@@ -202,7 +202,7 @@ Object {
     },
     Object {
       "sizes": "512x512",
-      "src": "./icon-512x512.b0f68593.webp",
+      "src": "./icon-512x512.53c5ad04.webp",
       "type": "image/webp",
     },
     Object {
@@ -257,15 +257,15 @@ Array [
 
 exports[`Default generation works correctly 1`] = `
 Array [
-  "icon-96x96.70093599.webp",
+  "icon-96x96.b1e09075.webp",
   "icon-96x96.c5330840.png",
-  "icon-152x152.7ef67a0a.webp",
+  "icon-152x152.a1f4f47a.webp",
   "icon-152x152.6115bce1.png",
-  "icon-192x192.634db135.webp",
+  "icon-192x192.60385309.webp",
   "icon-192x192.1421700b.png",
-  "icon-384x384.523968a2.webp",
+  "icon-384x384.e4fe6960.webp",
   "icon-384x384.59b7a9f8.png",
-  "icon-512x512.b0f68593.webp",
+  "icon-512x512.53c5ad04.webp",
   "icon-512x512.03718fd9.png",
   "apple-touch-icon.67e6641c.png",
   "mstile-70x70.d4870be2.png",
@@ -283,7 +283,7 @@ Object {
   "icons": Array [
     Object {
       "sizes": "96x96",
-      "src": "./icon-96x96.70093599.webp",
+      "src": "./icon-96x96.b1e09075.webp",
       "type": "image/webp",
     },
     Object {
@@ -293,7 +293,7 @@ Object {
     },
     Object {
       "sizes": "152x152",
-      "src": "./icon-152x152.7ef67a0a.webp",
+      "src": "./icon-152x152.a1f4f47a.webp",
       "type": "image/webp",
     },
     Object {
@@ -303,7 +303,7 @@ Object {
     },
     Object {
       "sizes": "192x192",
-      "src": "./icon-192x192.634db135.webp",
+      "src": "./icon-192x192.60385309.webp",
       "type": "image/webp",
     },
     Object {
@@ -313,7 +313,7 @@ Object {
     },
     Object {
       "sizes": "384x384",
-      "src": "./icon-384x384.523968a2.webp",
+      "src": "./icon-384x384.e4fe6960.webp",
       "type": "image/webp",
     },
     Object {
@@ -323,7 +323,7 @@ Object {
     },
     Object {
       "sizes": "512x512",
-      "src": "./icon-512x512.b0f68593.webp",
+      "src": "./icon-512x512.53c5ad04.webp",
       "type": "image/webp",
     },
     Object {
@@ -378,9 +378,9 @@ Array [
 
 exports[`Favicon generation works correctly 1`] = `
 Array [
-  "icon-192x192.634db135.webp",
+  "icon-192x192.60385309.webp",
   "icon-192x192.1421700b.png",
-  "icon-512x512.b0f68593.webp",
+  "icon-512x512.53c5ad04.webp",
   "icon-512x512.03718fd9.png",
   "favicon-32x32.743f0ca1.png",
   "favicon-16x16.d8c5885e.png",
@@ -400,7 +400,7 @@ Object {
   "icons": Array [
     Object {
       "sizes": "192x192",
-      "src": "./icon-192x192.634db135.webp",
+      "src": "./icon-192x192.60385309.webp",
       "type": "image/webp",
     },
     Object {
@@ -410,7 +410,7 @@ Object {
     },
     Object {
       "sizes": "512x512",
-      "src": "./icon-512x512.b0f68593.webp",
+      "src": "./icon-512x512.53c5ad04.webp",
       "type": "image/webp",
     },
     Object {
@@ -481,11 +481,11 @@ Array [
 
 exports[`Formats work correctly 1`] = `
 Array [
-  "icon-192x192.1421700b.png",
   "icon-192x192.c2e0ecd6.webp",
+  "icon-192x192.1421700b.png",
   "icon-192x192.41e1ed48.jpeg",
-  "icon-512x512.03718fd9.png",
   "icon-512x512.f44f37e8.webp",
+  "icon-512x512.03718fd9.png",
   "icon-512x512.868f70e4.jpeg",
   "apple-touch-icon.67e6641c.png",
   "mstile-70x70.d4870be2.png",
@@ -503,13 +503,13 @@ Object {
   "icons": Array [
     Object {
       "sizes": "192x192",
-      "src": "./icon-192x192.1421700b.png",
-      "type": "image/png",
+      "src": "./icon-192x192.c2e0ecd6.webp",
+      "type": "image/webp",
     },
     Object {
       "sizes": "192x192",
-      "src": "./icon-192x192.c2e0ecd6.webp",
-      "type": "image/webp",
+      "src": "./icon-192x192.1421700b.png",
+      "type": "image/png",
     },
     Object {
       "sizes": "192x192",
@@ -518,13 +518,13 @@ Object {
     },
     Object {
       "sizes": "512x512",
-      "src": "./icon-512x512.03718fd9.png",
-      "type": "image/png",
+      "src": "./icon-512x512.f44f37e8.webp",
+      "type": "image/webp",
     },
     Object {
       "sizes": "512x512",
-      "src": "./icon-512x512.f44f37e8.webp",
-      "type": "image/webp",
+      "src": "./icon-512x512.03718fd9.png",
+      "type": "image/png",
     },
     Object {
       "sizes": "512x512",
@@ -578,9 +578,9 @@ Array [
 
 exports[`Microsoft Tile generation options work correctly 1`] = `
 Array [
-  "icon-192x192.634db135.webp",
+  "icon-192x192.60385309.webp",
   "icon-192x192.1421700b.png",
-  "icon-512x512.b0f68593.webp",
+  "icon-512x512.53c5ad04.webp",
   "icon-512x512.03718fd9.png",
   "apple-touch-icon.67e6641c.png",
   "mstile-70x70.d4870be2.png",
@@ -598,7 +598,7 @@ Object {
   "icons": Array [
     Object {
       "sizes": "192x192",
-      "src": "./icon-192x192.634db135.webp",
+      "src": "./icon-192x192.60385309.webp",
       "type": "image/webp",
     },
     Object {
@@ -608,7 +608,7 @@ Object {
     },
     Object {
       "sizes": "512x512",
-      "src": "./icon-512x512.b0f68593.webp",
+      "src": "./icon-512x512.53c5ad04.webp",
       "type": "image/webp",
     },
     Object {
@@ -663,9 +663,9 @@ Array [
 
 exports[`Purpose modification works 1`] = `
 Array [
-  "icon-192x192.634db135.webp",
+  "icon-192x192.60385309.webp",
   "icon-192x192.1421700b.png",
-  "icon-512x512.b0f68593.webp",
+  "icon-512x512.53c5ad04.webp",
   "icon-512x512.03718fd9.png",
   "apple-touch-icon.67e6641c.png",
   "mstile-70x70.d4870be2.png",
@@ -684,7 +684,7 @@ Object {
     Object {
       "purpose": "maskable any",
       "sizes": "192x192",
-      "src": "./icon-192x192.634db135.webp",
+      "src": "./icon-192x192.60385309.webp",
       "type": "image/webp",
     },
     Object {
@@ -696,7 +696,7 @@ Object {
     Object {
       "purpose": "maskable any",
       "sizes": "512x512",
-      "src": "./icon-512x512.b0f68593.webp",
+      "src": "./icon-512x512.53c5ad04.webp",
       "type": "image/webp",
     },
     Object {
@@ -752,9 +752,9 @@ Array [
 
 exports[`Resize method option works correctly 1`] = `
 Array [
-  "icon-192x192.2e07c273.webp",
+  "icon-192x192.dbb23144.webp",
   "icon-192x192.3434e21c.png",
-  "icon-512x512.8c4e4901.webp",
+  "icon-512x512.5ae4ed85.webp",
   "icon-512x512.f91dd2b8.png",
   "apple-touch-icon.03f60dde.png",
   "mstile-70x70.648a2539.png",
@@ -772,7 +772,7 @@ Object {
   "icons": Array [
     Object {
       "sizes": "192x192",
-      "src": "./icon-192x192.2e07c273.webp",
+      "src": "./icon-192x192.dbb23144.webp",
       "type": "image/webp",
     },
     Object {
@@ -782,7 +782,7 @@ Object {
     },
     Object {
       "sizes": "512x512",
-      "src": "./icon-512x512.8c4e4901.webp",
+      "src": "./icon-512x512.5ae4ed85.webp",
       "type": "image/webp",
     },
     Object {
@@ -838,9 +838,9 @@ Array [
 exports[`Screenshot injection works 1`] = `
 Array [
   "screenshot.db3e932d.png",
-  "icon-192x192.634db135.webp",
+  "icon-192x192.60385309.webp",
   "icon-192x192.1421700b.png",
-  "icon-512x512.b0f68593.webp",
+  "icon-512x512.53c5ad04.webp",
   "icon-512x512.03718fd9.png",
   "apple-touch-icon.67e6641c.png",
   "mstile-70x70.d4870be2.png",
@@ -858,7 +858,7 @@ Object {
   "icons": Array [
     Object {
       "sizes": "192x192",
-      "src": "./icon-192x192.634db135.webp",
+      "src": "./icon-192x192.60385309.webp",
       "type": "image/webp",
     },
     Object {
@@ -868,7 +868,7 @@ Object {
     },
     Object {
       "sizes": "512x512",
-      "src": "./icon-512x512.b0f68593.webp",
+      "src": "./icon-512x512.53c5ad04.webp",
       "type": "image/webp",
     },
     Object {
@@ -933,15 +933,15 @@ Array [
 
 exports[`Specifying sizes works properly 1`] = `
 Array [
-  "icon-57x57.8df5d215.webp",
+  "icon-57x57.df72b665.webp",
   "icon-57x57.6cab30d1.png",
-  "icon-180x180.7ee1346f.webp",
+  "icon-180x180.5bd7895c.webp",
   "icon-180x180.e3c77fb2.png",
-  "icon-384x384.523968a2.webp",
+  "icon-384x384.e4fe6960.webp",
   "icon-384x384.59b7a9f8.png",
-  "icon-512x512.b0f68593.webp",
+  "icon-512x512.53c5ad04.webp",
   "icon-512x512.03718fd9.png",
-  "icon-192x192.634db135.webp",
+  "icon-192x192.60385309.webp",
   "icon-192x192.1421700b.png",
   "apple-touch-icon.67e6641c.png",
   "mstile-70x70.d4870be2.png",
@@ -959,7 +959,7 @@ Object {
   "icons": Array [
     Object {
       "sizes": "57x57",
-      "src": "./icon-57x57.8df5d215.webp",
+      "src": "./icon-57x57.df72b665.webp",
       "type": "image/webp",
     },
     Object {
@@ -969,7 +969,7 @@ Object {
     },
     Object {
       "sizes": "180x180",
-      "src": "./icon-180x180.7ee1346f.webp",
+      "src": "./icon-180x180.5bd7895c.webp",
       "type": "image/webp",
     },
     Object {
@@ -979,7 +979,7 @@ Object {
     },
     Object {
       "sizes": "384x384",
-      "src": "./icon-384x384.523968a2.webp",
+      "src": "./icon-384x384.e4fe6960.webp",
       "type": "image/webp",
     },
     Object {
@@ -989,7 +989,7 @@ Object {
     },
     Object {
       "sizes": "512x512",
-      "src": "./icon-512x512.b0f68593.webp",
+      "src": "./icon-512x512.53c5ad04.webp",
       "type": "image/webp",
     },
     Object {
@@ -999,7 +999,7 @@ Object {
     },
     Object {
       "sizes": "192x192",
-      "src": "./icon-192x192.634db135.webp",
+      "src": "./icon-192x192.60385309.webp",
       "type": "image/webp",
     },
     Object {
@@ -1054,9 +1054,9 @@ Array [
 
 exports[`Standard parameters work properly 1`] = `
 Array [
-  "icon-192x192.634db135.webp",
+  "icon-192x192.60385309.webp",
   "icon-192x192.1421700b.png",
-  "icon-512x512.b0f68593.webp",
+  "icon-512x512.53c5ad04.webp",
   "icon-512x512.03718fd9.png",
   "apple-touch-icon.636f8a01.png",
   "mstile-70x70.d4870be2.png",
@@ -1080,7 +1080,7 @@ Object {
   "icons": Array [
     Object {
       "sizes": "192x192",
-      "src": "./icon-192x192.634db135.webp",
+      "src": "./icon-192x192.60385309.webp",
       "type": "image/webp",
     },
     Object {
@@ -1090,7 +1090,7 @@ Object {
     },
     Object {
       "sizes": "512x512",
-      "src": "./icon-512x512.b0f68593.webp",
+      "src": "./icon-512x512.53c5ad04.webp",
       "type": "image/webp",
     },
     Object {
