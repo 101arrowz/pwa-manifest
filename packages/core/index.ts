@@ -421,7 +421,7 @@ export default class PWAManifestGenerator extends EventEmitter {
         'appleTouchIconPadding',
         'apple-touch-icon-padding',
         'atip'
-      ]) || 12;
+      ]) ?? 12;
     // istanbul ignore next
     if (typeof appleTouchIconPadding !== 'number')
       throw 'The Apple Touch Icon padding parameter must be a number of pixels to pad the image with on each side.';

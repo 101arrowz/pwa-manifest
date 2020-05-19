@@ -1,7 +1,9 @@
-## 3.03
+## 3.0.7
+- Made Apple Touch Icon Padding possible to set to 0 (fix #13)
+## 3.0.3-3.0.6
 - Removed `pwaBuildStart` and `pwaBuildEnd` events, since they are no longer useful
 - Improved documentation
-# 3.0.0-3.02
+# 3.0.0-3.0.2
 - Now automatically inserts links into every HTML file
 - Speed dramatically improved (begin at build start rather than end)
   - Could see zero impact on performance, unlike ANY other Parcel plugin out there
