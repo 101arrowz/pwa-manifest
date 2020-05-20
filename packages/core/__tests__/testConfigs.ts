@@ -144,6 +144,17 @@ const testConfigs: Config[] = [
     }
   },
   {
+    msg: 'Safari Pinned Tab options work',
+    config: {
+      genIconOpts: {
+        baseIcon: './icon.svg',
+        sizes: [],
+        genSafariPinnedTab: true,
+        sptc: 'black'
+      }
+    }
+  },
+  {
     msg: 'Standard parameters work properly',
     config: {
       name: 'My Amazing PWA',

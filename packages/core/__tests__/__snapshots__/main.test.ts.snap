@@ -835,9 +835,103 @@ Array [
 ]
 `;
 
+exports[`Safari Pinned Tab options work 1`] = `
+Array [
+  "icon-192x192.60385309.webp",
+  "icon-192x192.1421700b.png",
+  "icon-512x512.53c5ad04.webp",
+  "icon-512x512.03718fd9.png",
+  "safari-pinned-tab.a2b84e4d.svg",
+  "apple-touch-icon.67e6641c.png",
+  "mstile-70x70.d4870be2.png",
+  "mstile-150x150.db75c4ea.png",
+  "mstile-310x310.7d35cb45.png",
+  "mstile-310x150.df0ada1c.png",
+]
+`;
+
+exports[`Safari Pinned Tab options work 2`] = `
+Object {
+  "background_color": "white",
+  "description": "test",
+  "display": "standalone",
+  "icons": Array [
+    Object {
+      "sizes": "192x192",
+      "src": "./icon-192x192.60385309.webp",
+      "type": "image/webp",
+    },
+    Object {
+      "sizes": "192x192",
+      "src": "./icon-192x192.1421700b.png",
+      "type": "image/png",
+    },
+    Object {
+      "sizes": "512x512",
+      "src": "./icon-512x512.53c5ad04.webp",
+      "type": "image/webp",
+    },
+    Object {
+      "sizes": "512x512",
+      "src": "./icon-512x512.03718fd9.png",
+      "type": "image/png",
+    },
+  ],
+  "name": "tester",
+  "scope": "./",
+  "short_name": "tester",
+  "start_url": "./",
+  "theme_color": "white",
+}
+`;
+
+exports[`Safari Pinned Tab options work 3`] = `"<?xml version=\\"1.0\\" encoding=\\"utf-8\\"?><browserconfig><msapplication><tile><TileColor>white</TileColor><square70x70logo src=\\"./mstile-70x70.d4870be2.png\\"/><square150x150logo src=\\"./mstile-150x150.db75c4ea.png\\"/><square310x310logo src=\\"./mstile-310x310.7d35cb45.png\\"/><wide310x150logo src=\\"./mstile-310x150.df0ada1c.png\\"/></tile></msapplication></browserconfig>"`;
+
+exports[`Safari Pinned Tab options work 4`] = `
+Array [
+  Array [
+    "meta",
+    Object {
+      "content": "./browserconfig.xml",
+      "name": "msapplication-config",
+    },
+  ],
+  Array [
+    "meta",
+    Object {
+      "content": "white",
+      "name": "theme-color",
+    },
+  ],
+  Array [
+    "link",
+    Object {
+      "color": "black",
+      "href": "./safari-pinned-tab.a2b84e4d.svg",
+      "rel": "mask-icon",
+    },
+  ],
+  Array [
+    "link",
+    Object {
+      "href": "./apple-touch-icon.67e6641c.png",
+      "rel": "apple-touch-icon",
+      "sizes": "180x180",
+    },
+  ],
+  Array [
+    "link",
+    Object {
+      "href": "./manifest.webmanifest",
+      "rel": "manifest",
+    },
+  ],
+]
+`;
+
 exports[`Screenshot injection works 1`] = `
 Array [
-  "screenshot.db3e932d.png",
+  "screenshot.4c7a8b28.png",
   "icon-192x192.60385309.webp",
   "icon-192x192.1421700b.png",
   "icon-512x512.53c5ad04.webp",
@@ -885,7 +979,7 @@ Object {
       "type": "image/webp",
     },
     Object {
-      "src": "./screenshot.db3e932d.png",
+      "src": "./screenshot.4c7a8b28.png",
       "type": "image/png",
     },
   ],

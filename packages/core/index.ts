@@ -10,6 +10,7 @@ import { existsSync, readFileSync } from 'fs';
 import { basename, resolve } from 'path';
 import { EventEmitter } from 'events';
 import { createHash } from 'crypto';
+import { posterize } from './potrace';
 export type FormatOptions = {
   png: PngOptions;
   webp?: WebpOptions;
@@ -53,24 +54,30 @@ export type EmittedGenEvent = {
 export type StartEvent =
   | 'defaultIconsStart'
   | 'appleTouchIconStart'
+  | 'safariPinnedTabStart'
   | 'faviconStart'
   | 'msTileStart';
 export type GenerationEvent =
   | 'defaultIconsGen'
   | 'appleTouchIconGen'
+  | 'safariPinnedTabGen'
   | 'faviconGen'
   | 'msTileGen';
 export type EndEvent =
   | 'defaultIconsEnd'
   | 'appleTouchIconEnd'
+  | 'safariPinnedTabEnd'
   | 'faviconEnd'
   | 'msTileEnd';
 export type BaseEvent = 'start' | 'end';
 export type Event = StartEvent | GenerationEvent | EndEvent | BaseEvent;
 export type HTMLInsert = [string, Record<string, string>];
 type AwaitableBuffer = Buffer | Promise<Buffer>;
-const createEvent = (img: AwaitableBuffer): EmittedGenEvent => ({
-  filename: Promise.resolve(undefined),
+const createEvent = (
+  img: AwaitableBuffer,
+  filename: string
+): EmittedGenEvent => ({
+  filename: Promise.resolve(filename),
   content: Promise.resolve(img)
 });
 const isValidURL = (url: string): boolean => {
@@ -119,12 +126,14 @@ export default class PWAManifestGenerator extends EventEmitter {
   }
   private baseIcon: Sharp;
   private sizes: number[];
-  private purposes?: string[];
+  private purposes: string[];
   private formats: FormatOptions;
   private resizeOptions: ResizeOptions;
   private appleTouchIconBG: string;
   private appleTouchIconPadding: number;
   private doGenFavicons: boolean;
+  private doGenPinnedTab: boolean;
+  private pinnedTabColor: string;
   private extraParams: PWAManifestOptions;
   private defaultHashMethod: HashMethod = 'name';
   private icons: IconEntry[] = [];
@@ -397,7 +406,7 @@ export default class PWAManifestGenerator extends EventEmitter {
         )
       )
         throw "The purposes parameter in the icon generation options must be an array for which each element is one of 'badge', 'maskable', or 'any'.";
-    this.purposes = purposes;
+    this.purposes = purposes || [];
     this.html.push([
       'meta',
       { name: 'msapplication-config', content: baseURL + 'browserconfig.xml' }
@@ -436,6 +445,37 @@ export default class PWAManifestGenerator extends EventEmitter {
     if (!['boolean', 'undefined'].includes(typeof genFavicons))
       throw 'The favicon generation option in the icon generation options must be a boolean.';
     this.doGenFavicons = genFavicons;
+    const genPinnedTab = opt(genIconOpts, [
+      'genSafariPinnedTab',
+      'gen-safari-pinned-tab',
+      'genPinnedTab',
+      'gen-pinned-tab',
+      'generateSafariPinnedTab',
+      'generate-safari-pinned-tab',
+      'gpt',
+      'gspt'
+    ]);
+    // istanbul ignore next
+    if (!['boolean', 'undefined'].includes(typeof genPinnedTab))
+      throw 'The favicon generation option in the icon generation options must be a boolean.';
+    this.doGenPinnedTab = genPinnedTab;
+    const pinnedTabColor = opt(genIconOpts, [
+      'safariPinnedTabColor',
+      'safari-pinned-tab-color',
+      'pinnedTabColor',
+      'pinned-tab-color',
+      'sptc'
+    ]);
+    // istanbul ignore next
+    if (typeof pinnedTabColor !== 'string') {
+      if (typeof pinnedTabColor !== 'undefined')
+        throw 'The pinned tab color provided in the icon generation options must be a string representing a valid CSS color.';
+    } else if (!genPinnedTab) {
+      throw 'The pinned tab color cannot be specified without enabling pinned tab generation in the icon generation options.';
+    }
+    // Sketchy method of detecting default theme
+    this.pinnedTabColor = pinnedTabColor || theme === 'white' ? 'black' : theme;
+
     // No custom modifications for the rest of the common parameters, so we just do type checking
     const extraTypes: [string[], string | Verifier, unknown?][] = [
       [
@@ -593,7 +633,7 @@ export default class PWAManifestGenerator extends EventEmitter {
       base +
       '.' +
       (method === 'name'
-        ? this.intHashFunction('_parcel-plugin-pwa-manifest-' + filename).slice(
+        ? this.intHashFunction('_pwa-manifest-' + filename).slice(
             -8
           ) + '.'
         : method === 'content'
@@ -618,6 +658,7 @@ export default class PWAManifestGenerator extends EventEmitter {
     this.emit('start');
     await this.genDefaultIcons();
     if (this.doGenFavicons) await this.genFavicons();
+    if (this.doGenPinnedTab) await this.genSafariPinnedTab();
     await this.genAppleTouchIcon();
     await this.genMsTileIcons();
     await this.genManifest();
@@ -637,7 +678,7 @@ export default class PWAManifestGenerator extends EventEmitter {
   async genDefaultIcons(): Promise<void> {
     this.emit('defaultIconsStart', `Generating icons for ${this.name}...`);
     let purpose: string | undefined;
-    if (this.purposes) purpose = this.purposes.join(' ');
+    if (this.purposes.length) purpose = this.purposes.join(' ');
     for (const size of this.sizes) {
       const icon = this.baseIcon.clone().resize(size, size, this.resizeOptions);
       const saveSize = size + 'x' + size;
@@ -655,15 +696,13 @@ export default class PWAManifestGenerator extends EventEmitter {
           throw 'An unknown error ocurred during the icon creation process: ' +
             e;
         }
-        const ev = createEvent(buf);
+        const fn = this.baseIconName + '-' + saveSize + '.' + format;
+        const ev = createEvent(buf, fn);
+        const fnProm = ev.filename;
         this.emit('defaultIconsGen', ev);
         buf = await ev.content;
-        const filename =
-          (await ev.filename) ||
-          this.fingerprint(
-            this.baseIconName + '-' + saveSize + '.' + format,
-            buf
-          );
+        let filename = ev.filename === fnProm ? undefined : await ev.filename;
+        if (!filename) filename = this.fingerprint(fn, buf);
         this.generatedFiles[filename] = buf;
         const iconEntry: IconEntry = {
           src: this.meta.baseURL + filename,
@@ -681,7 +720,7 @@ export default class PWAManifestGenerator extends EventEmitter {
    * Generates the Apple Touch Icon for this config, adding it to the
    * `generatedFiles` property.
    */
-  async genAppleTouchIcon(): Promise<Buffer> {
+  async genAppleTouchIcon(): Promise<void> {
     this.emit('appleTouchIconStart', 'Generating Apple Touch Icon...');
     let buf: AwaitableBuffer;
     const atiSize = 180 - 2 * this.appleTouchIconPadding;
@@ -706,11 +745,13 @@ export default class PWAManifestGenerator extends EventEmitter {
       throw 'An unknown error ocurred during the Apple Touch Icon creation process: ' +
         e;
     }
-    const ev = createEvent(buf);
+    const fn = 'apple-touch-icon.png';
+    const ev = createEvent(buf, fn);
+    const fnProm = ev.filename;
     this.emit('appleTouchIconGen', ev);
     buf = await ev.content;
-    const atiname =
-      (await ev.filename) || this.fingerprint('apple-touch-icon.png', buf);
+    let atiname = ev.filename === fnProm ? undefined : await ev.filename;
+    if (!atiname) atiname = this.fingerprint(fn, buf);
     this.generatedFiles[atiname] = buf;
     this.html.push([
       'link',
@@ -721,7 +762,45 @@ export default class PWAManifestGenerator extends EventEmitter {
       }
     ]);
     this.emit('appleTouchIconEnd');
-    return buf;
+  }
+
+  /**
+   * Generates the Safari Pinned Tab icon for this config, adding it to the
+   * `generatedFiles` property.
+   */
+  async genSafariPinnedTab(): Promise<void> {
+    this.emit('safariPinnedTabStart', 'Generating Safari Pinned Tab...');
+    let safariPinnedTab: AwaitableBuffer;
+    try {
+      const { height, width } = await this.baseIcon.metadata();
+      safariPinnedTab = Buffer.from(
+        posterize(
+          await this.baseIcon
+            .clone()
+            .raw()
+            .toBuffer(),
+          width!,
+          height!
+        )
+      );
+    } catch (e) {
+      throw 'An unknown error ocurred during the Safari Pinned Tab creation process: ' +
+        e;
+    }
+    const fn = 'safari-pinned-tab.svg';
+    const ev = createEvent(safariPinnedTab, fn);
+    const fnProm = ev.filename;
+    this.emit('safariPinnedTabGen', ev);
+    safariPinnedTab = await ev.content;
+    let sptname = ev.filename === fnProm ? undefined : await ev.filename;
+    if (!sptname) sptname = this.fingerprint(fn, safariPinnedTab);
+    this.generatedFiles[sptname] = safariPinnedTab;
+    this.html.push(['link', {
+      rel: 'mask-icon',
+      href: this.meta.baseURL + sptname,
+      color: this.pinnedTabColor
+    }]);
+    this.emit('safariPinnedTabEnd');
   }
 
   /**
@@ -744,12 +823,13 @@ export default class PWAManifestGenerator extends EventEmitter {
           e;
       }
       const sizes = size + 'x' + size;
-      const ev = createEvent(favicon);
+      const fn = 'favicon-' + sizes + '.png';
+      const ev = createEvent(favicon, fn);
+      const fnProm = ev.filename;
       this.emit('faviconGen', ev);
       favicon = await ev.content;
-      const filename =
-        (await ev.filename) ||
-        this.fingerprint('favicon-' + sizes + '.png', favicon);
+      let filename = ev.filename === fnProm ? undefined : await ev.filename;
+      if (!filename) filename = this.fingerprint(fn, favicon);
       this.generatedFiles[filename] = favicon;
       this.html.push([
         'link',
@@ -779,12 +859,13 @@ export default class PWAManifestGenerator extends EventEmitter {
           e;
       }
       const sizes = size + 'x' + size;
-      const ev = createEvent(msTile);
+      const fn = 'mstile-' + sizes + '.png';
+      const ev = createEvent(msTile, fn);
+      const fnProm = ev.filename;
       this.emit('msTileGen', ev);
       msTile = await ev.content;
-      const filename =
-        (await ev.filename) ||
-        this.fingerprint('mstile-' + sizes + '.png', msTile);
+      let filename = ev.filename === fnProm ? undefined : await ev.filename;
+      if (!filename) filename = this.fingerprint(fn, msTile);
       this.generatedFiles[filename] = msTile;
       this.intBrowserConfig += `<square${sizes}logo src="${this.meta.baseURL +
         filename}"/>`;
@@ -801,11 +882,15 @@ export default class PWAManifestGenerator extends EventEmitter {
       throw 'An unknown error ocurred during the Microsoft Tile Icon creation process: ' +
         e;
     }
-    const ev = createEvent(rectMsTile);
+    const rectFn = 'mstile-310x150.png';
+    const ev = createEvent(rectMsTile, rectFn);
+    const rectFnProm = ev.filename;
     this.emit('msTileGen', ev);
     rectMsTile = await ev.content;
-    const rectMsTileFilename =
-      (await ev.filename) || this.fingerprint('mstile-310x150.png', rectMsTile);
+    let rectMsTileFilename =
+      ev.filename === rectFnProm ? undefined : await ev.filename;
+    if (!rectMsTileFilename)
+      rectMsTileFilename = this.fingerprint(rectFn, rectMsTile);
     this.generatedFiles[rectMsTileFilename] = rectMsTile;
     this.intBrowserConfig += `<wide310x150logo src="${this.meta.baseURL +
       rectMsTileFilename}"/>`;

@@ -80,10 +80,6 @@ In the case of icon generation, you could manually do it with something like [Re
 
 Integrating manifest generation into the build pipeline makes life easier. Only minimal configuration is *required*, but if you want you can still customize to your heart's content.
 
-## Are there any limitations?
-
-Safari pinned tab support would also require an autotracer to get an SVG output, which is too large an addition for a small plugin like this. If you absolutely need pinned tab support, you have to manually insert it into the original HTML file.
-
 ## Documentation
 
 Almost anything that usually goes in a `manifest.json` file can go into the constructor. All parameter names have aliases in the original form from the spec (like `start_url`), in camel case (recommended, like `startUrl`), in kebab case (like `start-url`), and in other reasonable forms (like `startURL`). If you see any inconsistencies in the documentation, it's probably fine; you can use multiple names for the same value.
@@ -121,6 +117,13 @@ The number of pixels to pad the Apple Touch Icon with on all sides. Defaults to 
 Whether or not to generate 16x16 and 32x32 favicons and insert links in the HTML. Defaults to `false`.
 #### `msTileColor`
 The background color for Microsoft Tiles. Defaults to the theme color.
+#### `genSafariPinnedTab`
+Whether or not to generate a Safari Pinned Tab SVG icon using an autotracer. Defaults to `false`
+- Has a significant impact on performance (not managed by `sharp` but by native JavaScript).
+- Recommended to use `genPinnedTab` or `gspt` for brevity.
+#### `safariPinnedTabColor`
+The color for the Safari Pinned Tab icon. Defaults to the theme color (or `'black'` if no theme was manually specified).
+- Recommended to use `pinnedTabColor` or `sptc` for brevity.
 #### `resizeMethod`
 The method to use for resizing non-square images. Can be one of `'cover'` (default), `'contain'`, or `'fill'`.
 #### `purpose`

@@ -108,6 +108,13 @@ The number of pixels to pad the Apple Touch Icon with on all sides. Defaults to 
 - Recommended to use `atip` alias for brevity.
 #### `genFavicons`
 Whether or not to generate 16x16 and 32x32 favicons and insert links in the HTML. Defaults to `false`.
+#### `genSafariPinnedTab`
+Whether or not to generate a Safari Pinned Tab SVG icon using an autotracer. Defaults to `false`
+- Has a significant impact on performance (not managed by `sharp` but by native JavaScript).
+- Recommended to use `genPinnedTab` or `gspt` for brevity.
+#### `safariPinnedTabColor`
+The color for the Safari Pinned Tab icon. Defaults to the theme color (or `'black'` if no theme was manually specified).
+- Recommended to use `pinnedTabColor` or `sptc` for brevity.
 #### `msTileColor`
 The background color for Microsoft Tiles. Defaults to the theme color.
 #### `resizeMethod`
