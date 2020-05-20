@@ -633,9 +633,7 @@ export default class PWAManifestGenerator extends EventEmitter {
       base +
       '.' +
       (method === 'name'
-        ? this.intHashFunction('_pwa-manifest-' + filename).slice(
-            -8
-          ) + '.'
+        ? this.intHashFunction('_pwa-manifest-' + filename).slice(-8) + '.'
         : method === 'content'
         ? this.intHashFunction(buf.toString()).slice(-8) + '.'
         : '') +
@@ -795,11 +793,14 @@ export default class PWAManifestGenerator extends EventEmitter {
     let sptname = ev.filename === fnProm ? undefined : await ev.filename;
     if (!sptname) sptname = this.fingerprint(fn, safariPinnedTab);
     this.generatedFiles[sptname] = safariPinnedTab;
-    this.html.push(['link', {
-      rel: 'mask-icon',
-      href: this.meta.baseURL + sptname,
-      color: this.pinnedTabColor
-    }]);
+    this.html.push([
+      'link',
+      {
+        rel: 'mask-icon',
+        href: this.meta.baseURL + sptname,
+        color: this.pinnedTabColor
+      }
+    ]);
     this.emit('safariPinnedTabEnd');
   }
 
