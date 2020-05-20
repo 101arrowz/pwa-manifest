@@ -2,29 +2,29 @@
 
 exports[`Integrated correctly 1`] = `
 Array [
-  "apple-touch-icon.a9f2329b.png",
+  "apple-touch-icon.6eb46d24.png",
   "browserconfig.xml",
-  "icon-152x152.5b713d42.png",
-  "icon-152x152.645318f8.webp",
-  "icon-192x192.870db1ef.png",
-  "icon-192x192.b687c5da.webp",
-  "icon-384x384.123b9b28.png",
-  "icon-384x384.548009be.webp",
-  "icon-512x512.06c9b093.webp",
-  "icon-512x512.ecb3e851.png",
-  "icon-96x96.54527403.png",
-  "icon-96x96.c7f54d5d.webp",
+  "icon-152x152.a2c4965d.png",
+  "icon-152x152.e2615640.webp",
+  "icon-192x192.554a0796.webp",
+  "icon-192x192.c97405ca.png",
+  "icon-384x384.c881a5f5.webp",
+  "icon-384x384.eb80993e.png",
+  "icon-512x512.aeed3ce8.png",
+  "icon-512x512.ff48d090.webp",
+  "icon-96x96.60d2eb6e.png",
+  "icon-96x96.fedd2531.webp",
   "index.html",
   "main.js",
   "manifest.webmanifest",
-  "mstile-150x150.d71a0330.png",
-  "mstile-310x150.b40ebd92.png",
-  "mstile-310x310.1fc7ce02.png",
-  "mstile-70x70.f4544710.png",
+  "mstile-150x150.5a2d0ef2.png",
+  "mstile-310x150.a11a86cc.png",
+  "mstile-310x310.28a64a8f.png",
+  "mstile-70x70.032d20b4.png",
 ]
 `;
 
-exports[`Integrated correctly 2`] = `"<?xml version=\\"1.0\\" encoding=\\"utf-8\\"?><browserconfig><msapplication><tile><TileColor>white</TileColor><square70x70logo src=\\"/mstile-70x70.f4544710.png\\"/><square150x150logo src=\\"/mstile-150x150.d71a0330.png\\"/><square310x310logo src=\\"/mstile-310x310.1fc7ce02.png\\"/><wide310x150logo src=\\"/mstile-310x150.b40ebd92.png\\"/></tile></msapplication></browserconfig>"`;
+exports[`Integrated correctly 2`] = `"<?xml version=\\"1.0\\" encoding=\\"utf-8\\"?><browserconfig><msapplication><tile><TileColor>white</TileColor><square70x70logo src=\\"/mstile-70x70.032d20b4.png\\"/><square150x150logo src=\\"/mstile-150x150.5a2d0ef2.png\\"/><square310x310logo src=\\"/mstile-310x310.28a64a8f.png\\"/><wide310x150logo src=\\"/mstile-310x150.a11a86cc.png\\"/></tile></msapplication></browserconfig>"`;
 
 exports[`Integrated correctly 3`] = `
 "<!DOCTYPE html>
@@ -32,7 +32,7 @@ exports[`Integrated correctly 3`] = `
   <head>
     <meta charset=\\"utf-8\\">
     <title>Webpack App</title>
-  <meta name=\\"viewport\\" content=\\"width=device-width, initial-scale=1\\"><meta name=\\"msapplication-config\\" content=\\"/browserconfig.xml\\"><meta name=\\"theme-color\\" content=\\"white\\"><link rel=\\"apple-touch-icon\\" sizes=\\"180x180\\" href=\\"/apple-touch-icon.a9f2329b.png\\"><link rel=\\"manifest\\" href=\\"/manifest.webmanifest\\"></head>
+  <meta name=\\"viewport\\" content=\\"width=device-width, initial-scale=1\\"><meta name=\\"msapplication-config\\" content=\\"/browserconfig.xml\\"><meta name=\\"theme-color\\" content=\\"white\\"><link rel=\\"apple-touch-icon\\" sizes=\\"180x180\\" href=\\"/apple-touch-icon.6eb46d24.png\\"><link rel=\\"manifest\\" href=\\"/manifest.webmanifest\\"></head>
   <body>
   <script src=\\"main.js\\"></script></body>
 </html>"
@@ -45,52 +45,52 @@ Object {
   "icons": Array [
     Object {
       "sizes": "96x96",
-      "src": "/icon-96x96.c7f54d5d.webp",
+      "src": "/icon-96x96.fedd2531.webp",
       "type": "image/webp",
     },
     Object {
       "sizes": "96x96",
-      "src": "/icon-96x96.54527403.png",
+      "src": "/icon-96x96.60d2eb6e.png",
       "type": "image/png",
     },
     Object {
       "sizes": "152x152",
-      "src": "/icon-152x152.645318f8.webp",
+      "src": "/icon-152x152.e2615640.webp",
       "type": "image/webp",
     },
     Object {
       "sizes": "152x152",
-      "src": "/icon-152x152.5b713d42.png",
+      "src": "/icon-152x152.a2c4965d.png",
       "type": "image/png",
     },
     Object {
       "sizes": "192x192",
-      "src": "/icon-192x192.b687c5da.webp",
+      "src": "/icon-192x192.554a0796.webp",
       "type": "image/webp",
     },
     Object {
       "sizes": "192x192",
-      "src": "/icon-192x192.870db1ef.png",
+      "src": "/icon-192x192.c97405ca.png",
       "type": "image/png",
     },
     Object {
       "sizes": "384x384",
-      "src": "/icon-384x384.548009be.webp",
+      "src": "/icon-384x384.c881a5f5.webp",
       "type": "image/webp",
     },
     Object {
       "sizes": "384x384",
-      "src": "/icon-384x384.123b9b28.png",
+      "src": "/icon-384x384.eb80993e.png",
       "type": "image/png",
     },
     Object {
       "sizes": "512x512",
-      "src": "/icon-512x512.06c9b093.webp",
+      "src": "/icon-512x512.ff48d090.webp",
       "type": "image/webp",
     },
     Object {
       "sizes": "512x512",
-      "src": "/icon-512x512.ecb3e851.png",
+      "src": "/icon-512x512.aeed3ce8.png",
       "type": "image/png",
     },
   ],
