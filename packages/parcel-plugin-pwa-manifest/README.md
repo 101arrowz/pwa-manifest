@@ -2,6 +2,8 @@
 
 A Parcel plugin that generates a Web App Manifest, creates all the icons you need, and more!
 
+NOTE: For Parcel 2 support, please see [`parcel-config-pwa-manifest`](https://npmjs.com/package/parcel-config-pwa-manifest).
+
 ## Usage
 In `package.json`:
 ```json
