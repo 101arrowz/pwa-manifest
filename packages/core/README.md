@@ -54,7 +54,7 @@ import PWAManifestGenerator, { htmlInsertToString } from '@pwa-manifest/core';
 async function generateFromOpts(opts) {
   const generator = new PWAManifestGenerator(opts);
   const generation = await generator.generate();
-  fs.writeFileSync('manifest.json', JSON.stringify(generation.manifest));
+  fs.writeFileSync('manifest.webmanifest', JSON.stringify(generation.manifest));
   fs.writeFileSync('browserconfig.xml', generation.browserConfig);
   for (const filename in generation.generatedFiles) {
     fs.writeFileSync(filename, generation.generatedFiles[filename]);
@@ -75,7 +75,7 @@ await generator.genAppleTouchIcon();
 
 ## Options
 
-Almost anything that usually goes in a `manifest.json` file can go into the options. All parameter names have aliases in the original form from the spec (like `start_url`), in camel case (recommended, like `startUrl`), in kebab case (like `start-url`), and in other reasonable forms (like `startURL`). If you see any inconsistencies in the documentation, it's probably fine; you can use multiple names for the same value.
+Almost anything that usually goes in a `manifest.webmanifest` file can go into the options. All parameter names have aliases in the original form from the spec (like `start_url`), in camel case (recommended, like `startUrl`), in kebab case (like `start-url`), and in other reasonable forms (like `startURL`). If you see any inconsistencies in the documentation, it's probably fine; you can use multiple names for the same value.
 
 All parameters that exist in the [MDN documentation for the Web App Manifest](https://developer.mozilla.org/en-US/docs/Web/Manifest) are aliased, type-checked, and insterted into the manifest whenever provided in `pwaManifest`. There are a few reasonable defaults, like `'.'` for `start_url`. Watch out for two changes, though: the removal of the `icons` option to allow icon generation and the modification of the `screenshots` option's behavior (detailed below).
 
