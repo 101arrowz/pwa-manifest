@@ -103,7 +103,11 @@ In order to enable the plugin, you MUST create a `.parcelrc`. The `extends` key 
 
 ```json
 {
-  "extends": ["@my-custom-config/parcel-config", "parcel-config-my-other-config", "parcel-config-pwa-manifest"]
+  "extends": [
+    "@my-custom-config/parcel-config",
+    "parcel-config-my-other-config",
+    "parcel-config-pwa-manifest"
+  ]
 }
 ```
 

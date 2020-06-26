@@ -17,7 +17,7 @@
     "node": ">=10",
     "parcel": "2.0.0-beta.1"
   },
-  "homepage": "https://github.com/101arrowz/pwa-manifest/tree/master/packages/parcel-runtime-pwa-manifest",
+  "homepage": "https://github.com/101arrowz/pwa-manifest/tree/master/packages/parcel-transformer-pwa-manifest",
   "repository": {
     "type": "git",
     "url": "https://github.com/101arrowz/pwa-manifest"
