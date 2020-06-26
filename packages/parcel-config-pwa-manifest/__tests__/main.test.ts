@@ -1,6 +1,6 @@
 /// <reference types="./parcel" />
 import Parcel from '@parcel/core';
-import defaultConfig from '../index.json'
+import defaultConfig from '../index.json';
 import { join } from 'path';
 import { readFileSync, readdirSync } from 'fs';
 

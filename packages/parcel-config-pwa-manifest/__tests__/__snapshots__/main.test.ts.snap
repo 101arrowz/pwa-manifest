@@ -2,8 +2,8 @@
 
 exports[`Integrated correctly 1`] = `
 Array [
-  "__tests__.18ea1367.js",
-  "__tests__.18ea1367.js.map",
+  "__tests__.2faea9d5.js",
+  "__tests__.2faea9d5.js.map",
   "apple-touch-icon.67e6641c.png",
   "browserconfig.xml",
   "cache",
@@ -29,7 +29,7 @@ exports[`Integrated correctly 2`] = `
   <title>My PWA</title>
 </head>
 <body>
-  <script src=\\"/__tests__.18ea1367.js\\"></script>
+  <script src=\\"/__tests__.2faea9d5.js\\"></script>
 </body>
 </html>"
 `;
