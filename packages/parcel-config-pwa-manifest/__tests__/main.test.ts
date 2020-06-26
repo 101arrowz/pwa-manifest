@@ -24,8 +24,8 @@ const parcel = new Parcel({
 jest.setTimeout(60000);
 test('Integrated correctly', async () => {
   await parcel.run();
-  expect(readdirSync(outDir)).toMatchSnapshot();
-  expect(readFileSync(join(outDir, 'index.html')).toString()).toMatchSnapshot();
+  expect(readdirSync(outDir).filter(fn => !fn.startsWith('__tests__'))).toMatchSnapshot();
+  expect(readFileSync(join(outDir, 'index.html')).toString().replace(/<script(.*)>/, '')).toMatchSnapshot();
   expect(
     readFileSync(join(outDir, 'browserconfig.xml')).toString()
   ).toMatchSnapshot();

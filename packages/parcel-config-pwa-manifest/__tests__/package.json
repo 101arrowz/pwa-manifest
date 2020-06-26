@@ -1,4 +1,8 @@
 {
   "name": "my-pwa",
-  "description": "A PWA"
+  "description": "A PWA",
+  "dependencies": {
+    "parcel-namer-pwa-manifest": "0.0.1",
+    "parcel-transformer-pwa-manifest": "0.0.1"
+  }
 }
