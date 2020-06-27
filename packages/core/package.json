@@ -1,6 +1,6 @@
 {
   "name": "@pwa-manifest/core",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "Core generation for a Web App Manifest, all necessary icons, and more!",
   "main": "lib/index.js",
   "author": "Arjun Barrett <arjunbarrett@gmail.com>",
@@ -34,6 +34,7 @@
     "preversion": "yarn lint && yarn test"
   },
   "dependencies": {
-    "sharp": "^0.25.2"
+    "sharp": "^0.25.2",
+    "@pwa-manifest/potrace": "^1.0.0"
   }
 }

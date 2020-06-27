@@ -1,3 +1,5 @@
+## 3.0.8-3.0.9
+- Update dependencies, README
 ## 3.0.7
 - Made Apple Touch Icon Padding possible to set to 0 (fix #13)
 ## 3.0.3-3.0.6

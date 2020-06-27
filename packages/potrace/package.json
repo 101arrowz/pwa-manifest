@@ -1,0 +1,29 @@
+{
+  "name": "@pwa-manifest/potrace",
+  "version": "1.0.0",
+  "description": "Potrace without a JIMP dependency",
+  "main": "src/index.js",
+  "types": "src/index.d.ts",
+  "author": "Arjun Barrett <arjunbarrett@gmail.com>",
+  "license": "MIT",
+  "engines": {
+    "node": ">=10"
+  },
+  "homepage": "https://github.com/101arrowz/pwa-manifest/tree/master/packages/potrace",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/101arrowz/pwa-manifest"
+  },
+  "bugs": {
+    "email": "arjunbarrett@gmail.com",
+    "url": "https://github.com/101arrowz/pwa-manifest"
+  },
+  "scripts": {
+    "lint": "eslint --fix \"src/**/*.js\" src/index.d.ts",
+    "prepack": "yarn lint",
+    "preversion": "yarn lint"
+  },
+  "dependencies": {
+    "sharp": "^0.25.2"
+  }
+}

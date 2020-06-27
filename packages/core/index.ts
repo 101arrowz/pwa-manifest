@@ -10,7 +10,7 @@ import { existsSync, readFileSync } from 'fs';
 import { basename, resolve } from 'path';
 import { EventEmitter } from 'events';
 import { createHash } from 'crypto';
-import { posterize } from './potrace';
+import { posterize } from '@pwa-manifest/potrace';
 export type FormatOptions = {
   png: PngOptions;
   webp?: WebpOptions;
