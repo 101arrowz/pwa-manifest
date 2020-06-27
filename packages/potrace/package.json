@@ -18,12 +18,8 @@
     "email": "arjunbarrett@gmail.com",
     "url": "https://github.com/101arrowz/pwa-manifest"
   },
-  "scripts": {
-    "lint": "eslint --fix \"src/**/*.js\" src/index.d.ts",
-    "prepack": "yarn lint",
-    "preversion": "yarn lint"
-  },
   "dependencies": {
     "sharp": "^0.25.2"
-  }
+  },
+  "private": false
 }
