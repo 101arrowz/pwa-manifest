@@ -1,6 +1,6 @@
 {
   "name": "parcel-plugin-pwa-manifest",
-  "version": "3.0.9",
+  "version": "3.0.10",
   "description": "A Parcel plugin that generates a Web App Manifest, creates all necessary icons, and more!",
   "main": "lib/index.js",
   "author": "Arjun Barrett <arjunbarrett@gmail.com>",

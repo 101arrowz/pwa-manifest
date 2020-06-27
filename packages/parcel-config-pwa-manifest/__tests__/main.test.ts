@@ -21,7 +21,7 @@ const parcel = new Parcel({
   cacheDir,
   distDir: outDir
 });
-jest.setTimeout(60000);
+jest.setTimeout(120000); // Thanks, Parcel 2
 test('Integrated correctly', async () => {
   await parcel.run();
   expect(
