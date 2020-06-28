@@ -6,7 +6,7 @@ A Parcel 2 plugin that generates a Web App Manifest, creates all the icons you n
 In `.parcelrc`
 ```json
 {
-  "extends": ["@parcel/config-default", "parcel-config-pwa-manifest"]
+  "extends": "parcel-config-pwa-manifest"
 }
 ```
 
@@ -79,7 +79,7 @@ This package is a plugin for the [Parcel bundler](https://parceljs.org) that cre
 Please note that this plugin supports *Parcel 2 only*. See [`parcel-plugin-pwa-manifest`](https://npmjs.com/package/parcel-plugin-pwa-manifest) for a plugin that supports Parcel 1.
 
 ## Why?
-Parcel fully supports web manifests, but creating them can be annoying and can involve you having to jump through hoops to do simple things such as having an icon set that just works across all devices.
+Parcel (will soon) fully support web manifests, but creating them can be annoying and can involve you having to jump through hoops to do simple things such as having an icon set that just works across all devices.
 
 In the case of icon generation, you could manually do it with something like [Real Favicon Generator](https://realfavicongenerator.net), but if you ever change your main icon, you have to run through the entire process again. That's no fun.
 

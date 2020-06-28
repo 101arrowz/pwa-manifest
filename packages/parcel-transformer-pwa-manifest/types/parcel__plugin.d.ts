@@ -5,9 +5,7 @@ type SynthAsset = {
 type TransformerResultAsset = Asset | {
   content: string | Buffer;
   type: string;
-  filePath: string;
   uniqueKey: string;
-  isIsolated: boolean;
 };
 
 type Diagnostic = {
@@ -18,14 +16,11 @@ type PluginLogger = {
   log(v: Diagnostic): void;
 };
 
-type AST = { program: unknown };
 type Options = { rootDir: string; }
 type Asset = {
   type: string;
   filePath: string;
-  getAST(): Promise<AST>;
   getCode(): Promise<string>;
-  setAST(ast: AST): void;
   setCode(code: string): void;
 }
 type Async<T> = T | Promise<T>;
@@ -44,7 +39,6 @@ declare module '@parcel/plugin' {
       preSerializeConfig?(dat: { config: Config<S>, options: Options, logger: PluginLogger }): Async<void>;
       postDeserializeConfig?(dat: { config: Config<T>, options: Options, logger: PluginLogger }): Async<void>;
       transform(dat: { asset: Asset, config: T | null, options: Options, logger: PluginLogger, resolve: Resolve }): Async<TransformerResultAsset[]>;
-      generate(dat: { ast: AST }): Async<{ content: string }>;
     });
   }
 }

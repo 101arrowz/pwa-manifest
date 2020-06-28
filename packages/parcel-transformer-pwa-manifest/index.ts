@@ -2,9 +2,6 @@ import PWAManifestGenerator, {
   Generation,
   htmlInsertToString
 } from '@pwa-manifest/core';
-import { extname } from 'path';
-import { match } from 'posthtml/lib/api';
-import render from 'posthtml-render';
 import { Transformer } from '@parcel/plugin';
 
 const headSearch = /(?<=<head(.*?)>)|<\/head>/;
@@ -69,67 +66,46 @@ export default new Transformer<
   },
   async transform({ asset, config }) {
     if (config && asset.type === 'html') {
-      const ast = await asset.getAST();
-      if (ast && ast.program) {
-        match.call(ast.program, { tag: 'head' }, node => {
-          node.content.push(
-            ...config.html.map(([tag, attrs]) => ({ tag, attrs }))
-          );
-        });
-        asset.setAST(ast);
-      } else {
-        let origHTML = await asset.getCode();
-        const ind = origHTML.search(headSearch);
-        // istanbul ignore next
-        if (ind === -1) {
-          const htmlInd = origHTML.search(htmlSearch);
-          if (htmlInd === -1) {
-            throw 'HTML file for link injection is invalid.';
-          }
-          origHTML = `${origHTML.slice(0, htmlInd)}<head><title>${
-            config.manifest.name
-          }</title>${config.html
-            .map(htmlInsertToString)
-            .join('')}</head>${origHTML.slice(htmlInd)}`;
-        } else {
-          origHTML = `${origHTML.slice(0, ind)}${config.html.map(
-            htmlInsertToString
-          )}${origHTML.slice(ind)}`;
+      let origHTML = await asset.getCode();
+      const ind = origHTML.search(headSearch);
+      // istanbul ignore next
+      if (ind === -1) {
+        const htmlInd = origHTML.search(htmlSearch);
+        if (htmlInd === -1) {
+          throw 'HTML file for link injection is invalid.';
         }
-        asset.setCode(origHTML);
+        origHTML = `${origHTML.slice(0, htmlInd)}<head><title>${
+          config.manifest.name
+        }</title>${config.html
+          .map(htmlInsertToString)
+          .join('')}</head>${origHTML.slice(htmlInd)}`;
+      } else {
+        origHTML = `${origHTML.slice(0, ind)}${config.html
+          .map(htmlInsertToString)
+          .join('')}${origHTML.slice(ind)}`;
       }
+      asset.setCode(origHTML);
       const newAssets: TransformerResultAsset[] = [
         asset,
         {
-          filePath: 'browserconfig.xml', // TODO: necessary?
           type: 'xml',
           uniqueKey: 'ptpm-browserconfig.xml',
-          isIsolated: true,
           content: config.browserConfig
         },
         {
-          filePath: 'manifest.webmanifest',
           type: 'webmanifest',
           uniqueKey: 'ptpm-manifest.webmanifest',
-          isIsolated: true,
           content: JSON.stringify(config.manifest)
         }
       ];
       for (const k in config.generatedFiles)
         newAssets.push({
-          filePath: k,
-          type: extname(k).slice(1),
+          type: k.slice(k.lastIndexOf('.') + 1),
           uniqueKey: 'ptpm-' + k,
-          isIsolated: true,
           content: config.generatedFiles[k]
         });
       return newAssets;
     }
     return [asset];
-  },
-  generate({ ast }) {
-    return {
-      content: render(ast.program)
-    };
   }
 });
