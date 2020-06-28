@@ -40,10 +40,11 @@ type Resolve = (from: string, to: string) => Promise<string>;
 declare module '@parcel/plugin' {
   export class Transformer<T, S> {
     constructor(data: {
-      loadConfig(dat: { config: Config<T>, options: Options, logger: PluginLogger }): Promise<void>;
-      preSerializeConfig?(dat: { config: Config<S>, options: Options, logger: PluginLogger }): Promise<void>;
-      postDeserializeConfig?(dat: { config: Config<T>, options: Options, logger: PluginLogger }): Promise<void>;
+      loadConfig(dat: { config: Config<T>, options: Options, logger: PluginLogger }): Async<void>;
+      preSerializeConfig?(dat: { config: Config<S>, options: Options, logger: PluginLogger }): Async<void>;
+      postDeserializeConfig?(dat: { config: Config<T>, options: Options, logger: PluginLogger }): Async<void>;
       transform(dat: { asset: Asset, config: T | null, options: Options, logger: PluginLogger, resolve: Resolve }): Async<TransformerResultAsset[]>;
+      generate(dat: { ast: AST }): Async<{ content: string }>;
     });
   }
 }

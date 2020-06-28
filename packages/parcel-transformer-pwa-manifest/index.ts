@@ -4,6 +4,7 @@ import PWAManifestGenerator, {
 } from '@pwa-manifest/core';
 import { extname } from 'path';
 import { match } from 'posthtml/lib/api';
+import render from 'posthtml-render';
 import { Transformer } from '@parcel/plugin';
 
 const headSearch = /(?<=<head(.*?)>)|<\/head>/;
@@ -125,5 +126,10 @@ export default new Transformer<
       return newAssets;
     }
     return [asset];
+  },
+  generate({ ast }) {
+    return {
+      content: render(ast)
+    };
   }
 });
