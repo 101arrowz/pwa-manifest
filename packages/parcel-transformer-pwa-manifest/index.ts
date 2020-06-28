@@ -129,7 +129,7 @@ export default new Transformer<
   },
   generate({ ast }) {
     return {
-      content: render(ast)
+      content: render(ast.program)
     };
   }
 });
