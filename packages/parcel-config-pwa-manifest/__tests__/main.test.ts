@@ -25,7 +25,9 @@ jest.setTimeout(120000); // Thanks, Parcel 2
 test('Integrated correctly', async () => {
   await parcel.run();
   expect(
-    readdirSync(outDir).filter(fn => !fn.startsWith('__tests__'))
+    readdirSync(outDir).filter(
+      fn => fn === 'index.html' || !fn.startsWith('index')
+    )
   ).toMatchSnapshot();
   expect(
     readFileSync(join(outDir, 'index.html'))

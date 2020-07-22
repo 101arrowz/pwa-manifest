@@ -3,10 +3,10 @@
 A Parcel 2 plugin that generates a Web App Manifest, creates all the icons you need, and more!
 
 ## Usage
-In `.parcelrc`
+In `.parcelrc`:
 ```json
 {
-  "extends": "parcel-config-pwa-manifest"
+  "extends": ["@parcel/config-default", "parcel-config-pwa-manifest"]
 }
 ```
 
@@ -86,7 +86,7 @@ In the case of icon generation, you could manually do it with something like [Re
 Integrating manifest generation into the build pipeline makes life easier. Only minimal configuration is *required*, but if you want you can still customize to your heart's content.
 
 ## Documentation
-All configuration is done in `package.json` under the `pwaManifest` key. You may also place configuration in `.pwamanifestrc` or `.pwarc` in a JSON format:
+All configuration is done in `package.json` under the `pwaManifest` key. You may also place configuration in a `.pwamanifestrc` in a JSON format:
 
 ```json
 {

@@ -14,11 +14,21 @@ export default new Transformer<
   }
 >({
   async loadConfig({ config, options, logger }) {
-    const conf = (
-      await config.getConfig(['.pwamanifestrc', '.manifestrc', '.pwarc'], {
+    const confFile = await config.getConfig(
+      [
+        '.pwamanifestrc',
+        '.pwamanifestrc.json',
+        '.pwamanifestrc.js',
+        'pwamanifest.conifg.js'
+      ],
+      {
         packageKey: 'pwaManifest'
-      })
-    ).contents;
+      }
+    );
+    const conf = confFile?.contents;
+    if (!conf) {
+      throw new Error('Manifest creation failed: No config found.');
+    }
     const pkg = await config.getPackage();
     let gen: PWAManifestGenerator;
     try {
@@ -41,7 +51,11 @@ export default new Transformer<
     gen.on('*', (ev, ...args) => {
       if (ev.endsWith('Start')) logger.log({ message: args[0] });
     });
-    config.setResult(await gen.generate());
+    try {
+      config.setResult(await gen.generate());
+    } catch (e) {
+      throw new Error(`Manifest creation failed: ${e}`);
+    }
   },
   async preSerializeConfig({ config }) {
     if (!config.result) return;

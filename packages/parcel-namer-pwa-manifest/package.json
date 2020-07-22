@@ -1,6 +1,6 @@
 {
   "name": "parcel-namer-pwa-manifest",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A Parcel v2 namer that helps generate a Web App Manifest, creates all necessary icons, and more!",
   "main": "lib/index.js",
   "author": "Arjun Barrett <arjunbarrett@gmail.com>",
@@ -15,7 +15,7 @@
   ],
   "engines": {
     "node": ">=10",
-    "parcel": "2.0.0-beta.1"
+    "parcel": ">2.0.0-beta.1"
   },
   "homepage": "https://github.com/101arrowz/pwa-manifest/tree/master/packages/parcel-namer-pwa-manifest",
   "repository": {
@@ -34,6 +34,6 @@
     "preversion": "yarn lint"
   },
   "peerDependencies": {
-    "parcel": "^2.0.0-beta.1"
+    "parcel": ">2.0.0-beta.1"
   }
 }
