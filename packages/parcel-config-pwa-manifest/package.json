@@ -33,13 +33,10 @@
     "url": "https://github.com/101arrowz/pwa-manifest/issues"
   },
   "dependencies": {
-    "parcel-namer-pwa-manifest": "^0.0.2",
-    "parcel-transformer-pwa-manifest": "^0.0.8"
+    "parcel-namer-pwa-manifest": "file:../parcel-namer-pwa-manifest",
+    "parcel-transformer-pwa-manifest": "file:../parcel-transformer-pwa-manifest"
   },
   "peerDependencies": {
-    "parcel": ">2.0.0-beta.1"
-  },
-  "devDependencies": {
     "parcel": ">2.0.0-beta.1"
   }
 }

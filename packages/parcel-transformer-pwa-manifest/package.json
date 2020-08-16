@@ -34,7 +34,7 @@
     "preversion": "yarn lint"
   },
   "dependencies": {
-    "@pwa-manifest/core": "^1.4.1"
+    "@pwa-manifest/core": "file:../core"
   },
   "peerDependencies": {
     "parcel": ">2.0.0-beta.1"

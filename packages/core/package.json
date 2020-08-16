@@ -34,7 +34,7 @@
     "preversion": "yarn lint && yarn test"
   },
   "dependencies": {
-    "sharp": "^0.25.2",
-    "@pwa-manifest/potrace": "^1.0.0"
+    "@pwa-manifest/potrace": "file:../potrace",
+    "sharp": "^0.25.2"
   }
 }
