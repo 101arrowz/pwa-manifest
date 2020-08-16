@@ -36,7 +36,7 @@
     "preversion": "yarn lint && yarn test"
   },
   "dependencies": {
-    "@pwa-manifest/core": "^1.4.1"
+    "@pwa-manifest/core": "file:../core"
   },
   "peerDependencies": {
     "parcel-bundler": "^1.12.4"

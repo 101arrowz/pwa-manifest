@@ -6,4 +6,3 @@ before_install:
   - export PATH="$HOME/.yarn/bin:$PATH"
 before_script:
   - yarn list
-  - lerna bootstrap
