@@ -1,6 +1,6 @@
 {
   "name": "parcel-config-pwa-manifest",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "A Parcel 2 plugin that generates a Web App Manifest, creates all necessary icons, and more!",
   "main": "index.json",
   "author": "Arjun Barrett <arjunbarrett@gmail.com>",
@@ -34,7 +34,7 @@
   },
   "dependencies": {
     "parcel-namer-pwa-manifest": "^0.0.2",
-    "parcel-transformer-pwa-manifest": "^0.0.7"
+    "parcel-transformer-pwa-manifest": "^0.0.8"
   },
   "peerDependencies": {
     "parcel": ">2.0.0-beta.1"

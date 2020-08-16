@@ -9865,13 +9865,6 @@ parcel-bundler@^1.12.4:
     v8-compile-cache "^2.0.0"
     ws "^5.1.1"
 
-parcel-transformer-pwa-manifest@^0.0.6:
-  version "0.0.6"
-  resolved "https://registry.yarnpkg.com/parcel-transformer-pwa-manifest/-/parcel-transformer-pwa-manifest-0.0.6.tgz#c976f72439a2b50875e29fc6c0dcce247f103323"
-  integrity sha512-FqavGcvru4Rswz2uyMkrjdeExqttb9lSdOXGaF42g+1WLn42b62lhPumTQKu7dO8Fv4EH4q/6aGk6daJ4jP/Yw==
-  dependencies:
-    "@pwa-manifest/core" "^1.4.1"
-
 parcel@>2.0.0-beta.1:
   version "2.0.0-nightly.347"
   resolved "https://registry.yarnpkg.com/parcel/-/parcel-2.0.0-nightly.347.tgz#1e236bd5fd1e18683b43d5552d7b6e8abcbb167b"

@@ -14,6 +14,12 @@ export default new Transformer<
   }
 >({
   async loadConfig({ config, options, logger }) {
+    if (!config.env.isBrowser()) {
+      logger.warn({
+        message: `Not generating a manifest for ${config.searchPath}: context "${config.env.context}" is not a browser context`
+      });
+      return;
+    }
     const confFile = await config.getConfig(
       [
         '.pwamanifestrc',
@@ -25,6 +31,32 @@ export default new Transformer<
         packageKey: 'pwaManifest'
       }
     );
+    const pkgJson = await config.getPackage();
+    const envBrowsers = config.env.engines.browsers!;
+    let publicUrl = '/';
+    if (pkgJson && pkgJson.targets) {
+      for (const k in pkgJson.targets) {
+        const target = pkgJson.targets[k];
+        if (target.context && target.context !== 'browser') {
+          continue;
+        }
+        if (typeof envBrowsers === 'string') {
+          if (target.engines?.browsers !== envBrowsers) {
+            continue;
+          }
+        } else if (
+          target.engines?.browsers &&
+          !(
+            Array.isArray(target.engines.browsers) &&
+            target.engines.browsers.length === envBrowsers.length &&
+            target.engines.browsers.every((v, i) => envBrowsers[i] === v)
+          )
+        ) {
+          continue;
+        }
+        publicUrl = target.publicUrl || '/';
+      }
+    }
     const conf = confFile?.contents;
     if (!conf) {
       throw new Error('Manifest creation failed: No config found.');
@@ -35,7 +67,7 @@ export default new Transformer<
       gen = new PWAManifestGenerator(
         conf,
         {
-          baseURL: '.',
+          baseURL: publicUrl,
           resolveDir: options.rootDir
         },
         {

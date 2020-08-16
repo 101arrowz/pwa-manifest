@@ -14,6 +14,7 @@ type Diagnostic = {
 
 type PluginLogger = {
   log(v: Diagnostic): void;
+  warn(v: Diagnostic): void;
 };
 
 type Options = { rootDir: string; }
@@ -24,11 +25,32 @@ type Asset = {
   setCode(code: string): void;
 }
 type Async<T> = T | Promise<T>;
+type Engines = {
+  browsers?: string | string[];
+};
+type Environment = {
+  context: string;
+  engines: Engines;
+  isBrowser(): boolean;
+};
+type PackageJSON = {
+  name?: string;
+  description?: string;
+  targets: {
+    [k: string]: {
+      context?: string;
+      engines?: Engines;
+      publicUrl?: string;
+    }
+  };
+};
 type Config<T> = {
+  env: Environment;
   result: T;
+  searchPath: string;
   getConfig(locs: string[], extra: { packageKey: string }): Promise<{ contents: import('@pwa-manifest/core').PWAManifestOptions; }>;
   setResult(conf: T): void
-  getPackage(): Promise<{ name?: string; description?: string }>;
+  getPackage(): Promise<PackageJSON>;
 };
 type Resolve = (from: string, to: string) => Promise<string>;
 
