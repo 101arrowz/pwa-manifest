@@ -28,15 +28,16 @@
     "packages/*"
   ],
   "scripts": {
+    "pretest": "yarn workspace @pwa-manifest/core build-unchecked && yarn workspace parcel-transformer-pwa-manifest build-unchecked && yarn workspace parcel-namer-pwa-manifest build-unchecked",
     "test": "jest && cat ./coverageReport/lcov.info | coveralls"
   },
   "dependencies": {
-    "@pwa-manifest/core": "file:packages/core",
-    "@pwa-manifest/potrace": "file:packages/potrace",
-    "parcel-config-pwa-manifest": "file:packages/parcel-config-pwa-manifest",
-    "parcel-namer-pwa-manifest": "file:packages/parcel-namer-pwa-manifest",
-    "parcel-plugin-pwa-manifest": "file:packages/parcel-plugin-pwa-manifest",
-    "parcel-transformer-pwa-manifest": "file:packages/parcel-transformer-pwa-manifest",
-    "webpack-plugin-pwa-manifest": "file:packages/webpack-plugin-pwa-manifest"
+    "@pwa-manifest/core": "link:packages/core",
+    "@pwa-manifest/potrace": "link:packages/potrace",
+    "parcel-config-pwa-manifest": "link:packages/parcel-config-pwa-manifest",
+    "parcel-namer-pwa-manifest": "link:packages/parcel-namer-pwa-manifest",
+    "parcel-plugin-pwa-manifest": "link:packages/parcel-plugin-pwa-manifest",
+    "parcel-transformer-pwa-manifest": "link:packages/parcel-transformer-pwa-manifest",
+    "webpack-plugin-pwa-manifest": "link:packages/webpack-plugin-pwa-manifest"
   }
 }

@@ -16,7 +16,7 @@ const parcel = new Parcel({
   defaultConfig: {
     ...defaultConfig,
     extends: ['@parcel/config-default'],
-    filePath: require.resolve('../index.json')
+    filePath: require.resolve('parcel-config-pwa-manifest')
   },
   cacheDir,
   distDir: outDir

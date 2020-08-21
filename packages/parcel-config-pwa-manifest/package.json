@@ -24,6 +24,9 @@
   },
   "scripts": {
     "lint": "eslint --fix \"__tests__/**/*.ts\"",
+    "build-namer": "yarn workspace parcel-namer-pwa-manifest build-unchecked",
+    "build-transformer": "yarn workspace parcel-transformer-pwa-manifest build-unchecked",
+    "pretest": "yarn build-namer && yarn build-transformer",
     "test": "jest",
     "preversion": "yarn lint && yarn test",
     "prepack": "yarn preversion"
