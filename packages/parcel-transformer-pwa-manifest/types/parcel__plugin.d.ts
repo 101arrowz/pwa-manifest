@@ -48,7 +48,10 @@ type Config<T> = {
   env: Environment;
   result: T;
   searchPath: string;
-  getConfig(locs: string[], extra: { packageKey: string }): Promise<{ contents: import('@pwa-manifest/core').PWAManifestOptions; }>;
+  getConfig(locs: string[], extra: { packageKey: string }): Promise<{
+    contents: import('@pwa-manifest/core').PWAManifestOptions;
+    filePath: string;
+  }>;
   setResult(conf: T): void
   getPackage(): Promise<PackageJSON>;
 };

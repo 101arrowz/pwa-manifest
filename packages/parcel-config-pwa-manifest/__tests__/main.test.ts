@@ -12,7 +12,7 @@ const outDir = fp('tmp', Date.now().toString(36));
 const cacheDir = join(outDir, 'cache');
 
 const parcel = new Parcel({
-  entries: [fp('index.html')],
+  entries: [fp('index.html')], // TODO: Multi-entry
   defaultConfig: {
     ...defaultConfig,
     extends: ['@parcel/config-default'],

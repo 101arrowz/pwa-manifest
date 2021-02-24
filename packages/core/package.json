@@ -1,6 +1,6 @@
 {
   "name": "@pwa-manifest/core",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "Core generation for a Web App Manifest, all necessary icons, and more!",
   "main": "lib/index.js",
   "author": "Arjun Barrett <arjunbarrett@gmail.com>",

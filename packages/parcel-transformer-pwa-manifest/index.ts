@@ -3,6 +3,7 @@ import PWAManifestGenerator, {
   htmlInsertToString
 } from '@pwa-manifest/core';
 import { Transformer } from '@parcel/plugin';
+import { dirname } from 'path';
 
 const headSearch = /(?<=<head(.*?)>)|<\/head>/;
 const htmlSearch = /(?<=<html(.*?)>)/;
@@ -68,7 +69,7 @@ export default new Transformer<
         conf,
         {
           baseURL: publicUrl,
-          resolveDir: options.rootDir
+          resolveDir: dirname(confFile.filePath)
         },
         {
           name: pkg.name,
