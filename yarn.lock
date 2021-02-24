@@ -2925,6 +2925,13 @@
   dependencies:
     "@parcel/types" "2.0.0-nightly.349+283fd43b"
 
+"@parcel/plugin@2.0.0-nightly.630+dc09f125":
+  version "2.0.0-nightly.630"
+  resolved "https://registry.yarnpkg.com/@parcel/plugin/-/plugin-2.0.0-nightly.630.tgz#990be48201f568dd9073a274e28e6450b503105e"
+  integrity sha512-mUqYWwbewTAJx9FW+XVLNcyeGv+MXmzFkGJlZH0NFO3CCwxJwtBuU/YfZ1200+9ypbuhmI0QLwnAe49+Qm8pqw==
+  dependencies:
+    "@parcel/types" "2.0.0-nightly.630+dc09f125"
+
 "@parcel/reporter-bundle-analyzer@2.0.0-nightly.1971+283fd43b":
   version "2.0.0-nightly.1971"
   resolved "https://registry.yarnpkg.com/@parcel/reporter-bundle-analyzer/-/reporter-bundle-analyzer-2.0.0-nightly.1971.tgz#e84dc6d6c5202cfa41a5a88f4c92d1dcf1ee5cd9"
@@ -3193,6 +3200,13 @@
   dependencies:
     "@parcel/plugin" "2.0.0-nightly.349+283fd43b"
 
+"@parcel/transformer-raw@>2.0.0-beta.1":
+  version "2.0.0-nightly.630"
+  resolved "https://registry.yarnpkg.com/@parcel/transformer-raw/-/transformer-raw-2.0.0-nightly.630.tgz#5ff44714fd3cb9e5fc14dcc2d2c5e45ea8c89fe1"
+  integrity sha512-9C65QmvfPV64gm0Whj05+F5qA4PdmARNQr7ejTGBIL4GEvVSLTRc9pMBH25elAnyH76qmrbTGSylaC3dqFZPKw==
+  dependencies:
+    "@parcel/plugin" "2.0.0-nightly.630+dc09f125"
+
 "@parcel/transformer-react-refresh-babel@2.0.0-nightly.349+283fd43b":
   version "2.0.0-nightly.349"
   resolved "https://registry.yarnpkg.com/@parcel/transformer-react-refresh-babel/-/transformer-react-refresh-babel-2.0.0-nightly.349.tgz#dbd8c86c10e50055ad04a91c192e8eeed21b6d37"
@@ -3278,6 +3292,11 @@
   resolved "https://registry.yarnpkg.com/@parcel/types/-/types-2.0.0-nightly.349.tgz#f13d684bdcc2547c6de2942f9a2571c51f5d7751"
   integrity sha512-WCmhYVVYX180Vl9R/gNNSIrl4HCu6Qa3O190aipqVXzrVCWZnCganZczuDPzfiSEpWWqwbjbgjN1vzGa0vCiJw==
 
+"@parcel/types@2.0.0-nightly.630+dc09f125":
+  version "2.0.0-nightly.630"
+  resolved "https://registry.yarnpkg.com/@parcel/types/-/types-2.0.0-nightly.630.tgz#bfaea83cde3275c1453dc99f608f6317db06eb8a"
+  integrity sha512-x+M4HDuPLCfPG5T5GXnD+TqZRFdeMvFxK+vJK6fTwyM6IfZKf2XuI6jvjdKTuWFk2AdpNZvBQqAf3EMR466+yA==
+
 "@parcel/utils@2.0.0-nightly.349+283fd43b":
   version "2.0.0-nightly.349"
   resolved "https://registry.yarnpkg.com/@parcel/utils/-/utils-2.0.0-nightly.349.tgz#92252fb07984744505f6bb4fa21cfc0991af9612"
@@ -3347,9 +3366,9 @@
     physical-cpu-count "^2.0.0"
 
 "@pwa-manifest/core@file:packages/core":
-  version "1.4.1"
+  version "1.4.2"
   dependencies:
-    "@pwa-manifest/potrace" "file:../../Library/Caches/Yarn/v6/npm-@pwa-manifest-core-1.4.1-6eaf9228-388f-46c1-b656-7ba5434e9250-1598060632728/node_modules/@pwa-manifest/potrace"
+    "@pwa-manifest/potrace" "file:../../Library/Caches/Yarn/v6/npm-@pwa-manifest-core-1.4.2-4f4ad1b6-3417-4aa7-97b7-04972ece745a-1616198512132/node_modules/@pwa-manifest/potrace"
     sharp "^0.25.2"
 
 "@pwa-manifest/core@link:packages/core":
@@ -9900,9 +9919,9 @@ parcel-bundler@^1.12.4:
   uid ""
 
 "parcel-transformer-pwa-manifest@file:packages/parcel-transformer-pwa-manifest":
-  version "0.0.8"
+  version "0.0.9"
   dependencies:
-    "@pwa-manifest/core" "file:../../Library/Caches/Yarn/v6/npm-parcel-transformer-pwa-manifest-0.0.8-8900a084-14fd-4fa1-aa71-c7cde06b42ba-1598060632727/node_modules/core"
+    "@pwa-manifest/core" "file:../../Library/Caches/Yarn/v6/npm-parcel-transformer-pwa-manifest-0.0.9-1685f76a-e4cd-499a-bc12-228800f2bd2b-1616198512132/node_modules/core"
 
 "parcel-transformer-pwa-manifest@link:packages/parcel-transformer-pwa-manifest":
   version "0.0.0"
