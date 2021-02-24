@@ -36,6 +36,7 @@
     "url": "https://github.com/101arrowz/pwa-manifest/issues"
   },
   "dependencies": {
+    "@parcel/transformer-raw": "^2.0.0",
     "parcel-namer-pwa-manifest": "file:../parcel-namer-pwa-manifest",
     "parcel-transformer-pwa-manifest": "file:../parcel-transformer-pwa-manifest"
   },
