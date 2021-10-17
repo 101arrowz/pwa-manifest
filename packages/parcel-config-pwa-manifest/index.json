@@ -1,6 +1,7 @@
 {
   "transformers": {
     "*.{htm,html}": ["...", "parcel-transformer-pwa-manifest"],
-    "__ptpm_raw:*": ["@parcel/transformer-raw"]
+    "__ptpm_raw:*": ["@parcel/transformer-raw"],
+    "__ptpm_process:*": ["parcel-transformer-pwa-manifest"]
   }
 }

@@ -25,7 +25,7 @@ export type Screenshot = {
 };
 export type Shortcut = {
   name: string;
-  shortName: string,
+  shortName: string;
   desc: string;
   url: string;
   icon?: string | IconEntry[];
@@ -286,11 +286,18 @@ export default class PWAManifestGenerator extends EventEmitter {
     // istanbul ignore next
     if (
       screenshots instanceof Array &&
-      screenshots.every(v => typeof v === 'string' || (typeof v === 'object' && v && (typeof v.size === 'string' || typeof v.size === 'undefined') && typeof v.src === 'string'))
+      screenshots.every(
+        v =>
+          typeof v === 'string' ||
+          (typeof v === 'object' &&
+            v &&
+            (typeof v.size === 'string' || typeof v.size === 'undefined') &&
+            typeof v.src === 'string')
+      )
     ) {
       const manifestScreenshots: Screenshot[] = [];
       const screenshotPaths: InternalScreenshot[] = [];
-      for (let rawSC of screenshots) {
+      for (const rawSC of screenshots) {
         let sc = rawSC as string;
         let sizes: string | undefined;
         if (typeof rawSC === 'object') {
@@ -302,7 +309,11 @@ export default class PWAManifestGenerator extends EventEmitter {
         else if (!['png', 'jpeg', 'webp'].includes(ext))
           throw 'Each screenshot in the screenshots must be of type PNG, WebP, or JPEG. Ensure that the filenames have the correct extensions.';
         if (isValidURL(sc))
-          manifestScreenshots.push({ src: sc, type: 'image/' + ext, ...(sizes && { sizes }) });
+          manifestScreenshots.push({
+            src: sc,
+            type: 'image/' + ext,
+            ...(sizes && { sizes })
+          });
         else if (existsSync((sc = resolve(resolveDir, sc)))) {
           screenshotPaths.push({ src: sc, size: sizes });
         } else
@@ -330,8 +341,7 @@ export default class PWAManifestGenerator extends EventEmitter {
           opt(shortcut, ['shortName', 'short-name', 'short_name']) || name;
         if (typeof shortName !== 'string')
           throw 'The short name provided in the shortcut options must be a string.';
-        const url =
-          opt(shortcut, ['url', 'page', 'link']);
+        const url = opt(shortcut, ['url', 'page', 'link']);
         if (typeof url !== 'string') {
           if (typeof url === 'undefined')
             throw 'No URL was found in the shortcut options.';
@@ -355,12 +365,14 @@ export default class PWAManifestGenerator extends EventEmitter {
         // istanbul ignore next
         if (typeof purposes !== 'undefined') {
           if (!icon) {
-            throw "The purposes parameter in the shortcut options can only exist if the shortcut has an icon.";
+            throw 'The purposes parameter in the shortcut options can only exist if the shortcut has an icon.';
           }
           if (
             !(
               purposes instanceof Array &&
-              purposes.every(val => ['badge', 'maskable', 'monochrome', 'any'].includes(val))
+              purposes.every(val =>
+                ['badge', 'maskable', 'monochrome', 'any'].includes(val)
+              )
             )
           )
             throw "The purposes parameter in the shortcut options must be an array for which each element is one of 'badge', 'maskable', 'monochrome', or 'any'.";
@@ -436,7 +448,12 @@ export default class PWAManifestGenerator extends EventEmitter {
       throw 'No icon was found at the base icon path ' + baseIconPath + '.';
     this.intBaseIconName = baseIconName;
     let sizes = [96, 152, 192, 384, 512]; // Common sizes
-    const tmpSizes = opt(genIconOpts, ['sizes', 'sizeList', 'size-list', 'size_list']);
+    const tmpSizes = opt(genIconOpts, [
+      'sizes',
+      'sizeList',
+      'size-list',
+      'size_list'
+    ]);
     // istanbul ignore next
     if (
       tmpSizes instanceof Array &&
@@ -444,8 +461,7 @@ export default class PWAManifestGenerator extends EventEmitter {
     ) {
       // Needed in all PWAs
       sizes = [...new Set(tmpSizes.concat(192, 512))] as number[];
-    }
-    else if (typeof tmpSizes !== 'undefined')
+    } else if (typeof tmpSizes !== 'undefined')
       throw 'The sizes parameter in the icon generation options must be an array of numeric pixel values for sizes of the images.';
     this.sizes = sizes;
 
@@ -465,8 +481,7 @@ export default class PWAManifestGenerator extends EventEmitter {
     ) {
       // Needed in all PWAs
       shortcutSizes = [...new Set(tmpShortcutSizes.concat(96))] as number[];
-    }
-    else if (typeof tmpShortcutSizes !== 'undefined')
+    } else if (typeof tmpShortcutSizes !== 'undefined')
       throw 'The shortcut sizes parameter in the icon generation options must be an array of numeric pixel values for sizes of the shortcut icons.';
     this.shortcutSizes = shortcutSizes;
 
@@ -518,7 +533,9 @@ export default class PWAManifestGenerator extends EventEmitter {
       if (
         !(
           purposes instanceof Array &&
-          purposes.every(val => ['badge', 'maskable', 'monochrome', 'any'].includes(val))
+          purposes.every(val =>
+            ['badge', 'maskable', 'monochrome', 'any'].includes(val)
+          )
         )
       )
         throw "The purposes parameter in the icon generation options must be an array for which each element is one of 'badge', 'maskable', 'monochrome', or 'any'.";
@@ -843,15 +860,14 @@ export default class PWAManifestGenerator extends EventEmitter {
       if (shortcut.icon) {
         const icons: IconEntry[] = [];
         const si = shortcut.icon as string;
-        const shortcutIconName = basename(
-          si,
-          si.slice(si.lastIndexOf('.'))
-        );
+        const shortcutIconName = basename(si, si.slice(si.lastIndexOf('.')));
         let purpose = '';
         if (shortcut.purposes) purpose = shortcut.purposes.join(' ');
         const shortcutIcon = sharp(si);
         for (const size of this.shortcutSizes) {
-          const icon = shortcutIcon.clone().resize(size, size, this.resizeOptions);
+          const icon = shortcutIcon
+            .clone()
+            .resize(size, size, this.resizeOptions);
           const saveSize = size + 'x' + size;
           for (const format of Object.keys(this.formats) as Array<
             keyof FormatOptions
@@ -867,12 +883,20 @@ export default class PWAManifestGenerator extends EventEmitter {
               throw 'An unknown error ocurred during the icon creation process: ' +
                 e;
             }
-            const fn = 'shortcut-' + shortcutIconName + i + '-' + saveSize + '.' + format;
+            const fn =
+              'shortcut-' +
+              shortcutIconName +
+              i +
+              '-' +
+              saveSize +
+              '.' +
+              format;
             const ev = createEvent(buf, fn);
             const fnProm = ev.filename;
             this.emit('shortcutIconsGen', ev);
             buf = await ev.content;
-            let filename = ev.filename === fnProm ? undefined : await ev.filename;
+            let filename =
+              ev.filename === fnProm ? undefined : await ev.filename;
             if (!filename) filename = this.fingerprint(fn, buf);
             this.generatedFiles[filename] = buf;
             const iconEntry: IconEntry = {
@@ -947,7 +971,7 @@ export default class PWAManifestGenerator extends EventEmitter {
     for (let { src, size } of this.screenshotPaths) {
       const image = sharp(src);
       if (!size) {
-        const { height, width, } = await image.metadata();
+        const { height, width } = await image.metadata();
         size = `${width!}x${height!}`;
       }
       let buf: AwaitableBuffer = image.toBuffer();
@@ -959,7 +983,11 @@ export default class PWAManifestGenerator extends EventEmitter {
       let scName = ev.filename === fnProm ? undefined : await ev.filename;
       if (!scName) scName = this.fingerprint(fn, buf);
       this.generatedFiles[scName] = buf;
-      this.screenshots.push({ src: this.meta.baseURL + scName, sizes: size, type: 'image/' + scName.slice(scName.lastIndexOf('.') + 1) });
+      this.screenshots.push({
+        src: this.meta.baseURL + scName,
+        sizes: size,
+        type: 'image/' + scName.slice(scName.lastIndexOf('.') + 1)
+      });
     }
     this.emit('screenshotsEnd');
   }
@@ -1114,13 +1142,15 @@ export default class PWAManifestGenerator extends EventEmitter {
       icons: this.icons,
       theme_color: this.theme,
       ...(this.screenshots.length && { screenshots: this.screenshots }),
-      ...(this.shortcuts.length && { shortcuts: this.shortcuts.map(shortcut => ({
-        name: shortcut.name,
-        short_name: shortcut.shortName,
-        ...(shortcut.desc && { description: shortcut.desc }),
-        url: shortcut.url,
-        ...(shortcut.icon instanceof Array && { icons: shortcut.icon })
-      })) }),
+      ...(this.shortcuts.length && {
+        shortcuts: this.shortcuts.map(shortcut => ({
+          name: shortcut.name,
+          short_name: shortcut.shortName,
+          ...(shortcut.desc && { description: shortcut.desc }),
+          url: shortcut.url,
+          ...(shortcut.icon instanceof Array && { icons: shortcut.icon })
+        }))
+      }),
       ...this.extraParams
     };
     this.html.push([

@@ -1,16 +1,16 @@
 import PWAManifestGenerator, {
-  Generation,
-  htmlInsertToString
+  htmlInsertToString,
+  MetaConfig,
+  PWAManifestOptions
 } from '@pwa-manifest/core';
 import { Transformer } from '@parcel/plugin';
 import { dirname } from 'path';
-import assert from 'assert';
 
 const headSearch = /(?<=<head(.*?)>)|<\/head>/;
 const htmlSearch = /(?<=<html(.*?)>)/;
 
-export default new Transformer<Generation | void>({
-  async loadConfig({ config, options, logger }) {
+export default new Transformer<[PWAManifestOptions, MetaConfig, PWAManifestOptions] | void>({
+  async loadConfig({ config, logger }) {
     if (!config.env.isBrowser()) {
       logger.warn({
         message: `Not generating a manifest for ${config.searchPath}: context "${config.env.context}" is not a browser context`
@@ -33,9 +33,8 @@ export default new Transformer<Generation | void>({
       throw new Error('Manifest creation failed: No config found.');
     }
     const pkg = await config.getPackage();
-    let gen: PWAManifestGenerator;
     try {
-      gen = new PWAManifestGenerator(
+      new PWAManifestGenerator(
         conf,
         {
           baseURL: '.',
@@ -49,69 +48,97 @@ export default new Transformer<Generation | void>({
     } catch (e) {
       throw new Error(`Manifest creation failed: ${e}`);
     }
-    gen.hashMethod = 'none';
-    gen.on('*', (ev, ...args) => {
-      if (ev.endsWith('Start')) logger.log({ message: args[0] });
-    });
-    return await gen.generate();
+    return [
+      conf,
+      {
+        baseURL: '.',
+        resolveDir: dirname(confFile.filePath)
+      },
+      {
+        name: pkg.name,
+        desc: pkg.description
+      }
+    ];
   },
-  async transform({ asset, config }) {
+  async transform({ asset, logger, config }) {
     if (config && asset.type === 'html') {
+      const gen = new PWAManifestGenerator(...config);
+      gen.hashMethod = 'none';
+      gen.on('*', (ev, ...args) => {
+        if (ev.endsWith('Start')) logger.log({ message: args[0] });
+      });
+      const result = await gen.generate();
       let origHTML = await asset.getCode();
       const newAssets: TransformerResultAsset[] = [asset];
-      let htmlInject = config.html
-        .map(htmlInsertToString)
-        .join('');
-      let manifest = JSON.stringify(config.manifest);
-      let browserConfig = config.browserConfig;
-      for (const k in config.generatedFiles) {
+      let htmlInject = result.html.map(htmlInsertToString).join('');
+      let manifest = JSON.stringify(result.manifest);
+      let browserConfig = result.browserConfig;
+      for (const k in result.generatedFiles) {
         const uniqueKey = '__ptpm-' + k;
         newAssets.push({
           type: k.slice(k.lastIndexOf('.') + 1),
           uniqueKey,
-          content: config.generatedFiles[k],
+          content: result.generatedFiles[k],
           pipeline: '__ptpm_raw'
         });
         const regex = new RegExp('./' + k, 'g');
-        manifest = manifest.replace(regex, uniqueKey);
-        const inBC = regex.test(browserConfig);
-        const inHTML = regex.test(htmlInject);
-        if (inBC || inHTML) {
-          const dep = asset.addURLDependency(uniqueKey);
-          if (inBC) browserConfig = browserConfig.replace(regex, dep);
-          if (inHTML) htmlInject = htmlInject.replace(regex, dep);
+        const processDep = '__ptpm(' + uniqueKey + ')';
+        manifest = manifest.replace(regex, processDep);
+        browserConfig = browserConfig.replace(regex, processDep);
+        if (regex.test(htmlInject)) {
+          htmlInject = htmlInject.replace(
+            regex,
+            asset.addURLDependency(uniqueKey)
+          );
         }
       }
-      newAssets.push({
-        type: 'xml',
-        uniqueKey: '__ptpm-browserconfig.xml',
-        content: browserConfig,
-        pipeline: '__ptpm_raw'
-      }, {
-        type: 'webmanifest',
-        uniqueKey: '__ptpm-manifest.webmanifest',
-        content: manifest
-      });
-      htmlInject = htmlInject.replace(new RegExp('./manifest.webmanifest', 'g'), asset.addURLDependency('__ptpm-manifest.webmanifest', {
-        needsStableName: true
-      }));
-      htmlInject = htmlInject.replace(new RegExp('./browserconfig.xml', 'g'), asset.addURLDependency('__ptpm-browserconfig.xml', {
-        needsStableName: true
-      }));
+      newAssets.push(
+        {
+          type: 'xml',
+          uniqueKey: '__ptpm-browserconfig.xml',
+          content: browserConfig,
+          pipeline: '__ptpm_process'
+        },
+        {
+          type: 'webmanifest',
+          uniqueKey: '__ptpm-manifest.webmanifest',
+          content: manifest,
+          pipeline: '__ptpm_process'
+        }
+      );
+      htmlInject = htmlInject.replace(
+        new RegExp('./manifest.webmanifest', 'g'),
+        asset.addURLDependency('__ptpm-manifest.webmanifest')
+      );
+      htmlInject = htmlInject.replace(
+        new RegExp('./browserconfig.xml', 'g'),
+        asset.addURLDependency('__ptpm-browserconfig.xml')
+      );
       const ind = origHTML.search(headSearch);
       // istanbul ignore next
       if (ind === -1) {
         const htmlInd = origHTML.search(htmlSearch);
         if (htmlInd === -1) {
-          throw new Error('Manifest injection failed: HTML file for link injection is invalid.');
+          throw new Error(
+            'Manifest injection failed: HTML file for link injection is invalid.'
+          );
         }
-        origHTML = `${origHTML.slice(0, htmlInd)}<head><title>${config.manifest.name}</title>${htmlInject}</head>${origHTML.slice(htmlInd)}`;
-      }
-      else {
-        origHTML = `${origHTML.slice(0, ind)}${htmlInject}${origHTML.slice(ind)}`;
+        origHTML = `${origHTML.slice(0, htmlInd)}<head><title>${
+          result.manifest.name
+        }</title>${htmlInject}</head>${origHTML.slice(htmlInd)}`;
+      } else {
+        origHTML = `${origHTML.slice(0, ind)}${htmlInject}${origHTML.slice(
+          ind
+        )}`;
       }
       asset.setCode(origHTML);
       return newAssets;
+    } else {
+      let code = await asset.getCode();
+      code = code.replace(/__ptpm\((.*?)\)/g, str =>
+        asset.addURLDependency(str.slice(7, -1))
+      );
+      asset.setCode(code);
     }
     return [asset];
   }

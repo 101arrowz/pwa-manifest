@@ -147,16 +147,19 @@ const testConfigs: Config[] = [
   {
     msg: 'Shortcuts work',
     config: {
-      shortcuts: [{
-        name: 'Example',
-        url: '/example'
-      }, {
-        name: 'Complex',
-        shortName: 'CX',
-        url: '/complex',
-        description: 'Complex config',
-        icon: './icon.svg'
-      }],
+      shortcuts: [
+        {
+          name: 'Example',
+          url: '/example'
+        },
+        {
+          name: 'Complex',
+          shortName: 'CX',
+          url: '/complex',
+          description: 'Complex config',
+          icon: './icon.svg'
+        }
+      ],
       genIconOpts: {
         baseIcon: './icon.svg',
         shortcutSizes: []

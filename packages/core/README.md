@@ -87,6 +87,8 @@ The `theme_color` (aka `theme`) will default to white and will change the defaul
 
 The `screenshots`, unlike in a normal web app manifest, should be an array of screenshot image filepaths or absolute URLs. Do not use relative URLs or they will be confused for filepaths. Each image should be a PNG, JPEG, or WebP file.
 
+Each shortcut in the `shortcuts` should not include an `icons` field but rather a single `icon`, which will automatically be resized according to the icon generation options. The other fields like `name`, `short_name` have aliases.
+
 Instead of manually setting an `icons` parameter containing a set of icons, you should use `genIconOpts` (aka `iconGenerationOptions`, `iconGenOpts`, ...you get the gist). `genIconOpts` will contain the options for icon generation. The parameters for `genIconOpts` are as follows:
 #### `baseIcon`
 The path to the icon to generate all other icons from. Path is relative to the `resolveDir`.
@@ -94,6 +96,9 @@ The path to the icon to generate all other icons from. Path is relative to the `
 #### `sizes`
 An array of pixel values for the sizes to generate. Defaults to `[96, 152, 192, 384, 512]`.
 - All PWAs need at least 192px and 512px icons, so those will be added in regardless of whether they are provided in the `sizes` parameter.
+#### `shortcutSizes`
+An array of pixel values for the sizes of the shortcut icons. Defaults to `[96, 192]`.
+- All PWAs need at least 96x shortcut icons, so those will be added in regardless of whether they are provided in the `shortcutSizes` parameter.
 #### `formats`
 An object whose keys are the desired output formats (in lowercase) and whose values are the configurations to use with the [`sharp`](https://sharp.pixelplumbing.com/en/stable/api-output/#png) package when generating icons of that type. By default, generates WebP and PNG images with somewhat high compression.
 - If you prefer the user getting one format over another, put that format first in the object.

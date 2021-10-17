@@ -1,27 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Integrated correctly 1`] = `
-Array [
-  "apple-touch-icon.67e6641c.png",
-  "browserconfig.xml",
-  "cache",
-  "icon-192x192.60385309.webp",
-  "icon-192x192.ba2e3c32.png",
-  "icon-512x512.53c5ad04.webp",
-  "icon-512x512.8d04d761.png",
-  "index.html",
-  "manifest.webmanifest",
-  "mstile-150x150.db75c4ea.png",
-  "mstile-310x150.5f1296f5.png",
-  "mstile-310x310.7d35cb45.png",
-  "mstile-70x70.d4870be2.png",
-]
-`;
-
-exports[`Integrated correctly 2`] = `
 "<!DOCTYPE html>
 <html lang=\\"en\\">
-<head><meta name=\\"msapplication-config\\" content=\\"/browserconfig.xml\\"><meta name=\\"theme-color\\" content=\\"white\\"><link rel=\\"apple-touch-icon\\" sizes=\\"180x180\\" href=\\"/apple-touch-icon.67e6641c.png\\"><link rel=\\"manifest\\" href=\\"/manifest.webmanifest\\">
+<head><meta name=\\"msapplication-config\\" content=\\"/__tests__.cd633e1e.xml\\"><meta name=\\"theme-color\\" content=\\"white\\"><link rel=\\"apple-touch-icon\\" sizes=\\"180x180\\" href=\\"/__tests__.8cde3ce4.png\\"><link rel=\\"manifest\\" href=\\"/__tests__.6a838e8e.webmanifest\\">
   <meta charset=\\"UTF-8\\">
   <meta name=\\"viewport\\" content=\\"width=device-width, initial-scale=1.0\\">
   <title>My PWA</title>
@@ -32,9 +14,9 @@ exports[`Integrated correctly 2`] = `
 </html>"
 `;
 
-exports[`Integrated correctly 3`] = `"<?xml version=\\"1.0\\" encoding=\\"utf-8\\"?><browserconfig><msapplication><tile><TileColor>white</TileColor><square70x70logo src=\\"/mstile-70x70.d4870be2.png\\"/><square150x150logo src=\\"/mstile-150x150.db75c4ea.png\\"/><square310x310logo src=\\"/mstile-310x310.7d35cb45.png\\"/><wide310x150logo src=\\"/mstile-310x150.5f1296f5.png\\"/></tile></msapplication></browserconfig>"`;
+exports[`Integrated correctly 2`] = `"<?xml version=\\"1.0\\" encoding=\\"utf-8\\"?><browserconfig><msapplication><tile><TileColor>white</TileColor><square70x70logo src=\\"/__tests__.211d409d.png\\"/><square150x150logo src=\\"/__tests__.00063458.png\\"/><square310x310logo src=\\"/__tests__.76031e39.png\\"/><wide310x150logo src=\\"/__tests__.3c5362cd.png\\"/></tile></msapplication></browserconfig>"`;
 
-exports[`Integrated correctly 4`] = `
+exports[`Integrated correctly 3`] = `
 Object {
   "background_color": "white",
   "description": "A PWA",
@@ -42,29 +24,29 @@ Object {
   "icons": Array [
     Object {
       "sizes": "192x192",
-      "src": "/icon-192x192.60385309.webp",
+      "src": "/__tests__.2347bd1d.webp",
       "type": "image/webp",
     },
     Object {
       "sizes": "192x192",
-      "src": "/icon-192x192.ba2e3c32.png",
+      "src": "/__tests__.ca863f17.png",
       "type": "image/png",
     },
     Object {
       "sizes": "512x512",
-      "src": "/icon-512x512.53c5ad04.webp",
+      "src": "/__tests__.d0a5f607.webp",
       "type": "image/webp",
     },
     Object {
       "sizes": "512x512",
-      "src": "/icon-512x512.8d04d761.png",
+      "src": "/__tests__.95fef4cd.png",
       "type": "image/png",
     },
   ],
   "name": "my-pwa",
-  "scope": "/",
+  "scope": "./",
   "short_name": "my-pwa",
-  "start_url": "/",
+  "start_url": "./",
   "theme_color": "white",
 }
 `;

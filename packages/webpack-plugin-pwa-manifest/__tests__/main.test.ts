@@ -4,7 +4,7 @@ import WebpackPluginPWAManifest from '../index';
 import { join } from 'path';
 import { readdirSync, readFileSync } from 'fs';
 jest.setTimeout(30000);
-test('Integrated correctly', async done => {
+test('Integrated correctly', async () => {
   const base = join(__dirname, 'sample');
   const out = join(__dirname, 'tmp', Date.now().toString(36));
   await new Promise<void>((res, rej) => {
@@ -36,5 +36,4 @@ test('Integrated correctly', async done => {
   expect(
     JSON.parse(readFileSync(join(out, 'manifest.webmanifest')).toString())
   ).toMatchSnapshot();
-  done();
 });

@@ -23,7 +23,7 @@
     "url": "https://github.com/101arrowz/pwa-manifest"
   },
   "scripts": {
-    "lint": "eslint --fix \"__tests__/**/*.ts\"",
+    "lint": "eslint --fix \"__tests__/*.ts\"",
     "build-namer": "yarn workspace parcel-namer-pwa-manifest build-unchecked",
     "build-transformer": "yarn workspace parcel-transformer-pwa-manifest build-unchecked",
     "pretest": "yarn build-namer && yarn build-transformer",

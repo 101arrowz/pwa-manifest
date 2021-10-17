@@ -1,7 +1,7 @@
 {
   "name": "parcel-namer-pwa-manifest",
-  "version": "0.0.2",
-  "description": "A Parcel v2 namer that helps generate a Web App Manifest, creates all necessary icons, and more!",
+  "version": "0.0.3",
+  "description": "(DEPRECATED) A Parcel v2 namer that helps generate a Web App Manifest, creates all necessary icons, and more!",
   "main": "lib/index.js",
   "author": "Arjun Barrett <arjunbarrett@gmail.com>",
   "license": "MIT",
