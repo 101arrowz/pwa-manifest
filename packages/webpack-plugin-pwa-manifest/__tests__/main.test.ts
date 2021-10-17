@@ -7,7 +7,7 @@ jest.setTimeout(30000);
 test('Integrated correctly', async done => {
   const base = join(__dirname, 'sample');
   const out = join(__dirname, 'tmp', Date.now().toString(36));
-  await new Promise((res, rej) => {
+  await new Promise<void>((res, rej) => {
     webpack({
       mode: 'development',
       plugins: [

@@ -1,7 +1,6 @@
 {
   "transformers": {
     "*.{htm,html}": ["...", "parcel-transformer-pwa-manifest"],
-    "*.{xml,png,webp,tiff,jpg,webmanifest}": ["@parcel/transformer-raw"]
-  },
-  "namers": ["parcel-namer-pwa-manifest", "..."]
+    "__ptpm_raw:*": ["@parcel/transformer-raw"]
+  }
 }

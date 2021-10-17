@@ -4,16 +4,12 @@ import PWAManifestGenerator, {
 } from '@pwa-manifest/core';
 import { Transformer } from '@parcel/plugin';
 import { dirname } from 'path';
+import assert from 'assert';
 
 const headSearch = /(?<=<head(.*?)>)|<\/head>/;
 const htmlSearch = /(?<=<html(.*?)>)/;
 
-export default new Transformer<
-  Generation,
-  Omit<Generation, 'generatedFiles'> & {
-    generatedFiles: Record<string, number[]>;
-  }
->({
+export default new Transformer<Generation | void>({
   async loadConfig({ config, options, logger }) {
     if (!config.env.isBrowser()) {
       logger.warn({
@@ -26,38 +22,12 @@ export default new Transformer<
         '.pwamanifestrc',
         '.pwamanifestrc.json',
         '.pwamanifestrc.js',
-        'pwamanifest.conifg.js'
+        'pwamanifest.config.js'
       ],
       {
         packageKey: 'pwaManifest'
       }
     );
-    const pkgJson = await config.getPackage();
-    const envBrowsers = config.env.engines.browsers!;
-    let publicUrl = '/';
-    if (pkgJson && pkgJson.targets) {
-      for (const k in pkgJson.targets) {
-        const target = pkgJson.targets[k];
-        if (target.context && target.context !== 'browser') {
-          continue;
-        }
-        if (typeof envBrowsers === 'string') {
-          if (target.engines?.browsers !== envBrowsers) {
-            continue;
-          }
-        } else if (
-          target.engines?.browsers &&
-          !(
-            Array.isArray(target.engines.browsers) &&
-            target.engines.browsers.length === envBrowsers.length &&
-            target.engines.browsers.every((v, i) => envBrowsers[i] === v)
-          )
-        ) {
-          continue;
-        }
-        publicUrl = target.publicUrl || '/';
-      }
-    }
     const conf = confFile?.contents;
     if (!conf) {
       throw new Error('Manifest creation failed: No config found.');
@@ -68,7 +38,7 @@ export default new Transformer<
       gen = new PWAManifestGenerator(
         conf,
         {
-          baseURL: publicUrl,
+          baseURL: '.',
           resolveDir: dirname(confFile.filePath)
         },
         {
@@ -79,78 +49,68 @@ export default new Transformer<
     } catch (e) {
       throw new Error(`Manifest creation failed: ${e}`);
     }
-    // TODO: way to specify fingerprinting level
-    gen.hashMethod = 'content';
+    gen.hashMethod = 'none';
     gen.on('*', (ev, ...args) => {
       if (ev.endsWith('Start')) logger.log({ message: args[0] });
     });
-    try {
-      config.setResult(await gen.generate());
-    } catch (e) {
-      throw new Error(`Manifest creation failed: ${e}`);
-    }
-  },
-  async preSerializeConfig({ config }) {
-    if (!config.result) return;
-    const newFiles: Record<string, number[]> = {};
-    for (const k in config.result.generatedFiles) {
-      newFiles[k] = [...config.result.generatedFiles[k]];
-    }
-    config.result = {
-      ...config.result,
-      generatedFiles: newFiles
-    };
-  },
-  async postDeserializeConfig({ config }) {
-    const newFiles: Record<string, Buffer> = {};
-    for (const k in config.result.generatedFiles) {
-      newFiles[k] = Buffer.from(config.result.generatedFiles[k]);
-    }
-    config.setResult({
-      ...config.result,
-      generatedFiles: newFiles
-    });
+    return await gen.generate();
   },
   async transform({ asset, config }) {
     if (config && asset.type === 'html') {
       let origHTML = await asset.getCode();
+      const newAssets: TransformerResultAsset[] = [asset];
+      let htmlInject = config.html
+        .map(htmlInsertToString)
+        .join('');
+      let manifest = JSON.stringify(config.manifest);
+      let browserConfig = config.browserConfig;
+      for (const k in config.generatedFiles) {
+        const uniqueKey = '__ptpm-' + k;
+        newAssets.push({
+          type: k.slice(k.lastIndexOf('.') + 1),
+          uniqueKey,
+          content: config.generatedFiles[k],
+          pipeline: '__ptpm_raw'
+        });
+        const regex = new RegExp('./' + k, 'g');
+        manifest = manifest.replace(regex, uniqueKey);
+        const inBC = regex.test(browserConfig);
+        const inHTML = regex.test(htmlInject);
+        if (inBC || inHTML) {
+          const dep = asset.addURLDependency(uniqueKey);
+          if (inBC) browserConfig = browserConfig.replace(regex, dep);
+          if (inHTML) htmlInject = htmlInject.replace(regex, dep);
+        }
+      }
+      newAssets.push({
+        type: 'xml',
+        uniqueKey: '__ptpm-browserconfig.xml',
+        content: browserConfig,
+        pipeline: '__ptpm_raw'
+      }, {
+        type: 'webmanifest',
+        uniqueKey: '__ptpm-manifest.webmanifest',
+        content: manifest
+      });
+      htmlInject = htmlInject.replace(new RegExp('./manifest.webmanifest', 'g'), asset.addURLDependency('__ptpm-manifest.webmanifest', {
+        needsStableName: true
+      }));
+      htmlInject = htmlInject.replace(new RegExp('./browserconfig.xml', 'g'), asset.addURLDependency('__ptpm-browserconfig.xml', {
+        needsStableName: true
+      }));
       const ind = origHTML.search(headSearch);
       // istanbul ignore next
       if (ind === -1) {
         const htmlInd = origHTML.search(htmlSearch);
         if (htmlInd === -1) {
-          throw 'HTML file for link injection is invalid.';
+          throw new Error('Manifest injection failed: HTML file for link injection is invalid.');
         }
-        origHTML = `${origHTML.slice(0, htmlInd)}<head><title>${
-          config.manifest.name
-        }</title>${config.html
-          .map(htmlInsertToString)
-          .join('')}</head>${origHTML.slice(htmlInd)}`;
-      } else {
-        origHTML = `${origHTML.slice(0, ind)}${config.html
-          .map(htmlInsertToString)
-          .join('')}${origHTML.slice(ind)}`;
+        origHTML = `${origHTML.slice(0, htmlInd)}<head><title>${config.manifest.name}</title>${htmlInject}</head>${origHTML.slice(htmlInd)}`;
+      }
+      else {
+        origHTML = `${origHTML.slice(0, ind)}${htmlInject}${origHTML.slice(ind)}`;
       }
       asset.setCode(origHTML);
-      const newAssets: TransformerResultAsset[] = [
-        asset,
-        {
-          type: 'xml',
-          uniqueKey: 'ptpm-browserconfig.xml',
-          content: config.browserConfig
-        },
-        {
-          type: 'webmanifest',
-          uniqueKey: 'ptpm-manifest.webmanifest',
-          content: JSON.stringify(config.manifest)
-        }
-      ];
-      for (const k in config.generatedFiles)
-        newAssets.push({
-          type: k.slice(k.lastIndexOf('.') + 1),
-          uniqueKey: 'ptpm-' + k,
-          content: config.generatedFiles[k]
-        });
       return newAssets;
     }
     return [asset];

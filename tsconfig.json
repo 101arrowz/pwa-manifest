@@ -9,6 +9,7 @@
     "strict": true,
     "esModuleInterop": true,
     "pretty": true,
-    "preserveSymlinks": true
+    "preserveSymlinks": true,
+    "skipLibCheck": true
   }
 }

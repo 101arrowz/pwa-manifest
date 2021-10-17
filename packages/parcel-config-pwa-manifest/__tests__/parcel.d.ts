@@ -2,7 +2,6 @@ interface ParcelConfig {
   extends: string[];
   filePath: string;
   transformers: Record<string, string[]>;
-  namers: string[];
 } // TODO
 declare module '@parcel/core' {
   export interface ParcelOptions {

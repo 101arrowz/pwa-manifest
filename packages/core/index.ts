@@ -6,7 +6,7 @@ import sharp, {
   ResizeOptions,
   Sharp
 } from 'sharp';
-import { existsSync, readFileSync } from 'fs';
+import { existsSync } from 'fs';
 import { basename, resolve } from 'path';
 import { EventEmitter } from 'events';
 import { createHash } from 'crypto';
@@ -21,6 +21,15 @@ export type Verifier = (v: unknown) => boolean;
 export type Screenshot = {
   src: string;
   type: string;
+  sizes?: string;
+};
+export type Shortcut = {
+  name: string;
+  shortName: string,
+  desc: string;
+  url: string;
+  icon?: string | IconEntry[];
+  purposes?: string[];
 };
 export type IconEntry = {
   src: string;
@@ -53,26 +62,36 @@ export type EmittedGenEvent = {
 };
 export type StartEvent =
   | 'defaultIconsStart'
+  | 'shortcutIconsStart'
   | 'appleTouchIconStart'
   | 'safariPinnedTabStart'
+  | 'screenshotsStart'
   | 'faviconStart'
   | 'msTileStart';
 export type GenerationEvent =
   | 'defaultIconsGen'
+  | 'shortcutIconsGen'
   | 'appleTouchIconGen'
   | 'safariPinnedTabGen'
+  | 'screenshotsGen'
   | 'faviconGen'
   | 'msTileGen';
 export type EndEvent =
   | 'defaultIconsEnd'
+  | 'shortcutIconsEnd'
   | 'appleTouchIconEnd'
   | 'safariPinnedTabEnd'
+  | 'screenshotsEnd'
   | 'faviconEnd'
   | 'msTileEnd';
 export type BaseEvent = 'start' | 'end';
 export type Event = StartEvent | GenerationEvent | EndEvent | BaseEvent;
 export type HTMLInsert = [string, Record<string, string>];
 type AwaitableBuffer = Buffer | Promise<Buffer>;
+type InternalScreenshot = {
+  src: string;
+  size?: string;
+};
 const createEvent = (
   img: AwaitableBuffer,
   filename: string
@@ -126,6 +145,7 @@ export default class PWAManifestGenerator extends EventEmitter {
   }
   private baseIcon: Sharp;
   private sizes: number[];
+  private shortcutSizes: number[];
   private purposes: string[];
   private formats: FormatOptions;
   private resizeOptions: ResizeOptions;
@@ -137,6 +157,9 @@ export default class PWAManifestGenerator extends EventEmitter {
   private extraParams: PWAManifestOptions;
   private defaultHashMethod: HashMethod = 'name';
   private icons: IconEntry[] = [];
+  private shortcuts: Shortcut[] = [];
+  private screenshots: Screenshot[] = [];
+  private screenshotPaths: InternalScreenshot[] = [];
   /**
    * The hash method for the icon filename fingerprints. Can be 'none' (no
    * fingerprinting), 'name' (fingerprint based on filename), or 'content' (
@@ -180,7 +203,9 @@ export default class PWAManifestGenerator extends EventEmitter {
         const v = src[k];
         if (typeof v !== 'undefined') return v;
       }
-      return fallback[keys[0]];
+      if (src === opts) {
+        return fallback[keys[0]];
+      }
     };
 
     // istanbul ignore next
@@ -257,35 +282,101 @@ export default class PWAManifestGenerator extends EventEmitter {
       throw 'The theme color provided in the options must be a string representing a valid CSS color.';
     this.theme = theme;
     const extraParams: PWAManifestOptions = {};
-    const screenshots = opt(opts, [
-      'screenshots',
-      'screenShots',
-      'screen-shots'
-    ]);
+    const screenshots = opt(opts, ['screenshots', 'images']);
     // istanbul ignore next
     if (
       screenshots instanceof Array &&
-      screenshots.every(v => typeof v === 'string')
+      screenshots.every(v => typeof v === 'string' || (typeof v === 'object' && v && (typeof v.size === 'string' || typeof v.size === 'undefined') && typeof v.src === 'string'))
     ) {
       const manifestScreenshots: Screenshot[] = [];
-      for (let sc of screenshots) {
+      const screenshotPaths: InternalScreenshot[] = [];
+      for (let rawSC of screenshots) {
+        let sc = rawSC as string;
+        let sizes: string | undefined;
+        if (typeof rawSC === 'object') {
+          sc = rawSC.src;
+          sizes = rawSC.size;
+        }
         let ext = sc.slice(sc.lastIndexOf('.') + 1);
         if (ext === 'jpg') ext = 'jpeg';
         else if (!['png', 'jpeg', 'webp'].includes(ext))
           throw 'Each screenshot in the screenshots must be of type PNG, WebP, or JPEG. Ensure that the filenames have the correct extensions.';
         if (isValidURL(sc))
-          manifestScreenshots.push({ src: sc, type: 'image/' + ext });
+          manifestScreenshots.push({ src: sc, type: 'image/' + ext, ...(sizes && { sizes }) });
         else if (existsSync((sc = resolve(resolveDir, sc)))) {
-          const data = readFileSync(sc);
-          const fn = this.fingerprint(basename(sc), data);
-          this.generatedFiles[fn] = data;
-          manifestScreenshots.push({ src: baseURL + fn, type: 'image/' + ext });
+          screenshotPaths.push({ src: sc, size: sizes });
         } else
-          throw 'Every screenshot in the screenshots array must be a valid filepath or absolute URL to a screenshot image.';
+          throw 'Every screenshot in the screenshots array must include a valid filepath or absolute URL to a screenshot image.';
       }
-      extraParams.screenshots = manifestScreenshots;
+      this.screenshots = manifestScreenshots;
+      this.screenshotPaths = screenshotPaths;
     } else if (typeof screenshots !== 'undefined')
-      throw 'The screenshots provided in the options must be an array of screenshot filepaths or absolute URLs.';
+      throw "The screenshots provided in the options must be an array of screenshot filepaths, absolute URLs, or objects with a 'src' and a 'size'.";
+
+    const shortcuts = opt(opts, ['shortcuts', 'pages', 'links']);
+    if (
+      shortcuts instanceof Array &&
+      shortcuts.every(v => typeof v === 'object' && v)
+    ) {
+      const outShortcuts: Shortcut[] = [];
+      for (const shortcut of shortcuts) {
+        const name = opt(shortcut, ['name']);
+        if (typeof name !== 'string') {
+          if (typeof name === 'undefined')
+            throw 'No name was found in the shortcut options.';
+          throw 'The name provided in the shortcut options must be a string.';
+        }
+        const shortName =
+          opt(shortcut, ['shortName', 'short-name', 'short_name']) || name;
+        if (typeof shortName !== 'string')
+          throw 'The short name provided in the shortcut options must be a string.';
+        const url =
+          opt(shortcut, ['url', 'page', 'link']);
+        if (typeof url !== 'string') {
+          if (typeof url === 'undefined')
+            throw 'No URL was found in the shortcut options.';
+          throw 'The URL provided in the shortcut options must be a string.';
+        }
+        const desc = opt(shortcut, ['desc', 'description']) || '';
+        if (typeof desc !== 'string')
+          throw 'The description provided in the shortcut options must be a string.';
+        const iconPath = opt(shortcut, ['icon']);
+        let icon: string | undefined;
+        if (typeof iconPath !== 'undefined') {
+          if (typeof iconPath !== 'string') {
+            throw 'The icon parameter in the shortcut options must be a string that contains the path to the icon.';
+          }
+          const iconFullPath = resolve(resolveDir, iconPath);
+          if (!existsSync(iconFullPath))
+            throw 'No icon was found at the path ' + iconPath + '.';
+          icon = iconFullPath;
+        }
+        const purposes = opt(shortcut, ['purpose', 'purposes']);
+        // istanbul ignore next
+        if (typeof purposes !== 'undefined') {
+          if (!icon) {
+            throw "The purposes parameter in the shortcut options can only exist if the shortcut has an icon.";
+          }
+          if (
+            !(
+              purposes instanceof Array &&
+              purposes.every(val => ['badge', 'maskable', 'monochrome', 'any'].includes(val))
+            )
+          )
+            throw "The purposes parameter in the shortcut options must be an array for which each element is one of 'badge', 'maskable', 'monochrome', or 'any'.";
+        }
+        outShortcuts.push({
+          name,
+          shortName,
+          desc,
+          url,
+          purposes,
+          icon
+        });
+      }
+      this.shortcuts = outShortcuts;
+    } else if (typeof shortcuts !== 'undefined')
+      throw 'The shortcuts provided in the options must be an array of shortcut options with names, URLs, and an optional icon, short name, and description.';
 
     const genIconOpts = opt(opts, [
       'genIcon',
@@ -322,8 +413,11 @@ export default class PWAManifestGenerator extends EventEmitter {
     const baseIconPath = opt(genIconOpts, [
       'baseIcon',
       'base-icon',
+      'base_icon',
       'fromIcon',
-      'from-icon'
+      'from-icon',
+      'from_icon',
+      'icon'
     ]);
     // istanbul ignore next
     if (typeof baseIconPath !== 'string') {
@@ -342,17 +436,39 @@ export default class PWAManifestGenerator extends EventEmitter {
       throw 'No icon was found at the base icon path ' + baseIconPath + '.';
     this.intBaseIconName = baseIconName;
     let sizes = [96, 152, 192, 384, 512]; // Common sizes
-    const tmpSizes = opt(genIconOpts, ['sizes', 'sizeList', 'size-list']);
+    const tmpSizes = opt(genIconOpts, ['sizes', 'sizeList', 'size-list', 'size_list']);
     // istanbul ignore next
     if (
       tmpSizes instanceof Array &&
       tmpSizes.every((v: unknown) => typeof v === 'number')
-    )
+    ) {
+      // Needed in all PWAs
       sizes = [...new Set(tmpSizes.concat(192, 512))] as number[];
-    // Needed in all PWAs
+    }
     else if (typeof tmpSizes !== 'undefined')
       throw 'The sizes parameter in the icon generation options must be an array of numeric pixel values for sizes of the images.';
     this.sizes = sizes;
+
+    let shortcutSizes = [96, 192];
+    const tmpShortcutSizes = opt(genIconOpts, [
+      'shortcutSizes',
+      'shortcut-sizes',
+      'shortcut_sizes',
+      'shortcutSizeList',
+      'shortcut-size-list',
+      'shortcut_size_list'
+    ]);
+    // istanbul ignore next
+    if (
+      tmpShortcutSizes instanceof Array &&
+      tmpShortcutSizes.every((v: unknown) => typeof v === 'number')
+    ) {
+      // Needed in all PWAs
+      shortcutSizes = [...new Set(tmpShortcutSizes.concat(96))] as number[];
+    }
+    else if (typeof tmpShortcutSizes !== 'undefined')
+      throw 'The shortcut sizes parameter in the icon generation options must be an array of numeric pixel values for sizes of the shortcut icons.';
+    this.shortcutSizes = shortcutSizes;
 
     const png = {
       compressionLevel: 9
@@ -402,10 +518,10 @@ export default class PWAManifestGenerator extends EventEmitter {
       if (
         !(
           purposes instanceof Array &&
-          purposes.every(val => ['badge', 'maskable', 'any'].includes(val))
+          purposes.every(val => ['badge', 'maskable', 'monochrome', 'any'].includes(val))
         )
       )
-        throw "The purposes parameter in the icon generation options must be an array for which each element is one of 'badge', 'maskable', or 'any'.";
+        throw "The purposes parameter in the icon generation options must be an array for which each element is one of 'badge', 'maskable', 'monochrome', or 'any'.";
     this.purposes = purposes || [];
     this.html.push([
       'meta',
@@ -655,8 +771,10 @@ export default class PWAManifestGenerator extends EventEmitter {
       };
     this.emit('start');
     await this.genDefaultIcons();
+    await this.genShortcutIcons();
     if (this.doGenFavicons) await this.genFavicons();
     if (this.doGenPinnedTab) await this.genSafariPinnedTab();
+    await this.genScreenshots();
     await this.genAppleTouchIcon();
     await this.genMsTileIcons();
     await this.genManifest();
@@ -715,6 +833,64 @@ export default class PWAManifestGenerator extends EventEmitter {
   }
 
   /**
+   * Generates the icons for each shortcut in the manifest, adding them to the
+   * `generatedFiles` property.
+   */
+  async genShortcutIcons(): Promise<void> {
+    this.emit('shortcutIconsStart', `Generating shortcut icons...`);
+    for (let i = 0; i < this.shortcuts.length; ++i) {
+      const shortcut = this.shortcuts[i];
+      if (shortcut.icon) {
+        const icons: IconEntry[] = [];
+        const si = shortcut.icon as string;
+        const shortcutIconName = basename(
+          si,
+          si.slice(si.lastIndexOf('.'))
+        );
+        let purpose = '';
+        if (shortcut.purposes) purpose = shortcut.purposes.join(' ');
+        const shortcutIcon = sharp(si);
+        for (const size of this.shortcutSizes) {
+          const icon = shortcutIcon.clone().resize(size, size, this.resizeOptions);
+          const saveSize = size + 'x' + size;
+          for (const format of Object.keys(this.formats) as Array<
+            keyof FormatOptions
+          >) {
+            let buf: AwaitableBuffer;
+            try {
+              buf = icon
+                .clone()
+                [format](this.formats[format])
+                .toBuffer();
+            } catch (e) {
+              // istanbul ignore next
+              throw 'An unknown error ocurred during the icon creation process: ' +
+                e;
+            }
+            const fn = 'shortcut-' + shortcutIconName + i + '-' + saveSize + '.' + format;
+            const ev = createEvent(buf, fn);
+            const fnProm = ev.filename;
+            this.emit('shortcutIconsGen', ev);
+            buf = await ev.content;
+            let filename = ev.filename === fnProm ? undefined : await ev.filename;
+            if (!filename) filename = this.fingerprint(fn, buf);
+            this.generatedFiles[filename] = buf;
+            const iconEntry: IconEntry = {
+              src: this.meta.baseURL + filename,
+              sizes: saveSize,
+              type: 'image/' + format
+            };
+            if (purpose) iconEntry.purpose = purpose;
+            icons.push(iconEntry);
+          }
+        }
+        shortcut.icon = icons;
+      }
+    }
+    this.emit('shortcutIconsEnd');
+  }
+
+  /**
    * Generates the Apple Touch Icon for this config, adding it to the
    * `generatedFiles` property.
    */
@@ -760,6 +936,32 @@ export default class PWAManifestGenerator extends EventEmitter {
       }
     ]);
     this.emit('appleTouchIconEnd');
+  }
+
+  /**
+   * Generates the screenshots for this config, adding it to the
+   * `generatedFiles` property.
+   */
+  async genScreenshots(): Promise<void> {
+    this.emit('screenshotsStart', 'Generating screenshots...');
+    for (let { src, size } of this.screenshotPaths) {
+      const image = sharp(src);
+      if (!size) {
+        const { height, width, } = await image.metadata();
+        size = `${width!}x${height!}`;
+      }
+      let buf: AwaitableBuffer = image.toBuffer();
+      const fn = basename(src);
+      const ev = createEvent(buf, fn);
+      const fnProm = ev.filename;
+      this.emit('screenshotsGen', ev);
+      buf = await ev.content;
+      let scName = ev.filename === fnProm ? undefined : await ev.filename;
+      if (!scName) scName = this.fingerprint(fn, buf);
+      this.generatedFiles[scName] = buf;
+      this.screenshots.push({ src: this.meta.baseURL + scName, sizes: size, type: 'image/' + scName.slice(scName.lastIndexOf('.') + 1) });
+    }
+    this.emit('screenshotsEnd');
   }
 
   /**
@@ -911,6 +1113,14 @@ export default class PWAManifestGenerator extends EventEmitter {
       ...(this.desc && { description: this.desc }),
       icons: this.icons,
       theme_color: this.theme,
+      ...(this.screenshots.length && { screenshots: this.screenshots }),
+      ...(this.shortcuts.length && { shortcuts: this.shortcuts.map(shortcut => ({
+        name: shortcut.name,
+        short_name: shortcut.shortName,
+        ...(shortcut.desc && { description: shortcut.desc }),
+        url: shortcut.url,
+        ...(shortcut.icon instanceof Array && { icons: shortcut.icon })
+      })) }),
       ...this.extraParams
     };
     this.html.push([

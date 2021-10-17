@@ -1,13 +1,3 @@
-type SynthAsset = {
-  filePath: string;
-  code: string;
-};
-type TransformerResultAsset = Asset | {
-  content: string | Buffer;
-  type: string;
-  uniqueKey: string;
-};
-
 type Diagnostic = {
   message: string;
 }
@@ -17,53 +7,66 @@ type PluginLogger = {
   warn(v: Diagnostic): void;
 };
 
-type Options = { rootDir: string; }
+type TransformerResultAsset = {
+  type: string;
+  uniqueKey: string;
+  content: string | Buffer;
+  pipeline?: string;
+} | Asset;
+
+type Async<T> = T | Promise<T>;
+
+type Options = {};
+
+type Environment = {
+  isBrowser(): boolean;
+  context: string;
+};
+
+type DependencyOptions = {
+  needsStableName?: boolean;
+};
+
 type Asset = {
   type: string;
-  filePath: string;
   getCode(): Promise<string>;
   setCode(code: string): void;
+  addURLDependency(dep: string, opts?: DependencyOptions): string;
+};
+
+type Bundle = {
+  type: string;
+  needsStableName: boolean;
+  target: { distEntry: string };
+  traverseAssets(fn: (asset: Asset) => void): void;
 }
-type Async<T> = T | Promise<T>;
-type Engines = {
-  browsers?: string | string[];
-};
-type Environment = {
-  context: string;
-  engines: Engines;
-  isBrowser(): boolean;
-};
+
+type BundleGraph = {
+  getParentBundles(bundle: Bundle): Bundle[];
+  getBundles(): Bundle[];
+}
+
 type PackageJSON = {
-  name?: string;
-  description?: string;
-  targets: {
-    [k: string]: {
-      context?: string;
-      engines?: Engines;
-      publicUrl?: string;
-    }
-  };
+  name: string;
+  description: string;
 };
-type Config<T> = {
+
+type Config = {
   env: Environment;
-  result: T;
   searchPath: string;
   getConfig(locs: string[], extra: { packageKey: string }): Promise<{
     contents: import('@pwa-manifest/core').PWAManifestOptions;
     filePath: string;
   }>;
-  setResult(conf: T): void
   getPackage(): Promise<PackageJSON>;
 };
 type Resolve = (from: string, to: string) => Promise<string>;
 
 declare module '@parcel/plugin' {
-  export class Transformer<T, S> {
+  export class Transformer<T> {
     constructor(data: {
-      loadConfig(dat: { config: Config<T>, options: Options, logger: PluginLogger }): Async<void>;
-      preSerializeConfig?(dat: { config: Config<S>, options: Options, logger: PluginLogger }): Async<void>;
-      postDeserializeConfig?(dat: { config: Config<T>, options: Options, logger: PluginLogger }): Async<void>;
-      transform(dat: { asset: Asset, config: T | null, options: Options, logger: PluginLogger, resolve: Resolve }): Async<TransformerResultAsset[]>;
+      loadConfig(dat: { config: Config, options: Options, logger: PluginLogger }): Async<T>;
+      transform(dat: { asset: Asset, config: T, options: Options, logger: PluginLogger, resolve: Resolve }): Async<TransformerResultAsset[]>;
     });
   }
 }

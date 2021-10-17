@@ -28,7 +28,7 @@ const testConfig = ({ config, msg, ...props }: Config): void =>
       generatedManifest = result.manifest;
     } catch (e) {
       const throws = (props as ErrorConfig).throws;
-      if (throws && new RegExp(throws).test(e)) return;
+      if (throws && new RegExp(throws).test(e as string)) return;
       throw new Error(e);
     }
     const { logOutput, throws } = props as ResultConfig & ErrorConfig;

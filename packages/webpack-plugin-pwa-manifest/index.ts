@@ -38,6 +38,12 @@ const createHooks = (): Hooks => ({
   safariPinnedTabStart: new AsyncParallelHook(['msg']),
   safariPinnedTabGen: new SyncHook(['data']),
   safariPinnedTabEnd: new AsyncParallelHook(),
+  screenshotsStart: new AsyncParallelHook(['msg']),
+  screenshotsGen: new SyncHook(['data']),
+  screenshotsEnd: new AsyncParallelHook(),
+  shortcutIconsStart: new AsyncParallelHook(['msg']),
+  shortcutIconsGen: new SyncHook(['data']),
+  shortcutIconsEnd: new AsyncParallelHook(),
   faviconStart: new AsyncParallelHook(['msg']),
   faviconGen: new SyncHook(['data']),
   faviconEnd: new AsyncParallelHook(),
@@ -66,7 +72,7 @@ class WebpackPluginPWAManifest extends EventEmitter {
           baseURL: compilation.outputOptions.publicPath
         });
       } catch (e) {
-        compilation.errors.push(new Error(e));
+        compilation.errors.push(new Error(e as string));
         return;
       }
       if (this.conf.fingerprint)

@@ -135,11 +135,31 @@ const testConfigs: Config[] = [
     config: {
       screenshots: [
         'https://myfakesite.com/screenshot0.webp',
-        'screenshot.png'
+        './screenshot.png',
+        { src: './screenshot.png', size: '123x456' }
       ],
       genIconOpts: {
-        baseIcon: './icon.svg',
+        baseIcon: 'icon.svg',
         sizes: []
+      }
+    }
+  },
+  {
+    msg: 'Shortcuts work',
+    config: {
+      shortcuts: [{
+        name: 'Example',
+        url: '/example'
+      }, {
+        name: 'Complex',
+        shortName: 'CX',
+        url: '/complex',
+        description: 'Complex config',
+        icon: './icon.svg'
+      }],
+      genIconOpts: {
+        baseIcon: './icon.svg',
+        shortcutSizes: []
       }
     }
   },

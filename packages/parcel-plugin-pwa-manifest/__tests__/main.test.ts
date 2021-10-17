@@ -13,7 +13,7 @@ const bundler = new Bundler(resolve(__dirname, 'sample', 'index.html'), {
 attachManifestGenerator(bundler as FullBundler);
 jest.setTimeout(10000);
 test('Integrated correctly', async done => {
-  new Promise(res =>
+  new Promise<void>(res =>
     bundler.on('buildEnd', () => {
       expect(readdirSync(outDir)).toMatchSnapshot();
       expect(
