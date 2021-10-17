@@ -1,3 +1,5 @@
+## 1.1.0
+- Add support for `shortcuts`
 ## 1.0.1-1.0.3
 - Minor bugfixes
 - Allow 0 for `appleTouchIconPadding`

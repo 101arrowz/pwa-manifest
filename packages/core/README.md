@@ -77,7 +77,7 @@ await generator.genAppleTouchIcon();
 
 Almost anything that usually goes in a `manifest.webmanifest` file can go into the options. All parameter names have aliases in the original form from the spec (like `start_url`), in camel case (recommended, like `startUrl`), in kebab case (like `start-url`), and in other reasonable forms (like `startURL`). If you see any inconsistencies in the documentation, it's probably fine; you can use multiple names for the same value.
 
-All parameters that exist in the [MDN documentation for the Web App Manifest](https://developer.mozilla.org/en-US/docs/Web/Manifest) are aliased, type-checked, and insterted into the manifest whenever provided in `pwaManifest`. There are a few reasonable defaults, like `'.'` for `start_url`. Watch out for two changes, though: the removal of the `icons` option to allow icon generation and the modification of the `screenshots` option's behavior (detailed below).
+All parameters that exist in the [MDN documentation for the Web App Manifest](https://developer.mozilla.org/en-US/docs/Web/Manifest) are aliased, type-checked, and inserted into the manifest whenever provided in the options. There are a few reasonable defaults, like `'.'` for `start_url`. Watch out for three changes, though: the removal of the `icons` option to allow icon generation and the modification of the `screenshots` and `shortcuts` options' behavior (detailed below).
 
 If you need to have a parameter not included in that list, put an array of parameter names to keep in the final manifest under the `include` key. If you use an unknown parameter name and don't put it in `include`, the generation will throw an error.
 

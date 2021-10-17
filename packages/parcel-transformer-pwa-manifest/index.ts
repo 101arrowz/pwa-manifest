@@ -9,7 +9,9 @@ import { dirname } from 'path';
 const headSearch = /(?<=<head(.*?)>)|<\/head>/;
 const htmlSearch = /(?<=<html(.*?)>)/;
 
-export default new Transformer<[PWAManifestOptions, MetaConfig, PWAManifestOptions] | void>({
+export default new Transformer<
+  [PWAManifestOptions, MetaConfig, PWAManifestOptions] | void
+>({
   async loadConfig({ config, logger }) {
     if (!config.env.isBrowser()) {
       logger.warn({

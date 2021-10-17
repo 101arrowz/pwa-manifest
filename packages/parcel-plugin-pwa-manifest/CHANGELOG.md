@@ -1,3 +1,5 @@
+## 3.1.0
+- Add support for `shortcuts`
 ## 3.0.8-3.0.9
 - Update dependencies, README
 ## 3.0.7

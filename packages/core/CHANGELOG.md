@@ -1,3 +1,5 @@
+## 1.5.0
+- Add support for shortcuts
 ## 1.3.6
 - Use null coalescing operator instead of logical OR for numeric parameters (allow 0)
 ## 1.3.0-1.3.5

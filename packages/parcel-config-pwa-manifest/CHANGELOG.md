@@ -1,3 +1,5 @@
+## 0.1.0
+- Update to Parcel 2 stable
 ## 0.0.3-0.0.5
 - Fix bugs
 ## 0.0.2

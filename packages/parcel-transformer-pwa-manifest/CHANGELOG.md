@@ -1,3 +1,5 @@
+## 0.1.0
+- Update to Parcel 2 stable
 ## 0.0.8
 - Add support for multiple targets
 ## 0.0.3-0.0.7
