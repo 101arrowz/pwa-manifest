@@ -2734,12 +2734,14 @@
 "@pwa-manifest/core@file:packages/core":
   version "1.4.2"
   dependencies:
-    "@pwa-manifest/potrace" "file:../../.cache/yarn/v6/npm-@pwa-manifest-core-1.4.2-8f19b84c-4e0c-4571-9e34-e78b77c27ba7-1634449448212/node_modules/@pwa-manifest/potrace"
+    "@pwa-manifest/potrace" "file:packages/potrace"
     sharp "^0.25.2"
 
 "@pwa-manifest/core@link:packages/core":
-  version "0.0.0"
-  uid ""
+  version "1.4.2"
+  dependencies:
+    "@pwa-manifest/potrace" "file:packages/potrace"
+    sharp "^0.25.2"
 
 "@pwa-manifest/potrace@file:packages/potrace":
   version "1.0.0"
@@ -2747,8 +2749,9 @@
     sharp "^0.25.2"
 
 "@pwa-manifest/potrace@link:packages/potrace":
-  version "0.0.0"
-  uid ""
+  version "1.0.0"
+  dependencies:
+    sharp "^0.25.2"
 
 "@swc/helpers@^0.2.11":
   version "0.2.13"
@@ -9759,25 +9762,27 @@ parcel-bundler@^1.12.4:
     ws "^5.1.1"
 
 "parcel-config-pwa-manifest@link:packages/parcel-config-pwa-manifest":
-  version "0.0.0"
-  uid ""
+  version "0.1.0"
+  dependencies:
+    parcel-transformer-pwa-manifest "file:packages/parcel-transformer-pwa-manifest"
 
 "parcel-namer-pwa-manifest@link:packages/parcel-namer-pwa-manifest":
-  version "0.0.0"
-  uid ""
+  version "0.0.2"
 
 "parcel-plugin-pwa-manifest@link:packages/parcel-plugin-pwa-manifest":
-  version "0.0.0"
-  uid ""
+  version "3.0.10"
+  dependencies:
+    "@pwa-manifest/core" "file:packages/core"
 
 "parcel-transformer-pwa-manifest@file:packages/parcel-transformer-pwa-manifest":
-  version "0.0.9"
+  version "0.1.0"
   dependencies:
-    "@pwa-manifest/core" "file:../../.cache/yarn/v6/npm-parcel-transformer-pwa-manifest-0.0.9-2405f7d8-e913-4954-869d-c717c5a4e575-1634449448212/node_modules/core"
+    "@pwa-manifest/core" "file:packages/core"
 
 "parcel-transformer-pwa-manifest@link:packages/parcel-transformer-pwa-manifest":
-  version "0.0.0"
-  uid ""
+  version "0.1.0"
+  dependencies:
+    "@pwa-manifest/core" "file:packages/core"
 
 parcel@^2.0.0:
   version "2.0.0"
@@ -9937,9 +9942,9 @@ path-key@^2.0.0, path-key@^2.0.1:
   integrity sha1-QRyttXTFoUDTpLGRDUDYDMn0C0A=
 
 path-parse@^1.0.6:
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/path-parse/-/path-parse-1.0.6.tgz#d62dbb5679405d72c4737ec58600e9ddcf06d24c"
-  integrity sha512-GSmOT2EbHrINBf9SR7CDELwlJ8AENk3Qn7OikK4nFYAu3Ote2+JYNVvkpAEQm3/TLNEJFD/xZJjzyxg3KBWOzw==
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/path-parse/-/path-parse-1.0.7.tgz#fbc114b60ca42b30d9daf5858e4bd68bbedb6735"
+  integrity sha512-LDJzPVEEEPR+y48z93A0Ed0yXb8pAByGWo/k5YYdYgpY2/2EsOsksJrq7lOHxryrVOn1ejG6oAp8ahvOIQD8sw==
 
 path-to-regexp@2.2.1:
   version "2.2.1"
@@ -13202,8 +13207,10 @@ webidl-conversions@^4.0.2:
   integrity sha512-YQ+BmxuTgd6UXZW3+ICGfyqRyHXVlD5GtQr5+qjiNW7bF0cqrzX500HVXPBOvgXb5YnzDd+h0zqyv61KUD7+Sg==
 
 "webpack-plugin-pwa-manifest@link:packages/webpack-plugin-pwa-manifest":
-  version "0.0.0"
-  uid ""
+  version "1.0.4"
+  dependencies:
+    "@pwa-manifest/core" "file:packages/core"
+    callsite "^1.0.0"
 
 webpack-sources@^1.4.0, webpack-sources@^1.4.1:
   version "1.4.3"
