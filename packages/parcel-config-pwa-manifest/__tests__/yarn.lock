@@ -942,7 +942,7 @@
 "@pwa-manifest/core@file:../../core":
   version "1.5.0"
   dependencies:
-    "@pwa-manifest/potrace" "file:../../../../../.cache/yarn/v6/npm-@pwa-manifest-core-1.5.0-8de22b6e-19a7-4c69-96ea-0af2d8750174-1634510731236/node_modules/@pwa-manifest/potrace"
+    "@pwa-manifest/potrace" "file:../../potrace"
     sharp "^0.25.2"
 
 "@pwa-manifest/potrace@file:../../potrace":
@@ -3233,9 +3233,9 @@ nanocolors@^0.1.12:
   integrity sha512-2nMHqg1x5PU+unxX7PGY7AuYxl2qDx7PSrTRjizr8sxdd3l/3hBuWWaki62qmtYm2U5i4Z5E7GbjlyDFhs9/EQ==
 
 nanoid@^3.1.28:
-  version "3.1.30"
-  resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.1.30.tgz#63f93cc548d2a113dc5dfbc63bfa09e2b9b64362"
-  integrity sha512-zJpuPDwOv8D2zq2WRoMe1HsfZthVewpel9CAvTfc/2mBD1uUT/agc5f7GHGWXlYkFvi1mVxe4IjvP2HNrop7nQ==
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.2.0.tgz#62667522da6673971cca916a6d3eff3f415ff80c"
+  integrity sha512-fmsZYa9lpn69Ad5eDn7FMcnnSR+8R34W9qJEijxYhTbfOWzr22n1QxCMzXLK+ODyW2973V3Fux959iQoUxzUIA==
 
 napi-build-utils@^1.0.1:
   version "1.0.2"
@@ -3433,7 +3433,7 @@ pako@~1.0.5:
 "parcel-transformer-pwa-manifest@file:../../parcel-transformer-pwa-manifest":
   version "0.1.0"
   dependencies:
-    "@pwa-manifest/core" "file:../../../../../.cache/yarn/v6/npm-parcel-transformer-pwa-manifest-0.1.0-b3ae4be8-c2bd-40f2-a41f-1c66c8e9177b-1634510731234/node_modules/core"
+    "@pwa-manifest/core" "file:../../core"
 
 parcel@^2.0.0:
   version "2.0.0"
