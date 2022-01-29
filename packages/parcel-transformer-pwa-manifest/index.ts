@@ -65,6 +65,7 @@ export default new Transformer<
   async transform({ asset, logger, config }) {
     if (config && asset.type === 'html') {
       const gen = new PWAManifestGenerator(...config);
+      if (gen.disabled) return [asset];
       gen.hashMethod = 'none';
       gen.on('*', (ev, ...args) => {
         if (ev.endsWith('Start')) logger.log({ message: args[0] });
