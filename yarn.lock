@@ -2861,12 +2861,14 @@
 "@pwa-manifest/core@file:packages/core":
   version "1.5.0"
   dependencies:
-    "@pwa-manifest/potrace" "file:../../.cache/yarn/v6/npm-@pwa-manifest-core-1.5.0-61f75c9f-01d2-43d1-afc5-119df18b2c37-1634505845525/node_modules/@pwa-manifest/potrace"
+    "@pwa-manifest/potrace" "file:packages/potrace"
     sharp "^0.25.2"
 
 "@pwa-manifest/core@link:packages/core":
-  version "0.0.0"
-  uid ""
+  version "1.5.0"
+  dependencies:
+    "@pwa-manifest/potrace" "file:packages/potrace"
+    sharp "^0.25.2"
 
 "@pwa-manifest/potrace@file:packages/potrace":
   version "1.0.0"
@@ -2874,8 +2876,9 @@
     sharp "^0.25.2"
 
 "@pwa-manifest/potrace@link:packages/potrace":
-  version "0.0.0"
-  uid ""
+  version "1.0.0"
+  dependencies:
+    sharp "^0.25.2"
 
 "@sinonjs/commons@^1.7.0":
   version "1.8.3"
@@ -9370,9 +9373,9 @@ nanocolors@^0.1.12:
   integrity sha512-2nMHqg1x5PU+unxX7PGY7AuYxl2qDx7PSrTRjizr8sxdd3l/3hBuWWaki62qmtYm2U5i4Z5E7GbjlyDFhs9/EQ==
 
 nanoid@^3.1.28:
-  version "3.1.30"
-  resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.1.30.tgz#63f93cc548d2a113dc5dfbc63bfa09e2b9b64362"
-  integrity sha512-zJpuPDwOv8D2zq2WRoMe1HsfZthVewpel9CAvTfc/2mBD1uUT/agc5f7GHGWXlYkFvi1mVxe4IjvP2HNrop7nQ==
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.2.0.tgz#62667522da6673971cca916a6d3eff3f415ff80c"
+  integrity sha512-fmsZYa9lpn69Ad5eDn7FMcnnSR+8R34W9qJEijxYhTbfOWzr22n1QxCMzXLK+ODyW2973V3Fux959iQoUxzUIA==
 
 nanomatch@^1.2.9:
   version "1.2.13"
@@ -10112,25 +10115,27 @@ parcel-bundler@^1.12.4:
     ws "^5.1.1"
 
 "parcel-config-pwa-manifest@link:packages/parcel-config-pwa-manifest":
-  version "0.0.0"
-  uid ""
+  version "0.1.1"
+  dependencies:
+    parcel-transformer-pwa-manifest "file:packages/parcel-transformer-pwa-manifest"
 
 "parcel-namer-pwa-manifest@link:packages/parcel-namer-pwa-manifest":
-  version "0.0.0"
-  uid ""
+  version "0.0.3"
 
 "parcel-plugin-pwa-manifest@link:packages/parcel-plugin-pwa-manifest":
-  version "0.0.0"
-  uid ""
+  version "3.1.0"
+  dependencies:
+    "@pwa-manifest/core" "file:packages/core"
 
 "parcel-transformer-pwa-manifest@file:packages/parcel-transformer-pwa-manifest":
-  version "0.1.0"
+  version "0.1.1"
   dependencies:
-    "@pwa-manifest/core" "file:../../.cache/yarn/v6/npm-parcel-transformer-pwa-manifest-0.1.0-3070e8a6-e4c1-45d0-8d03-0e58c2efb662-1634505845525/node_modules/core"
+    "@pwa-manifest/core" "file:packages/core"
 
 "parcel-transformer-pwa-manifest@link:packages/parcel-transformer-pwa-manifest":
-  version "0.0.0"
-  uid ""
+  version "0.1.1"
+  dependencies:
+    "@pwa-manifest/core" "file:packages/core"
 
 parcel@^2.0.0:
   version "2.0.0"
@@ -13598,8 +13603,10 @@ webidl-conversions@^6.1.0:
   integrity sha512-qBIvFLGiBpLjfwmYAaHPXsn+ho5xZnGvyGvsarywGNc8VyQJUMHJ8OBKGGrPER0okBeMDaan4mNBlgBROxuI8w==
 
 "webpack-plugin-pwa-manifest@link:packages/webpack-plugin-pwa-manifest":
-  version "0.0.0"
-  uid ""
+  version "1.1.0"
+  dependencies:
+    "@pwa-manifest/core" "file:packages/core"
+    callsite "^1.0.0"
 
 webpack-sources@^1.4.0, webpack-sources@^1.4.1:
   version "1.4.3"
