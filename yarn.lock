@@ -2861,12 +2861,14 @@
 "@pwa-manifest/core@file:packages/core":
   version "1.5.0"
   dependencies:
-    "@pwa-manifest/potrace" "file:../../.cache/yarn/v6/npm-@pwa-manifest-core-1.5.0-61f75c9f-01d2-43d1-afc5-119df18b2c37-1634505845525/node_modules/@pwa-manifest/potrace"
+    "@pwa-manifest/potrace" "file:packages/potrace"
     sharp "^0.25.2"
 
 "@pwa-manifest/core@link:packages/core":
-  version "0.0.0"
-  uid ""
+  version "1.5.0"
+  dependencies:
+    "@pwa-manifest/potrace" "file:packages/potrace"
+    sharp "^0.25.2"
 
 "@pwa-manifest/potrace@file:packages/potrace":
   version "1.0.0"
@@ -2874,8 +2876,9 @@
     sharp "^0.25.2"
 
 "@pwa-manifest/potrace@link:packages/potrace":
-  version "0.0.0"
-  uid ""
+  version "1.0.0"
+  dependencies:
+    sharp "^0.25.2"
 
 "@sinonjs/commons@^1.7.0":
   version "1.8.3"
@@ -10112,25 +10115,27 @@ parcel-bundler@^1.12.4:
     ws "^5.1.1"
 
 "parcel-config-pwa-manifest@link:packages/parcel-config-pwa-manifest":
-  version "0.0.0"
-  uid ""
+  version "0.1.1"
+  dependencies:
+    parcel-transformer-pwa-manifest "file:packages/parcel-transformer-pwa-manifest"
 
 "parcel-namer-pwa-manifest@link:packages/parcel-namer-pwa-manifest":
-  version "0.0.0"
-  uid ""
+  version "0.0.3"
 
 "parcel-plugin-pwa-manifest@link:packages/parcel-plugin-pwa-manifest":
-  version "0.0.0"
-  uid ""
+  version "3.1.0"
+  dependencies:
+    "@pwa-manifest/core" "file:packages/core"
 
 "parcel-transformer-pwa-manifest@file:packages/parcel-transformer-pwa-manifest":
-  version "0.1.0"
+  version "0.1.1"
   dependencies:
-    "@pwa-manifest/core" "file:../../.cache/yarn/v6/npm-parcel-transformer-pwa-manifest-0.1.0-3070e8a6-e4c1-45d0-8d03-0e58c2efb662-1634505845525/node_modules/core"
+    "@pwa-manifest/core" "file:packages/core"
 
 "parcel-transformer-pwa-manifest@link:packages/parcel-transformer-pwa-manifest":
-  version "0.0.0"
-  uid ""
+  version "0.1.1"
+  dependencies:
+    "@pwa-manifest/core" "file:packages/core"
 
 parcel@^2.0.0:
   version "2.0.0"
@@ -13126,9 +13131,9 @@ trim-newlines@^2.0.0:
   integrity sha1-tAPQuRvlDDMd/EuC7s6yLD3hbSA=
 
 trim-off-newlines@^1.0.0:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/trim-off-newlines/-/trim-off-newlines-1.0.1.tgz#9f9ba9d9efa8764c387698bcbfeb2c848f11adb3"
-  integrity sha1-n5up2e+odkw4dpi8v+sshI8RrbM=
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/trim-off-newlines/-/trim-off-newlines-1.0.3.tgz#8df24847fcb821b0ab27d58ab6efec9f2fe961a1"
+  integrity sha512-kh6Tu6GbeSNMGfrrZh6Bb/4ZEHV1QlB4xNDBeog8Y9/QwFlKTRyWvY3Fs9tRDAMZliVUwieMgEdIeL/FtqjkJg==
 
 ts-jest@^27.0:
   version "27.0.7"
@@ -13598,8 +13603,10 @@ webidl-conversions@^6.1.0:
   integrity sha512-qBIvFLGiBpLjfwmYAaHPXsn+ho5xZnGvyGvsarywGNc8VyQJUMHJ8OBKGGrPER0okBeMDaan4mNBlgBROxuI8w==
 
 "webpack-plugin-pwa-manifest@link:packages/webpack-plugin-pwa-manifest":
-  version "0.0.0"
-  uid ""
+  version "1.1.0"
+  dependencies:
+    "@pwa-manifest/core" "file:packages/core"
+    callsite "^1.0.0"
 
 webpack-sources@^1.4.0, webpack-sources@^1.4.1:
   version "1.4.3"
