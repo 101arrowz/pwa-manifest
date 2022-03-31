@@ -942,7 +942,7 @@
 "@pwa-manifest/core@file:../../core":
   version "1.5.0"
   dependencies:
-    "@pwa-manifest/potrace" "file:../../../../../.cache/yarn/v6/npm-@pwa-manifest-core-1.5.0-8de22b6e-19a7-4c69-96ea-0af2d8750174-1634510731236/node_modules/@pwa-manifest/potrace"
+    "@pwa-manifest/potrace" "file:../../potrace"
     sharp "^0.25.2"
 
 "@pwa-manifest/potrace@file:../../potrace":
@@ -3161,9 +3161,9 @@ minimatch@3.0.4, minimatch@^3.0.4:
     brace-expansion "^1.1.7"
 
 minimist@^1.2.0, minimist@^1.2.3, minimist@^1.2.5:
-  version "1.2.5"
-  resolved "https://registry.yarnpkg.com/minimist/-/minimist-1.2.5.tgz#67d66014b66a6a8aaa0c083c5fd58df4e4e97602"
-  integrity sha512-FM9nNUYrRBAELZQT3xeZQ7fmMOBg6nWNmJKTcgsJeaLstP/UODVpGsr5OhXhhXg6f+qtJ8uiZ+PUxkDWcgIXLw==
+  version "1.2.6"
+  resolved "https://registry.yarnpkg.com/minimist/-/minimist-1.2.6.tgz#8637a5b759ea0d6e98702cfb3a9283323c93af44"
+  integrity sha512-Jsjnk4bw3YJqYzbdyBiNsPWHPfO++UGG749Cxs6peCu5Xg4nrena6OVxOYxrQTqww0Jmwt+Ref8rggumkTLz9Q==
 
 minipass@^3.0.0:
   version "3.1.5"
@@ -3431,9 +3431,9 @@ pako@~1.0.5:
   integrity sha512-4hLB8Py4zZce5s4yd9XzopqwVv/yGNhV1Bl8NTmCq1763HeK2+EwVTv+leGeL13Dnh2wfbqowVPXCIO0z4taYw==
 
 "parcel-transformer-pwa-manifest@file:../../parcel-transformer-pwa-manifest":
-  version "0.1.0"
+  version "0.1.1"
   dependencies:
-    "@pwa-manifest/core" "file:../../../../../.cache/yarn/v6/npm-parcel-transformer-pwa-manifest-0.1.0-b3ae4be8-c2bd-40f2-a41f-1c66c8e9177b-1634510731234/node_modules/core"
+    "@pwa-manifest/core" "file:../../core"
 
 parcel@^2.0.0:
   version "2.0.0"
