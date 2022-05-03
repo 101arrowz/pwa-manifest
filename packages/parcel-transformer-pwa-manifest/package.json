@@ -1,6 +1,6 @@
 {
   "name": "parcel-transformer-pwa-manifest",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A Parcel v2 transformer that generates a Web App Manifest, creates all necessary icons, and more!",
   "main": "lib/index.js",
   "author": "Arjun Barrett <arjunbarrett@gmail.com>",
