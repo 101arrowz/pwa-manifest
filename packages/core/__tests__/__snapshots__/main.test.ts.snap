@@ -2,15 +2,15 @@
 
 exports[`Apple Touch Icon generation options work correctly 1`] = `
 Array [
-  "icon-192x192.60385309.webp",
-  "icon-192x192.1421700b.png",
-  "icon-512x512.53c5ad04.webp",
-  "icon-512x512.03718fd9.png",
-  "apple-touch-icon.55a3a855.png",
-  "mstile-70x70.d4870be2.png",
-  "mstile-150x150.db75c4ea.png",
-  "mstile-310x310.7d35cb45.png",
-  "mstile-310x150.df0ada1c.png",
+  "icon-192x192.6cf01f66.webp",
+  "icon-192x192.1ca0d54e.png",
+  "icon-512x512.9de13230.webp",
+  "icon-512x512.e481a035.png",
+  "apple-touch-icon.94687586.png",
+  "mstile-70x70.3af68a9a.png",
+  "mstile-150x150.e286440d.png",
+  "mstile-310x310.e10f7557.png",
+  "mstile-310x150.926bd872.png",
 ]
 `;
 
@@ -22,22 +22,22 @@ Object {
   "icons": Array [
     Object {
       "sizes": "192x192",
-      "src": "./icon-192x192.60385309.webp",
+      "src": "./icon-192x192.6cf01f66.webp",
       "type": "image/webp",
     },
     Object {
       "sizes": "192x192",
-      "src": "./icon-192x192.1421700b.png",
+      "src": "./icon-192x192.1ca0d54e.png",
       "type": "image/png",
     },
     Object {
       "sizes": "512x512",
-      "src": "./icon-512x512.53c5ad04.webp",
+      "src": "./icon-512x512.9de13230.webp",
       "type": "image/webp",
     },
     Object {
       "sizes": "512x512",
-      "src": "./icon-512x512.03718fd9.png",
+      "src": "./icon-512x512.e481a035.png",
       "type": "image/png",
     },
   ],
@@ -49,7 +49,7 @@ Object {
 }
 `;
 
-exports[`Apple Touch Icon generation options work correctly 3`] = `"<?xml version=\\"1.0\\" encoding=\\"utf-8\\"?><browserconfig><msapplication><tile><TileColor>white</TileColor><square70x70logo src=\\"./mstile-70x70.d4870be2.png\\"/><square150x150logo src=\\"./mstile-150x150.db75c4ea.png\\"/><square310x310logo src=\\"./mstile-310x310.7d35cb45.png\\"/><wide310x150logo src=\\"./mstile-310x150.df0ada1c.png\\"/></tile></msapplication></browserconfig>"`;
+exports[`Apple Touch Icon generation options work correctly 3`] = `"<?xml version=\\"1.0\\" encoding=\\"utf-8\\"?><browserconfig><msapplication><tile><TileColor>white</TileColor><square70x70logo src=\\"./mstile-70x70.3af68a9a.png\\"/><square150x150logo src=\\"./mstile-150x150.e286440d.png\\"/><square310x310logo src=\\"./mstile-310x310.e10f7557.png\\"/><wide310x150logo src=\\"./mstile-310x150.926bd872.png\\"/></tile></msapplication></browserconfig>"`;
 
 exports[`Apple Touch Icon generation options work correctly 4`] = `
 Array [
@@ -70,7 +70,7 @@ Array [
   Array [
     "link",
     Object {
-      "href": "./apple-touch-icon.55a3a855.png",
+      "href": "./apple-touch-icon.94687586.png",
       "rel": "apple-touch-icon",
       "sizes": "180x180",
     },
@@ -87,15 +87,15 @@ Array [
 
 exports[`Config overrides package.json properties 1`] = `
 Array [
-  "icon-192x192.60385309.webp",
-  "icon-192x192.1421700b.png",
-  "icon-512x512.53c5ad04.webp",
-  "icon-512x512.03718fd9.png",
-  "apple-touch-icon.67e6641c.png",
-  "mstile-70x70.d4870be2.png",
-  "mstile-150x150.db75c4ea.png",
-  "mstile-310x310.7d35cb45.png",
-  "mstile-310x150.df0ada1c.png",
+  "icon-192x192.6cf01f66.webp",
+  "icon-192x192.1ca0d54e.png",
+  "icon-512x512.9de13230.webp",
+  "icon-512x512.e481a035.png",
+  "apple-touch-icon.9626d75a.png",
+  "mstile-70x70.3af68a9a.png",
+  "mstile-150x150.e286440d.png",
+  "mstile-310x310.e10f7557.png",
+  "mstile-310x150.926bd872.png",
 ]
 `;
 
@@ -107,22 +107,22 @@ Object {
   "icons": Array [
     Object {
       "sizes": "192x192",
-      "src": "./icon-192x192.60385309.webp",
+      "src": "./icon-192x192.6cf01f66.webp",
       "type": "image/webp",
     },
     Object {
       "sizes": "192x192",
-      "src": "./icon-192x192.1421700b.png",
+      "src": "./icon-192x192.1ca0d54e.png",
       "type": "image/png",
     },
     Object {
       "sizes": "512x512",
-      "src": "./icon-512x512.53c5ad04.webp",
+      "src": "./icon-512x512.9de13230.webp",
       "type": "image/webp",
     },
     Object {
       "sizes": "512x512",
-      "src": "./icon-512x512.03718fd9.png",
+      "src": "./icon-512x512.e481a035.png",
       "type": "image/png",
     },
   ],
@@ -134,7 +134,7 @@ Object {
 }
 `;
 
-exports[`Config overrides package.json properties 3`] = `"<?xml version=\\"1.0\\" encoding=\\"utf-8\\"?><browserconfig><msapplication><tile><TileColor>white</TileColor><square70x70logo src=\\"./mstile-70x70.d4870be2.png\\"/><square150x150logo src=\\"./mstile-150x150.db75c4ea.png\\"/><square310x310logo src=\\"./mstile-310x310.7d35cb45.png\\"/><wide310x150logo src=\\"./mstile-310x150.df0ada1c.png\\"/></tile></msapplication></browserconfig>"`;
+exports[`Config overrides package.json properties 3`] = `"<?xml version=\\"1.0\\" encoding=\\"utf-8\\"?><browserconfig><msapplication><tile><TileColor>white</TileColor><square70x70logo src=\\"./mstile-70x70.3af68a9a.png\\"/><square150x150logo src=\\"./mstile-150x150.e286440d.png\\"/><square310x310logo src=\\"./mstile-310x310.e10f7557.png\\"/><wide310x150logo src=\\"./mstile-310x150.926bd872.png\\"/></tile></msapplication></browserconfig>"`;
 
 exports[`Config overrides package.json properties 4`] = `
 Array [
@@ -155,7 +155,7 @@ Array [
   Array [
     "link",
     Object {
-      "href": "./apple-touch-icon.67e6641c.png",
+      "href": "./apple-touch-icon.9626d75a.png",
       "rel": "apple-touch-icon",
       "sizes": "180x180",
     },
@@ -172,15 +172,15 @@ Array [
 
 exports[`Custom NODE_ENV options work 1`] = `
 Array [
-  "icon-192x192.60385309.webp",
-  "icon-192x192.1421700b.png",
-  "icon-512x512.53c5ad04.webp",
-  "icon-512x512.03718fd9.png",
-  "apple-touch-icon.67e6641c.png",
-  "mstile-70x70.d4870be2.png",
-  "mstile-150x150.db75c4ea.png",
-  "mstile-310x310.7d35cb45.png",
-  "mstile-310x150.df0ada1c.png",
+  "icon-192x192.6cf01f66.webp",
+  "icon-192x192.1ca0d54e.png",
+  "icon-512x512.9de13230.webp",
+  "icon-512x512.e481a035.png",
+  "apple-touch-icon.9626d75a.png",
+  "mstile-70x70.3af68a9a.png",
+  "mstile-150x150.e286440d.png",
+  "mstile-310x310.e10f7557.png",
+  "mstile-310x150.926bd872.png",
 ]
 `;
 
@@ -192,22 +192,22 @@ Object {
   "icons": Array [
     Object {
       "sizes": "192x192",
-      "src": "./icon-192x192.60385309.webp",
+      "src": "./icon-192x192.6cf01f66.webp",
       "type": "image/webp",
     },
     Object {
       "sizes": "192x192",
-      "src": "./icon-192x192.1421700b.png",
+      "src": "./icon-192x192.1ca0d54e.png",
       "type": "image/png",
     },
     Object {
       "sizes": "512x512",
-      "src": "./icon-512x512.53c5ad04.webp",
+      "src": "./icon-512x512.9de13230.webp",
       "type": "image/webp",
     },
     Object {
       "sizes": "512x512",
-      "src": "./icon-512x512.03718fd9.png",
+      "src": "./icon-512x512.e481a035.png",
       "type": "image/png",
     },
   ],
@@ -219,7 +219,7 @@ Object {
 }
 `;
 
-exports[`Custom NODE_ENV options work 3`] = `"<?xml version=\\"1.0\\" encoding=\\"utf-8\\"?><browserconfig><msapplication><tile><TileColor>white</TileColor><square70x70logo src=\\"./mstile-70x70.d4870be2.png\\"/><square150x150logo src=\\"./mstile-150x150.db75c4ea.png\\"/><square310x310logo src=\\"./mstile-310x310.7d35cb45.png\\"/><wide310x150logo src=\\"./mstile-310x150.df0ada1c.png\\"/></tile></msapplication></browserconfig>"`;
+exports[`Custom NODE_ENV options work 3`] = `"<?xml version=\\"1.0\\" encoding=\\"utf-8\\"?><browserconfig><msapplication><tile><TileColor>white</TileColor><square70x70logo src=\\"./mstile-70x70.3af68a9a.png\\"/><square150x150logo src=\\"./mstile-150x150.e286440d.png\\"/><square310x310logo src=\\"./mstile-310x310.e10f7557.png\\"/><wide310x150logo src=\\"./mstile-310x150.926bd872.png\\"/></tile></msapplication></browserconfig>"`;
 
 exports[`Custom NODE_ENV options work 4`] = `
 Array [
@@ -240,7 +240,7 @@ Array [
   Array [
     "link",
     Object {
-      "href": "./apple-touch-icon.67e6641c.png",
+      "href": "./apple-touch-icon.9626d75a.png",
       "rel": "apple-touch-icon",
       "sizes": "180x180",
     },
@@ -257,21 +257,21 @@ Array [
 
 exports[`Default generation works correctly 1`] = `
 Array [
-  "icon-96x96.b1e09075.webp",
-  "icon-96x96.c5330840.png",
-  "icon-152x152.a1f4f47a.webp",
-  "icon-152x152.6115bce1.png",
-  "icon-192x192.60385309.webp",
-  "icon-192x192.1421700b.png",
-  "icon-384x384.e4fe6960.webp",
-  "icon-384x384.59b7a9f8.png",
-  "icon-512x512.53c5ad04.webp",
-  "icon-512x512.03718fd9.png",
-  "apple-touch-icon.67e6641c.png",
-  "mstile-70x70.d4870be2.png",
-  "mstile-150x150.db75c4ea.png",
-  "mstile-310x310.7d35cb45.png",
-  "mstile-310x150.df0ada1c.png",
+  "icon-96x96.7a11f66e.webp",
+  "icon-96x96.6c1e9526.png",
+  "icon-152x152.8a9657e1.webp",
+  "icon-152x152.b3c1bd72.png",
+  "icon-192x192.6cf01f66.webp",
+  "icon-192x192.1ca0d54e.png",
+  "icon-384x384.dd610217.webp",
+  "icon-384x384.93f7276c.png",
+  "icon-512x512.9de13230.webp",
+  "icon-512x512.e481a035.png",
+  "apple-touch-icon.9626d75a.png",
+  "mstile-70x70.3af68a9a.png",
+  "mstile-150x150.e286440d.png",
+  "mstile-310x310.e10f7557.png",
+  "mstile-310x150.926bd872.png",
 ]
 `;
 
@@ -283,52 +283,52 @@ Object {
   "icons": Array [
     Object {
       "sizes": "96x96",
-      "src": "./icon-96x96.b1e09075.webp",
+      "src": "./icon-96x96.7a11f66e.webp",
       "type": "image/webp",
     },
     Object {
       "sizes": "96x96",
-      "src": "./icon-96x96.c5330840.png",
+      "src": "./icon-96x96.6c1e9526.png",
       "type": "image/png",
     },
     Object {
       "sizes": "152x152",
-      "src": "./icon-152x152.a1f4f47a.webp",
+      "src": "./icon-152x152.8a9657e1.webp",
       "type": "image/webp",
     },
     Object {
       "sizes": "152x152",
-      "src": "./icon-152x152.6115bce1.png",
+      "src": "./icon-152x152.b3c1bd72.png",
       "type": "image/png",
     },
     Object {
       "sizes": "192x192",
-      "src": "./icon-192x192.60385309.webp",
+      "src": "./icon-192x192.6cf01f66.webp",
       "type": "image/webp",
     },
     Object {
       "sizes": "192x192",
-      "src": "./icon-192x192.1421700b.png",
+      "src": "./icon-192x192.1ca0d54e.png",
       "type": "image/png",
     },
     Object {
       "sizes": "384x384",
-      "src": "./icon-384x384.e4fe6960.webp",
+      "src": "./icon-384x384.dd610217.webp",
       "type": "image/webp",
     },
     Object {
       "sizes": "384x384",
-      "src": "./icon-384x384.59b7a9f8.png",
+      "src": "./icon-384x384.93f7276c.png",
       "type": "image/png",
     },
     Object {
       "sizes": "512x512",
-      "src": "./icon-512x512.53c5ad04.webp",
+      "src": "./icon-512x512.9de13230.webp",
       "type": "image/webp",
     },
     Object {
       "sizes": "512x512",
-      "src": "./icon-512x512.03718fd9.png",
+      "src": "./icon-512x512.e481a035.png",
       "type": "image/png",
     },
   ],
@@ -340,7 +340,7 @@ Object {
 }
 `;
 
-exports[`Default generation works correctly 3`] = `"<?xml version=\\"1.0\\" encoding=\\"utf-8\\"?><browserconfig><msapplication><tile><TileColor>white</TileColor><square70x70logo src=\\"./mstile-70x70.d4870be2.png\\"/><square150x150logo src=\\"./mstile-150x150.db75c4ea.png\\"/><square310x310logo src=\\"./mstile-310x310.7d35cb45.png\\"/><wide310x150logo src=\\"./mstile-310x150.df0ada1c.png\\"/></tile></msapplication></browserconfig>"`;
+exports[`Default generation works correctly 3`] = `"<?xml version=\\"1.0\\" encoding=\\"utf-8\\"?><browserconfig><msapplication><tile><TileColor>white</TileColor><square70x70logo src=\\"./mstile-70x70.3af68a9a.png\\"/><square150x150logo src=\\"./mstile-150x150.e286440d.png\\"/><square310x310logo src=\\"./mstile-310x310.e10f7557.png\\"/><wide310x150logo src=\\"./mstile-310x150.926bd872.png\\"/></tile></msapplication></browserconfig>"`;
 
 exports[`Default generation works correctly 4`] = `
 Array [
@@ -361,7 +361,7 @@ Array [
   Array [
     "link",
     Object {
-      "href": "./apple-touch-icon.67e6641c.png",
+      "href": "./apple-touch-icon.9626d75a.png",
       "rel": "apple-touch-icon",
       "sizes": "180x180",
     },
@@ -378,17 +378,17 @@ Array [
 
 exports[`Favicon generation works correctly 1`] = `
 Array [
-  "icon-192x192.60385309.webp",
-  "icon-192x192.1421700b.png",
-  "icon-512x512.53c5ad04.webp",
-  "icon-512x512.03718fd9.png",
-  "favicon-32x32.743f0ca1.png",
-  "favicon-16x16.d8c5885e.png",
-  "apple-touch-icon.67e6641c.png",
-  "mstile-70x70.d4870be2.png",
-  "mstile-150x150.db75c4ea.png",
-  "mstile-310x310.7d35cb45.png",
-  "mstile-310x150.df0ada1c.png",
+  "icon-192x192.6cf01f66.webp",
+  "icon-192x192.1ca0d54e.png",
+  "icon-512x512.9de13230.webp",
+  "icon-512x512.e481a035.png",
+  "favicon-32x32.0f3b61f8.png",
+  "favicon-16x16.32dfc325.png",
+  "apple-touch-icon.9626d75a.png",
+  "mstile-70x70.3af68a9a.png",
+  "mstile-150x150.e286440d.png",
+  "mstile-310x310.e10f7557.png",
+  "mstile-310x150.926bd872.png",
 ]
 `;
 
@@ -400,22 +400,22 @@ Object {
   "icons": Array [
     Object {
       "sizes": "192x192",
-      "src": "./icon-192x192.60385309.webp",
+      "src": "./icon-192x192.6cf01f66.webp",
       "type": "image/webp",
     },
     Object {
       "sizes": "192x192",
-      "src": "./icon-192x192.1421700b.png",
+      "src": "./icon-192x192.1ca0d54e.png",
       "type": "image/png",
     },
     Object {
       "sizes": "512x512",
-      "src": "./icon-512x512.53c5ad04.webp",
+      "src": "./icon-512x512.9de13230.webp",
       "type": "image/webp",
     },
     Object {
       "sizes": "512x512",
-      "src": "./icon-512x512.03718fd9.png",
+      "src": "./icon-512x512.e481a035.png",
       "type": "image/png",
     },
   ],
@@ -427,7 +427,7 @@ Object {
 }
 `;
 
-exports[`Favicon generation works correctly 3`] = `"<?xml version=\\"1.0\\" encoding=\\"utf-8\\"?><browserconfig><msapplication><tile><TileColor>white</TileColor><square70x70logo src=\\"./mstile-70x70.d4870be2.png\\"/><square150x150logo src=\\"./mstile-150x150.db75c4ea.png\\"/><square310x310logo src=\\"./mstile-310x310.7d35cb45.png\\"/><wide310x150logo src=\\"./mstile-310x150.df0ada1c.png\\"/></tile></msapplication></browserconfig>"`;
+exports[`Favicon generation works correctly 3`] = `"<?xml version=\\"1.0\\" encoding=\\"utf-8\\"?><browserconfig><msapplication><tile><TileColor>white</TileColor><square70x70logo src=\\"./mstile-70x70.3af68a9a.png\\"/><square150x150logo src=\\"./mstile-150x150.e286440d.png\\"/><square310x310logo src=\\"./mstile-310x310.e10f7557.png\\"/><wide310x150logo src=\\"./mstile-310x150.926bd872.png\\"/></tile></msapplication></browserconfig>"`;
 
 exports[`Favicon generation works correctly 4`] = `
 Array [
@@ -448,7 +448,7 @@ Array [
   Array [
     "link",
     Object {
-      "href": "./favicon-32x32.743f0ca1.png",
+      "href": "./favicon-32x32.0f3b61f8.png",
       "rel": "icon",
       "sizes": "32x32",
     },
@@ -456,7 +456,7 @@ Array [
   Array [
     "link",
     Object {
-      "href": "./favicon-16x16.d8c5885e.png",
+      "href": "./favicon-16x16.32dfc325.png",
       "rel": "icon",
       "sizes": "16x16",
     },
@@ -464,7 +464,7 @@ Array [
   Array [
     "link",
     Object {
-      "href": "./apple-touch-icon.67e6641c.png",
+      "href": "./apple-touch-icon.9626d75a.png",
       "rel": "apple-touch-icon",
       "sizes": "180x180",
     },
@@ -481,17 +481,17 @@ Array [
 
 exports[`Formats work correctly 1`] = `
 Array [
-  "icon-192x192.c2e0ecd6.webp",
-  "icon-192x192.1421700b.png",
-  "icon-192x192.41e1ed48.jpeg",
-  "icon-512x512.f44f37e8.webp",
-  "icon-512x512.03718fd9.png",
-  "icon-512x512.868f70e4.jpeg",
-  "apple-touch-icon.67e6641c.png",
-  "mstile-70x70.d4870be2.png",
-  "mstile-150x150.db75c4ea.png",
-  "mstile-310x310.7d35cb45.png",
-  "mstile-310x150.df0ada1c.png",
+  "icon-192x192.671a2c84.webp",
+  "icon-192x192.4bcf89d0.png",
+  "icon-192x192.f29b1daa.jpeg",
+  "icon-512x512.13d74355.webp",
+  "icon-512x512.09ed3834.png",
+  "icon-512x512.8f2bd859.jpeg",
+  "apple-touch-icon.e6f004a7.png",
+  "mstile-70x70.35c59d70.png",
+  "mstile-150x150.d7e11dc7.png",
+  "mstile-310x310.46efde35.png",
+  "mstile-310x150.e5738340.png",
 ]
 `;
 
@@ -503,32 +503,32 @@ Object {
   "icons": Array [
     Object {
       "sizes": "192x192",
-      "src": "./icon-192x192.c2e0ecd6.webp",
+      "src": "./icon-192x192.671a2c84.webp",
       "type": "image/webp",
     },
     Object {
       "sizes": "192x192",
-      "src": "./icon-192x192.1421700b.png",
+      "src": "./icon-192x192.4bcf89d0.png",
       "type": "image/png",
     },
     Object {
       "sizes": "192x192",
-      "src": "./icon-192x192.41e1ed48.jpeg",
+      "src": "./icon-192x192.f29b1daa.jpeg",
       "type": "image/jpeg",
     },
     Object {
       "sizes": "512x512",
-      "src": "./icon-512x512.f44f37e8.webp",
+      "src": "./icon-512x512.13d74355.webp",
       "type": "image/webp",
     },
     Object {
       "sizes": "512x512",
-      "src": "./icon-512x512.03718fd9.png",
+      "src": "./icon-512x512.09ed3834.png",
       "type": "image/png",
     },
     Object {
       "sizes": "512x512",
-      "src": "./icon-512x512.868f70e4.jpeg",
+      "src": "./icon-512x512.8f2bd859.jpeg",
       "type": "image/jpeg",
     },
   ],
@@ -540,7 +540,7 @@ Object {
 }
 `;
 
-exports[`Formats work correctly 3`] = `"<?xml version=\\"1.0\\" encoding=\\"utf-8\\"?><browserconfig><msapplication><tile><TileColor>white</TileColor><square70x70logo src=\\"./mstile-70x70.d4870be2.png\\"/><square150x150logo src=\\"./mstile-150x150.db75c4ea.png\\"/><square310x310logo src=\\"./mstile-310x310.7d35cb45.png\\"/><wide310x150logo src=\\"./mstile-310x150.df0ada1c.png\\"/></tile></msapplication></browserconfig>"`;
+exports[`Formats work correctly 3`] = `"<?xml version=\\"1.0\\" encoding=\\"utf-8\\"?><browserconfig><msapplication><tile><TileColor>white</TileColor><square70x70logo src=\\"./mstile-70x70.35c59d70.png\\"/><square150x150logo src=\\"./mstile-150x150.d7e11dc7.png\\"/><square310x310logo src=\\"./mstile-310x310.46efde35.png\\"/><wide310x150logo src=\\"./mstile-310x150.e5738340.png\\"/></tile></msapplication></browserconfig>"`;
 
 exports[`Formats work correctly 4`] = `
 Array [
@@ -561,7 +561,7 @@ Array [
   Array [
     "link",
     Object {
-      "href": "./apple-touch-icon.67e6641c.png",
+      "href": "./apple-touch-icon.e6f004a7.png",
       "rel": "apple-touch-icon",
       "sizes": "180x180",
     },
@@ -578,15 +578,15 @@ Array [
 
 exports[`Microsoft Tile generation options work correctly 1`] = `
 Array [
-  "icon-192x192.60385309.webp",
-  "icon-192x192.1421700b.png",
-  "icon-512x512.53c5ad04.webp",
-  "icon-512x512.03718fd9.png",
-  "apple-touch-icon.67e6641c.png",
-  "mstile-70x70.d4870be2.png",
-  "mstile-150x150.db75c4ea.png",
-  "mstile-310x310.7d35cb45.png",
-  "mstile-310x150.df0ada1c.png",
+  "icon-192x192.6cf01f66.webp",
+  "icon-192x192.1ca0d54e.png",
+  "icon-512x512.9de13230.webp",
+  "icon-512x512.e481a035.png",
+  "apple-touch-icon.9626d75a.png",
+  "mstile-70x70.3af68a9a.png",
+  "mstile-150x150.e286440d.png",
+  "mstile-310x310.e10f7557.png",
+  "mstile-310x150.926bd872.png",
 ]
 `;
 
@@ -598,22 +598,22 @@ Object {
   "icons": Array [
     Object {
       "sizes": "192x192",
-      "src": "./icon-192x192.60385309.webp",
+      "src": "./icon-192x192.6cf01f66.webp",
       "type": "image/webp",
     },
     Object {
       "sizes": "192x192",
-      "src": "./icon-192x192.1421700b.png",
+      "src": "./icon-192x192.1ca0d54e.png",
       "type": "image/png",
     },
     Object {
       "sizes": "512x512",
-      "src": "./icon-512x512.53c5ad04.webp",
+      "src": "./icon-512x512.9de13230.webp",
       "type": "image/webp",
     },
     Object {
       "sizes": "512x512",
-      "src": "./icon-512x512.03718fd9.png",
+      "src": "./icon-512x512.e481a035.png",
       "type": "image/png",
     },
   ],
@@ -625,7 +625,7 @@ Object {
 }
 `;
 
-exports[`Microsoft Tile generation options work correctly 3`] = `"<?xml version=\\"1.0\\" encoding=\\"utf-8\\"?><browserconfig><msapplication><tile><TileColor>red</TileColor><square70x70logo src=\\"./mstile-70x70.d4870be2.png\\"/><square150x150logo src=\\"./mstile-150x150.db75c4ea.png\\"/><square310x310logo src=\\"./mstile-310x310.7d35cb45.png\\"/><wide310x150logo src=\\"./mstile-310x150.df0ada1c.png\\"/></tile></msapplication></browserconfig>"`;
+exports[`Microsoft Tile generation options work correctly 3`] = `"<?xml version=\\"1.0\\" encoding=\\"utf-8\\"?><browserconfig><msapplication><tile><TileColor>red</TileColor><square70x70logo src=\\"./mstile-70x70.3af68a9a.png\\"/><square150x150logo src=\\"./mstile-150x150.e286440d.png\\"/><square310x310logo src=\\"./mstile-310x310.e10f7557.png\\"/><wide310x150logo src=\\"./mstile-310x150.926bd872.png\\"/></tile></msapplication></browserconfig>"`;
 
 exports[`Microsoft Tile generation options work correctly 4`] = `
 Array [
@@ -646,7 +646,7 @@ Array [
   Array [
     "link",
     Object {
-      "href": "./apple-touch-icon.67e6641c.png",
+      "href": "./apple-touch-icon.9626d75a.png",
       "rel": "apple-touch-icon",
       "sizes": "180x180",
     },
@@ -663,15 +663,15 @@ Array [
 
 exports[`Purpose modification works 1`] = `
 Array [
-  "icon-192x192.60385309.webp",
-  "icon-192x192.1421700b.png",
-  "icon-512x512.53c5ad04.webp",
-  "icon-512x512.03718fd9.png",
-  "apple-touch-icon.67e6641c.png",
-  "mstile-70x70.d4870be2.png",
-  "mstile-150x150.db75c4ea.png",
-  "mstile-310x310.7d35cb45.png",
-  "mstile-310x150.df0ada1c.png",
+  "icon-192x192.6cf01f66.webp",
+  "icon-192x192.1ca0d54e.png",
+  "icon-512x512.9de13230.webp",
+  "icon-512x512.e481a035.png",
+  "apple-touch-icon.9626d75a.png",
+  "mstile-70x70.3af68a9a.png",
+  "mstile-150x150.e286440d.png",
+  "mstile-310x310.e10f7557.png",
+  "mstile-310x150.926bd872.png",
 ]
 `;
 
@@ -684,25 +684,25 @@ Object {
     Object {
       "purpose": "maskable any",
       "sizes": "192x192",
-      "src": "./icon-192x192.60385309.webp",
+      "src": "./icon-192x192.6cf01f66.webp",
       "type": "image/webp",
     },
     Object {
       "purpose": "maskable any",
       "sizes": "192x192",
-      "src": "./icon-192x192.1421700b.png",
+      "src": "./icon-192x192.1ca0d54e.png",
       "type": "image/png",
     },
     Object {
       "purpose": "maskable any",
       "sizes": "512x512",
-      "src": "./icon-512x512.53c5ad04.webp",
+      "src": "./icon-512x512.9de13230.webp",
       "type": "image/webp",
     },
     Object {
       "purpose": "maskable any",
       "sizes": "512x512",
-      "src": "./icon-512x512.03718fd9.png",
+      "src": "./icon-512x512.e481a035.png",
       "type": "image/png",
     },
   ],
@@ -714,7 +714,7 @@ Object {
 }
 `;
 
-exports[`Purpose modification works 3`] = `"<?xml version=\\"1.0\\" encoding=\\"utf-8\\"?><browserconfig><msapplication><tile><TileColor>white</TileColor><square70x70logo src=\\"./mstile-70x70.d4870be2.png\\"/><square150x150logo src=\\"./mstile-150x150.db75c4ea.png\\"/><square310x310logo src=\\"./mstile-310x310.7d35cb45.png\\"/><wide310x150logo src=\\"./mstile-310x150.df0ada1c.png\\"/></tile></msapplication></browserconfig>"`;
+exports[`Purpose modification works 3`] = `"<?xml version=\\"1.0\\" encoding=\\"utf-8\\"?><browserconfig><msapplication><tile><TileColor>white</TileColor><square70x70logo src=\\"./mstile-70x70.3af68a9a.png\\"/><square150x150logo src=\\"./mstile-150x150.e286440d.png\\"/><square310x310logo src=\\"./mstile-310x310.e10f7557.png\\"/><wide310x150logo src=\\"./mstile-310x150.926bd872.png\\"/></tile></msapplication></browserconfig>"`;
 
 exports[`Purpose modification works 4`] = `
 Array [
@@ -735,7 +735,7 @@ Array [
   Array [
     "link",
     Object {
-      "href": "./apple-touch-icon.67e6641c.png",
+      "href": "./apple-touch-icon.9626d75a.png",
       "rel": "apple-touch-icon",
       "sizes": "180x180",
     },
@@ -752,15 +752,15 @@ Array [
 
 exports[`Resize method option works correctly 1`] = `
 Array [
-  "icon-192x192.dbb23144.webp",
-  "icon-192x192.3434e21c.png",
-  "icon-512x512.5ae4ed85.webp",
-  "icon-512x512.f91dd2b8.png",
-  "apple-touch-icon.03f60dde.png",
-  "mstile-70x70.648a2539.png",
-  "mstile-150x150.fbfce598.png",
-  "mstile-310x310.e2ed9d0a.png",
-  "mstile-310x150.5970012a.png",
+  "icon-192x192.b3a5ef21.webp",
+  "icon-192x192.b6df920d.png",
+  "icon-512x512.d57841a4.webp",
+  "icon-512x512.0e8d6df1.png",
+  "apple-touch-icon.ad22915a.png",
+  "mstile-70x70.dc8be3a3.png",
+  "mstile-150x150.ce2c3b7a.png",
+  "mstile-310x310.7492a22a.png",
+  "mstile-310x150.f0eaf2ff.png",
 ]
 `;
 
@@ -772,22 +772,22 @@ Object {
   "icons": Array [
     Object {
       "sizes": "192x192",
-      "src": "./icon-192x192.dbb23144.webp",
+      "src": "./icon-192x192.b3a5ef21.webp",
       "type": "image/webp",
     },
     Object {
       "sizes": "192x192",
-      "src": "./icon-192x192.3434e21c.png",
+      "src": "./icon-192x192.b6df920d.png",
       "type": "image/png",
     },
     Object {
       "sizes": "512x512",
-      "src": "./icon-512x512.5ae4ed85.webp",
+      "src": "./icon-512x512.d57841a4.webp",
       "type": "image/webp",
     },
     Object {
       "sizes": "512x512",
-      "src": "./icon-512x512.f91dd2b8.png",
+      "src": "./icon-512x512.0e8d6df1.png",
       "type": "image/png",
     },
   ],
@@ -799,7 +799,7 @@ Object {
 }
 `;
 
-exports[`Resize method option works correctly 3`] = `"<?xml version=\\"1.0\\" encoding=\\"utf-8\\"?><browserconfig><msapplication><tile><TileColor>white</TileColor><square70x70logo src=\\"./mstile-70x70.648a2539.png\\"/><square150x150logo src=\\"./mstile-150x150.fbfce598.png\\"/><square310x310logo src=\\"./mstile-310x310.e2ed9d0a.png\\"/><wide310x150logo src=\\"./mstile-310x150.5970012a.png\\"/></tile></msapplication></browserconfig>"`;
+exports[`Resize method option works correctly 3`] = `"<?xml version=\\"1.0\\" encoding=\\"utf-8\\"?><browserconfig><msapplication><tile><TileColor>white</TileColor><square70x70logo src=\\"./mstile-70x70.dc8be3a3.png\\"/><square150x150logo src=\\"./mstile-150x150.ce2c3b7a.png\\"/><square310x310logo src=\\"./mstile-310x310.7492a22a.png\\"/><wide310x150logo src=\\"./mstile-310x150.f0eaf2ff.png\\"/></tile></msapplication></browserconfig>"`;
 
 exports[`Resize method option works correctly 4`] = `
 Array [
@@ -820,7 +820,7 @@ Array [
   Array [
     "link",
     Object {
-      "href": "./apple-touch-icon.03f60dde.png",
+      "href": "./apple-touch-icon.ad22915a.png",
       "rel": "apple-touch-icon",
       "sizes": "180x180",
     },
@@ -837,16 +837,16 @@ Array [
 
 exports[`Safari Pinned Tab options work 1`] = `
 Array [
-  "icon-192x192.60385309.webp",
-  "icon-192x192.1421700b.png",
-  "icon-512x512.53c5ad04.webp",
-  "icon-512x512.03718fd9.png",
+  "icon-192x192.6cf01f66.webp",
+  "icon-192x192.1ca0d54e.png",
+  "icon-512x512.9de13230.webp",
+  "icon-512x512.e481a035.png",
   "safari-pinned-tab.a2b84e4d.svg",
-  "apple-touch-icon.67e6641c.png",
-  "mstile-70x70.d4870be2.png",
-  "mstile-150x150.db75c4ea.png",
-  "mstile-310x310.7d35cb45.png",
-  "mstile-310x150.df0ada1c.png",
+  "apple-touch-icon.9626d75a.png",
+  "mstile-70x70.3af68a9a.png",
+  "mstile-150x150.e286440d.png",
+  "mstile-310x310.e10f7557.png",
+  "mstile-310x150.926bd872.png",
 ]
 `;
 
@@ -858,22 +858,22 @@ Object {
   "icons": Array [
     Object {
       "sizes": "192x192",
-      "src": "./icon-192x192.60385309.webp",
+      "src": "./icon-192x192.6cf01f66.webp",
       "type": "image/webp",
     },
     Object {
       "sizes": "192x192",
-      "src": "./icon-192x192.1421700b.png",
+      "src": "./icon-192x192.1ca0d54e.png",
       "type": "image/png",
     },
     Object {
       "sizes": "512x512",
-      "src": "./icon-512x512.53c5ad04.webp",
+      "src": "./icon-512x512.9de13230.webp",
       "type": "image/webp",
     },
     Object {
       "sizes": "512x512",
-      "src": "./icon-512x512.03718fd9.png",
+      "src": "./icon-512x512.e481a035.png",
       "type": "image/png",
     },
   ],
@@ -885,7 +885,7 @@ Object {
 }
 `;
 
-exports[`Safari Pinned Tab options work 3`] = `"<?xml version=\\"1.0\\" encoding=\\"utf-8\\"?><browserconfig><msapplication><tile><TileColor>white</TileColor><square70x70logo src=\\"./mstile-70x70.d4870be2.png\\"/><square150x150logo src=\\"./mstile-150x150.db75c4ea.png\\"/><square310x310logo src=\\"./mstile-310x310.7d35cb45.png\\"/><wide310x150logo src=\\"./mstile-310x150.df0ada1c.png\\"/></tile></msapplication></browserconfig>"`;
+exports[`Safari Pinned Tab options work 3`] = `"<?xml version=\\"1.0\\" encoding=\\"utf-8\\"?><browserconfig><msapplication><tile><TileColor>white</TileColor><square70x70logo src=\\"./mstile-70x70.3af68a9a.png\\"/><square150x150logo src=\\"./mstile-150x150.e286440d.png\\"/><square310x310logo src=\\"./mstile-310x310.e10f7557.png\\"/><wide310x150logo src=\\"./mstile-310x150.926bd872.png\\"/></tile></msapplication></browserconfig>"`;
 
 exports[`Safari Pinned Tab options work 4`] = `
 Array [
@@ -914,7 +914,7 @@ Array [
   Array [
     "link",
     Object {
-      "href": "./apple-touch-icon.67e6641c.png",
+      "href": "./apple-touch-icon.9626d75a.png",
       "rel": "apple-touch-icon",
       "sizes": "180x180",
     },
@@ -931,16 +931,16 @@ Array [
 
 exports[`Screenshot injection works 1`] = `
 Array [
-  "icon-192x192.60385309.webp",
-  "icon-192x192.1421700b.png",
-  "icon-512x512.53c5ad04.webp",
-  "icon-512x512.03718fd9.png",
-  "screenshot.324e4a55.png",
-  "apple-touch-icon.67e6641c.png",
-  "mstile-70x70.d4870be2.png",
-  "mstile-150x150.db75c4ea.png",
-  "mstile-310x310.7d35cb45.png",
-  "mstile-310x150.df0ada1c.png",
+  "icon-192x192.6cf01f66.webp",
+  "icon-192x192.1ca0d54e.png",
+  "icon-512x512.9de13230.webp",
+  "icon-512x512.e481a035.png",
+  "screenshot.13847923.png",
+  "apple-touch-icon.9626d75a.png",
+  "mstile-70x70.3af68a9a.png",
+  "mstile-150x150.e286440d.png",
+  "mstile-310x310.e10f7557.png",
+  "mstile-310x150.926bd872.png",
 ]
 `;
 
@@ -952,22 +952,22 @@ Object {
   "icons": Array [
     Object {
       "sizes": "192x192",
-      "src": "./icon-192x192.60385309.webp",
+      "src": "./icon-192x192.6cf01f66.webp",
       "type": "image/webp",
     },
     Object {
       "sizes": "192x192",
-      "src": "./icon-192x192.1421700b.png",
+      "src": "./icon-192x192.1ca0d54e.png",
       "type": "image/png",
     },
     Object {
       "sizes": "512x512",
-      "src": "./icon-512x512.53c5ad04.webp",
+      "src": "./icon-512x512.9de13230.webp",
       "type": "image/webp",
     },
     Object {
       "sizes": "512x512",
-      "src": "./icon-512x512.03718fd9.png",
+      "src": "./icon-512x512.e481a035.png",
       "type": "image/png",
     },
   ],
@@ -980,12 +980,12 @@ Object {
     },
     Object {
       "sizes": "1976x1496",
-      "src": "./screenshot.324e4a55.png",
+      "src": "./screenshot.13847923.png",
       "type": "image/png",
     },
     Object {
       "sizes": "123x456",
-      "src": "./screenshot.324e4a55.png",
+      "src": "./screenshot.13847923.png",
       "type": "image/png",
     },
   ],
@@ -995,7 +995,7 @@ Object {
 }
 `;
 
-exports[`Screenshot injection works 3`] = `"<?xml version=\\"1.0\\" encoding=\\"utf-8\\"?><browserconfig><msapplication><tile><TileColor>white</TileColor><square70x70logo src=\\"./mstile-70x70.d4870be2.png\\"/><square150x150logo src=\\"./mstile-150x150.db75c4ea.png\\"/><square310x310logo src=\\"./mstile-310x310.7d35cb45.png\\"/><wide310x150logo src=\\"./mstile-310x150.df0ada1c.png\\"/></tile></msapplication></browserconfig>"`;
+exports[`Screenshot injection works 3`] = `"<?xml version=\\"1.0\\" encoding=\\"utf-8\\"?><browserconfig><msapplication><tile><TileColor>white</TileColor><square70x70logo src=\\"./mstile-70x70.3af68a9a.png\\"/><square150x150logo src=\\"./mstile-150x150.e286440d.png\\"/><square310x310logo src=\\"./mstile-310x310.e10f7557.png\\"/><wide310x150logo src=\\"./mstile-310x150.926bd872.png\\"/></tile></msapplication></browserconfig>"`;
 
 exports[`Screenshot injection works 4`] = `
 Array [
@@ -1016,7 +1016,7 @@ Array [
   Array [
     "link",
     Object {
-      "href": "./apple-touch-icon.67e6641c.png",
+      "href": "./apple-touch-icon.9626d75a.png",
       "rel": "apple-touch-icon",
       "sizes": "180x180",
     },
@@ -1033,23 +1033,23 @@ Array [
 
 exports[`Shortcuts work 1`] = `
 Array [
-  "icon-96x96.b1e09075.webp",
-  "icon-96x96.c5330840.png",
-  "icon-152x152.a1f4f47a.webp",
-  "icon-152x152.6115bce1.png",
-  "icon-192x192.60385309.webp",
-  "icon-192x192.1421700b.png",
-  "icon-384x384.e4fe6960.webp",
-  "icon-384x384.59b7a9f8.png",
-  "icon-512x512.53c5ad04.webp",
-  "icon-512x512.03718fd9.png",
-  "shortcut-icon1-96x96.b1e09075.webp",
-  "shortcut-icon1-96x96.c5330840.png",
-  "apple-touch-icon.67e6641c.png",
-  "mstile-70x70.d4870be2.png",
-  "mstile-150x150.db75c4ea.png",
-  "mstile-310x310.7d35cb45.png",
-  "mstile-310x150.df0ada1c.png",
+  "icon-96x96.7a11f66e.webp",
+  "icon-96x96.6c1e9526.png",
+  "icon-152x152.8a9657e1.webp",
+  "icon-152x152.b3c1bd72.png",
+  "icon-192x192.6cf01f66.webp",
+  "icon-192x192.1ca0d54e.png",
+  "icon-384x384.dd610217.webp",
+  "icon-384x384.93f7276c.png",
+  "icon-512x512.9de13230.webp",
+  "icon-512x512.e481a035.png",
+  "shortcut-icon1-96x96.7a11f66e.webp",
+  "shortcut-icon1-96x96.6c1e9526.png",
+  "apple-touch-icon.9626d75a.png",
+  "mstile-70x70.3af68a9a.png",
+  "mstile-150x150.e286440d.png",
+  "mstile-310x310.e10f7557.png",
+  "mstile-310x150.926bd872.png",
 ]
 `;
 
@@ -1061,52 +1061,52 @@ Object {
   "icons": Array [
     Object {
       "sizes": "96x96",
-      "src": "./icon-96x96.b1e09075.webp",
+      "src": "./icon-96x96.7a11f66e.webp",
       "type": "image/webp",
     },
     Object {
       "sizes": "96x96",
-      "src": "./icon-96x96.c5330840.png",
+      "src": "./icon-96x96.6c1e9526.png",
       "type": "image/png",
     },
     Object {
       "sizes": "152x152",
-      "src": "./icon-152x152.a1f4f47a.webp",
+      "src": "./icon-152x152.8a9657e1.webp",
       "type": "image/webp",
     },
     Object {
       "sizes": "152x152",
-      "src": "./icon-152x152.6115bce1.png",
+      "src": "./icon-152x152.b3c1bd72.png",
       "type": "image/png",
     },
     Object {
       "sizes": "192x192",
-      "src": "./icon-192x192.60385309.webp",
+      "src": "./icon-192x192.6cf01f66.webp",
       "type": "image/webp",
     },
     Object {
       "sizes": "192x192",
-      "src": "./icon-192x192.1421700b.png",
+      "src": "./icon-192x192.1ca0d54e.png",
       "type": "image/png",
     },
     Object {
       "sizes": "384x384",
-      "src": "./icon-384x384.e4fe6960.webp",
+      "src": "./icon-384x384.dd610217.webp",
       "type": "image/webp",
     },
     Object {
       "sizes": "384x384",
-      "src": "./icon-384x384.59b7a9f8.png",
+      "src": "./icon-384x384.93f7276c.png",
       "type": "image/png",
     },
     Object {
       "sizes": "512x512",
-      "src": "./icon-512x512.53c5ad04.webp",
+      "src": "./icon-512x512.9de13230.webp",
       "type": "image/webp",
     },
     Object {
       "sizes": "512x512",
-      "src": "./icon-512x512.03718fd9.png",
+      "src": "./icon-512x512.e481a035.png",
       "type": "image/png",
     },
   ],
@@ -1124,12 +1124,12 @@ Object {
       "icons": Array [
         Object {
           "sizes": "96x96",
-          "src": "./shortcut-icon1-96x96.b1e09075.webp",
+          "src": "./shortcut-icon1-96x96.7a11f66e.webp",
           "type": "image/webp",
         },
         Object {
           "sizes": "96x96",
-          "src": "./shortcut-icon1-96x96.c5330840.png",
+          "src": "./shortcut-icon1-96x96.6c1e9526.png",
           "type": "image/png",
         },
       ],
@@ -1143,7 +1143,7 @@ Object {
 }
 `;
 
-exports[`Shortcuts work 3`] = `"<?xml version=\\"1.0\\" encoding=\\"utf-8\\"?><browserconfig><msapplication><tile><TileColor>white</TileColor><square70x70logo src=\\"./mstile-70x70.d4870be2.png\\"/><square150x150logo src=\\"./mstile-150x150.db75c4ea.png\\"/><square310x310logo src=\\"./mstile-310x310.7d35cb45.png\\"/><wide310x150logo src=\\"./mstile-310x150.df0ada1c.png\\"/></tile></msapplication></browserconfig>"`;
+exports[`Shortcuts work 3`] = `"<?xml version=\\"1.0\\" encoding=\\"utf-8\\"?><browserconfig><msapplication><tile><TileColor>white</TileColor><square70x70logo src=\\"./mstile-70x70.3af68a9a.png\\"/><square150x150logo src=\\"./mstile-150x150.e286440d.png\\"/><square310x310logo src=\\"./mstile-310x310.e10f7557.png\\"/><wide310x150logo src=\\"./mstile-310x150.926bd872.png\\"/></tile></msapplication></browserconfig>"`;
 
 exports[`Shortcuts work 4`] = `
 Array [
@@ -1164,7 +1164,7 @@ Array [
   Array [
     "link",
     Object {
-      "href": "./apple-touch-icon.67e6641c.png",
+      "href": "./apple-touch-icon.9626d75a.png",
       "rel": "apple-touch-icon",
       "sizes": "180x180",
     },
@@ -1181,21 +1181,21 @@ Array [
 
 exports[`Specifying sizes works properly 1`] = `
 Array [
-  "icon-57x57.df72b665.webp",
-  "icon-57x57.6cab30d1.png",
-  "icon-180x180.5bd7895c.webp",
-  "icon-180x180.e3c77fb2.png",
-  "icon-384x384.e4fe6960.webp",
-  "icon-384x384.59b7a9f8.png",
-  "icon-512x512.53c5ad04.webp",
-  "icon-512x512.03718fd9.png",
-  "icon-192x192.60385309.webp",
-  "icon-192x192.1421700b.png",
-  "apple-touch-icon.67e6641c.png",
-  "mstile-70x70.d4870be2.png",
-  "mstile-150x150.db75c4ea.png",
-  "mstile-310x310.7d35cb45.png",
-  "mstile-310x150.df0ada1c.png",
+  "icon-57x57.94e88f49.webp",
+  "icon-57x57.c80785e5.png",
+  "icon-180x180.e3e40242.webp",
+  "icon-180x180.3505522d.png",
+  "icon-384x384.dd610217.webp",
+  "icon-384x384.93f7276c.png",
+  "icon-512x512.9de13230.webp",
+  "icon-512x512.e481a035.png",
+  "icon-192x192.6cf01f66.webp",
+  "icon-192x192.1ca0d54e.png",
+  "apple-touch-icon.9626d75a.png",
+  "mstile-70x70.3af68a9a.png",
+  "mstile-150x150.e286440d.png",
+  "mstile-310x310.e10f7557.png",
+  "mstile-310x150.926bd872.png",
 ]
 `;
 
@@ -1207,52 +1207,52 @@ Object {
   "icons": Array [
     Object {
       "sizes": "57x57",
-      "src": "./icon-57x57.df72b665.webp",
+      "src": "./icon-57x57.94e88f49.webp",
       "type": "image/webp",
     },
     Object {
       "sizes": "57x57",
-      "src": "./icon-57x57.6cab30d1.png",
+      "src": "./icon-57x57.c80785e5.png",
       "type": "image/png",
     },
     Object {
       "sizes": "180x180",
-      "src": "./icon-180x180.5bd7895c.webp",
+      "src": "./icon-180x180.e3e40242.webp",
       "type": "image/webp",
     },
     Object {
       "sizes": "180x180",
-      "src": "./icon-180x180.e3c77fb2.png",
+      "src": "./icon-180x180.3505522d.png",
       "type": "image/png",
     },
     Object {
       "sizes": "384x384",
-      "src": "./icon-384x384.e4fe6960.webp",
+      "src": "./icon-384x384.dd610217.webp",
       "type": "image/webp",
     },
     Object {
       "sizes": "384x384",
-      "src": "./icon-384x384.59b7a9f8.png",
+      "src": "./icon-384x384.93f7276c.png",
       "type": "image/png",
     },
     Object {
       "sizes": "512x512",
-      "src": "./icon-512x512.53c5ad04.webp",
+      "src": "./icon-512x512.9de13230.webp",
       "type": "image/webp",
     },
     Object {
       "sizes": "512x512",
-      "src": "./icon-512x512.03718fd9.png",
+      "src": "./icon-512x512.e481a035.png",
       "type": "image/png",
     },
     Object {
       "sizes": "192x192",
-      "src": "./icon-192x192.60385309.webp",
+      "src": "./icon-192x192.6cf01f66.webp",
       "type": "image/webp",
     },
     Object {
       "sizes": "192x192",
-      "src": "./icon-192x192.1421700b.png",
+      "src": "./icon-192x192.1ca0d54e.png",
       "type": "image/png",
     },
   ],
@@ -1264,7 +1264,7 @@ Object {
 }
 `;
 
-exports[`Specifying sizes works properly 3`] = `"<?xml version=\\"1.0\\" encoding=\\"utf-8\\"?><browserconfig><msapplication><tile><TileColor>white</TileColor><square70x70logo src=\\"./mstile-70x70.d4870be2.png\\"/><square150x150logo src=\\"./mstile-150x150.db75c4ea.png\\"/><square310x310logo src=\\"./mstile-310x310.7d35cb45.png\\"/><wide310x150logo src=\\"./mstile-310x150.df0ada1c.png\\"/></tile></msapplication></browserconfig>"`;
+exports[`Specifying sizes works properly 3`] = `"<?xml version=\\"1.0\\" encoding=\\"utf-8\\"?><browserconfig><msapplication><tile><TileColor>white</TileColor><square70x70logo src=\\"./mstile-70x70.3af68a9a.png\\"/><square150x150logo src=\\"./mstile-150x150.e286440d.png\\"/><square310x310logo src=\\"./mstile-310x310.e10f7557.png\\"/><wide310x150logo src=\\"./mstile-310x150.926bd872.png\\"/></tile></msapplication></browserconfig>"`;
 
 exports[`Specifying sizes works properly 4`] = `
 Array [
@@ -1285,7 +1285,7 @@ Array [
   Array [
     "link",
     Object {
-      "href": "./apple-touch-icon.67e6641c.png",
+      "href": "./apple-touch-icon.9626d75a.png",
       "rel": "apple-touch-icon",
       "sizes": "180x180",
     },
@@ -1302,15 +1302,15 @@ Array [
 
 exports[`Standard parameters work properly 1`] = `
 Array [
-  "icon-192x192.60385309.webp",
-  "icon-192x192.1421700b.png",
-  "icon-512x512.53c5ad04.webp",
-  "icon-512x512.03718fd9.png",
-  "apple-touch-icon.636f8a01.png",
-  "mstile-70x70.d4870be2.png",
-  "mstile-150x150.db75c4ea.png",
-  "mstile-310x310.7d35cb45.png",
-  "mstile-310x150.df0ada1c.png",
+  "icon-192x192.6cf01f66.webp",
+  "icon-192x192.1ca0d54e.png",
+  "icon-512x512.9de13230.webp",
+  "icon-512x512.e481a035.png",
+  "apple-touch-icon.bd818f9b.png",
+  "mstile-70x70.3af68a9a.png",
+  "mstile-150x150.e286440d.png",
+  "mstile-310x310.e10f7557.png",
+  "mstile-310x150.926bd872.png",
 ]
 `;
 
@@ -1328,22 +1328,22 @@ Object {
   "icons": Array [
     Object {
       "sizes": "192x192",
-      "src": "./icon-192x192.60385309.webp",
+      "src": "./icon-192x192.6cf01f66.webp",
       "type": "image/webp",
     },
     Object {
       "sizes": "192x192",
-      "src": "./icon-192x192.1421700b.png",
+      "src": "./icon-192x192.1ca0d54e.png",
       "type": "image/png",
     },
     Object {
       "sizes": "512x512",
-      "src": "./icon-512x512.53c5ad04.webp",
+      "src": "./icon-512x512.9de13230.webp",
       "type": "image/webp",
     },
     Object {
       "sizes": "512x512",
-      "src": "./icon-512x512.03718fd9.png",
+      "src": "./icon-512x512.e481a035.png",
       "type": "image/png",
     },
   ],
@@ -1368,7 +1368,7 @@ Object {
 }
 `;
 
-exports[`Standard parameters work properly 3`] = `"<?xml version=\\"1.0\\" encoding=\\"utf-8\\"?><browserconfig><msapplication><tile><TileColor>skyblue</TileColor><square70x70logo src=\\"./mstile-70x70.d4870be2.png\\"/><square150x150logo src=\\"./mstile-150x150.db75c4ea.png\\"/><square310x310logo src=\\"./mstile-310x310.7d35cb45.png\\"/><wide310x150logo src=\\"./mstile-310x150.df0ada1c.png\\"/></tile></msapplication></browserconfig>"`;
+exports[`Standard parameters work properly 3`] = `"<?xml version=\\"1.0\\" encoding=\\"utf-8\\"?><browserconfig><msapplication><tile><TileColor>skyblue</TileColor><square70x70logo src=\\"./mstile-70x70.3af68a9a.png\\"/><square150x150logo src=\\"./mstile-150x150.e286440d.png\\"/><square310x310logo src=\\"./mstile-310x310.e10f7557.png\\"/><wide310x150logo src=\\"./mstile-310x150.926bd872.png\\"/></tile></msapplication></browserconfig>"`;
 
 exports[`Standard parameters work properly 4`] = `
 Array [
@@ -1389,7 +1389,7 @@ Array [
   Array [
     "link",
     Object {
-      "href": "./apple-touch-icon.636f8a01.png",
+      "href": "./apple-touch-icon.bd818f9b.png",
       "rel": "apple-touch-icon",
       "sizes": "180x180",
     },

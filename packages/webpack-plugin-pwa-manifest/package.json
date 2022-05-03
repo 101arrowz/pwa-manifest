@@ -28,7 +28,7 @@
     "callsite": "^1.0.0"
   },
   "peerDependencies": {
-    "html-webpack-plugin": ">=4",
-    "webpack": ">=4.39.0"
+    "html-webpack-plugin": ">=4 <5",
+    "webpack": ">=4.39.0 <5"
   }
 }
