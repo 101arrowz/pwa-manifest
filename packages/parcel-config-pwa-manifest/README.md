@@ -174,5 +174,25 @@ The parameters to use when `NODE_ENV` is a certain value. Merged with the outer 
 ## Advanced: Events
 This plugin could support a rich event system like the [core package](https://github.com/101arrowz/pwa-manifest/tree/master/packages/core/README.md#Advanced-Events); however, at the moment it seems to be impossible to expose an event subscription API with the Parcel 2 Plugin API, so for now this will remain a TODO.
 
+## Troubleshooting
+
+### Package installation fails to build `sharp`
+
+```
+  CC(target) Release/obj.target/nothing/../../../../node-addon-api/nothing.o
+  LIBTOOL-STATIC Release/nothing.a
+warning: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/libtool: archive library: Release/nothing.a the table of contents is empty (no object file members in the library define global symbols)
+  TOUCH Release/obj.target/libvips-cpp.stamp
+  CXX(target) Release/obj.target/sharp/src/common.o
+../src/common.cc:23:10: fatal error: 'vips/vips8' file not found
+#include <vips/vips8>
+         ^~~~~~~~~~~~
+1 error generated.
+```
+
+If you encounter an issue with `sharp` when trying to add this package to your project, you might need to install the dependency `vips`.
+
+On MacOS, install the dependency via brew: `brew install vips`.
+
 ## License
 MIT
