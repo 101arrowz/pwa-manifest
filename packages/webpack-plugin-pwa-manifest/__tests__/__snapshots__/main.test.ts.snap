@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Integrated correctly 1`] = `
-Array [
+[
   "apple-touch-icon.6eb46d24.png",
   "browserconfig.xml",
   "icon-152x152.a2c4965d.png",
@@ -24,71 +24,71 @@ Array [
 ]
 `;
 
-exports[`Integrated correctly 2`] = `"<?xml version=\\"1.0\\" encoding=\\"utf-8\\"?><browserconfig><msapplication><tile><TileColor>white</TileColor><square70x70logo src=\\"/mstile-70x70.032d20b4.png\\"/><square150x150logo src=\\"/mstile-150x150.5a2d0ef2.png\\"/><square310x310logo src=\\"/mstile-310x310.28a64a8f.png\\"/><wide310x150logo src=\\"/mstile-310x150.a11a86cc.png\\"/></tile></msapplication></browserconfig>"`;
+exports[`Integrated correctly 2`] = `"<?xml version="1.0" encoding="utf-8"?><browserconfig><msapplication><tile><TileColor>white</TileColor><square70x70logo src="/mstile-70x70.032d20b4.png"/><square150x150logo src="/mstile-150x150.5a2d0ef2.png"/><square310x310logo src="/mstile-310x310.28a64a8f.png"/><wide310x150logo src="/mstile-310x150.a11a86cc.png"/></tile></msapplication></browserconfig>"`;
 
 exports[`Integrated correctly 3`] = `
 "<!DOCTYPE html>
 <html>
   <head>
-    <meta charset=\\"utf-8\\">
+    <meta charset="utf-8">
     <title>Webpack App</title>
-  <meta name=\\"viewport\\" content=\\"width=device-width, initial-scale=1\\"><meta name=\\"msapplication-config\\" content=\\"/browserconfig.xml\\"><meta name=\\"theme-color\\" content=\\"white\\"><link rel=\\"apple-touch-icon\\" sizes=\\"180x180\\" href=\\"/apple-touch-icon.6eb46d24.png\\"><link rel=\\"manifest\\" href=\\"/manifest.webmanifest\\"></head>
+  <meta name="viewport" content="width=device-width, initial-scale=1"><meta name="msapplication-config" content="/browserconfig.xml"><meta name="theme-color" content="white"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.6eb46d24.png"><link rel="manifest" href="/manifest.webmanifest"></head>
   <body>
-  <script src=\\"main.js\\"></script></body>
+  <script src="main.js"></script></body>
 </html>"
 `;
 
 exports[`Integrated correctly 4`] = `
-Object {
+{
   "background_color": "white",
   "display": "standalone",
-  "icons": Array [
-    Object {
+  "icons": [
+    {
       "sizes": "96x96",
       "src": "/icon-96x96.fedd2531.webp",
       "type": "image/webp",
     },
-    Object {
+    {
       "sizes": "96x96",
       "src": "/icon-96x96.60d2eb6e.png",
       "type": "image/png",
     },
-    Object {
+    {
       "sizes": "152x152",
       "src": "/icon-152x152.e2615640.webp",
       "type": "image/webp",
     },
-    Object {
+    {
       "sizes": "152x152",
       "src": "/icon-152x152.a2c4965d.png",
       "type": "image/png",
     },
-    Object {
+    {
       "sizes": "192x192",
       "src": "/icon-192x192.554a0796.webp",
       "type": "image/webp",
     },
-    Object {
+    {
       "sizes": "192x192",
       "src": "/icon-192x192.c97405ca.png",
       "type": "image/png",
     },
-    Object {
+    {
       "sizes": "384x384",
       "src": "/icon-384x384.c881a5f5.webp",
       "type": "image/webp",
     },
-    Object {
+    {
       "sizes": "384x384",
       "src": "/icon-384x384.eb80993e.png",
       "type": "image/png",
     },
-    Object {
+    {
       "sizes": "512x512",
       "src": "/icon-512x512.ff48d090.webp",
       "type": "image/webp",
     },
-    Object {
+    {
       "sizes": "512x512",
       "src": "/icon-512x512.aeed3ce8.png",
       "type": "image/png",

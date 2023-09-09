@@ -20,7 +20,7 @@
     "test": "jest",
     "test-cov": "npm test && cat __tests__/coverageReport/lcov.info | coveralls",
     "build": "tsc --build && npm run lint && npm test && npm run build-unchecked",
-    "build-unchecked": "parcel build --no-source-maps",
+    "build-unchecked": "parcel build --no-source-maps --no-cache",
     "prepack": "npm run build",
     "preversion": "npm run lint && npm test"
   },
