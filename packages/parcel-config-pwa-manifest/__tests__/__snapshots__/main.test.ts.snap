@@ -2,10 +2,10 @@
 
 exports[`Integrated correctly 1`] = `
 "<!DOCTYPE html>
-<html lang=\\"en\\">
-<head><meta name=\\"msapplication-config\\" content=\\"/__tests__.cd633e1e.xml\\"><meta name=\\"theme-color\\" content=\\"white\\"><link rel=\\"apple-touch-icon\\" sizes=\\"180x180\\" href=\\"/__tests__.8cde3ce4.png\\"><link rel=\\"manifest\\" href=\\"/__tests__.6a838e8e.webmanifest\\">
-  <meta charset=\\"UTF-8\\">
-  <meta name=\\"viewport\\" content=\\"width=device-width, initial-scale=1.0\\">
+<html lang="en">
+<head><meta name="msapplication-config" content="/__tests__.8ee90d25.xml"><meta name="theme-color" content="white"><link rel="apple-touch-icon" sizes="180x180" href="/__tests__.0c237cbe.png"><link rel="manifest" href="/__tests__.855325af.webmanifest">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My PWA</title>
 </head>
 <body>
@@ -14,32 +14,32 @@ exports[`Integrated correctly 1`] = `
 </html>"
 `;
 
-exports[`Integrated correctly 2`] = `"<?xml version=\\"1.0\\" encoding=\\"utf-8\\"?><browserconfig><msapplication><tile><TileColor>white</TileColor><square70x70logo src=\\"/__tests__.211d409d.png\\"/><square150x150logo src=\\"/__tests__.00063458.png\\"/><square310x310logo src=\\"/__tests__.76031e39.png\\"/><wide310x150logo src=\\"/__tests__.3c5362cd.png\\"/></tile></msapplication></browserconfig>"`;
+exports[`Integrated correctly 2`] = `"<?xml version="1.0" encoding="utf-8"?><browserconfig><msapplication><tile><TileColor>white</TileColor><square70x70logo src="/__tests__.7225bfae.png"/><square150x150logo src="/__tests__.92d58b9a.png"/><square310x310logo src="/__tests__.ac27e1d7.png"/><wide310x150logo src="/__tests__.7cf02833.png"/></tile></msapplication></browserconfig>"`;
 
 exports[`Integrated correctly 3`] = `
-Object {
+{
   "background_color": "white",
   "description": "A PWA",
   "display": "standalone",
-  "icons": Array [
-    Object {
+  "icons": [
+    {
       "sizes": "192x192",
-      "src": "/__tests__.2347bd1d.webp",
+      "src": "/__tests__.2f3c1461.webp",
       "type": "image/webp",
     },
-    Object {
+    {
       "sizes": "192x192",
-      "src": "/__tests__.ca863f17.png",
+      "src": "/__tests__.13000b4e.png",
       "type": "image/png",
     },
-    Object {
+    {
       "sizes": "512x512",
-      "src": "/__tests__.d0a5f607.webp",
+      "src": "/__tests__.edb46db8.webp",
       "type": "image/webp",
     },
-    Object {
+    {
       "sizes": "512x512",
-      "src": "/__tests__.95fef4cd.png",
+      "src": "/__tests__.4221d767.png",
       "type": "image/png",
     },
   ],

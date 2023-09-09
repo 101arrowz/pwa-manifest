@@ -29,7 +29,7 @@ const testConfig = ({ config, msg, ...props }: Config): void =>
     } catch (e) {
       const throws = (props as ErrorConfig).throws;
       if (throws && new RegExp(throws).test(e as string)) return;
-      throw new Error(e);
+      throw new Error(e as string);
     }
     const { logOutput, throws } = props as ResultConfig & ErrorConfig;
     if (throws) throw new Error('Did not throw for error config.');

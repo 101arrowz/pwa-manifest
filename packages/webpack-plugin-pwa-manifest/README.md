@@ -1,6 +1,8 @@
-# webpack-plugin-pwa-manifest
+# webpack-plugin-pwa-manifest (legacy)
 
 A Webpack plugin that generates a Web App Manifest, creates all the icons you need, and more!
+
+**NOTE: This package supports Webpack 4 and will likely not be updated for newer versions.**
 
 ## Usage
 In `webpack.config.js`:

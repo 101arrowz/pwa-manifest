@@ -14,7 +14,7 @@
     "icon"
   ],
   "engines": {
-    "node": ">=10",
+    "node": ">=16",
     "parcel": ">=2"
   },
   "homepage": "https://github.com/101arrowz/pwa-manifest/tree/master/packages/parcel-transformer-pwa-manifest",
@@ -28,10 +28,10 @@
   },
   "scripts": {
     "lint": "eslint --fix index.ts",
-    "build": "yarn build-unchecked && yarn lint",
-    "build-unchecked": "tsc",
-    "prepack": "yarn build",
-    "preversion": "yarn lint"
+    "build": "npm run build-unchecked && npm run lint",
+    "build-unchecked": "tsc --build",
+    "prepack": "npm run build",
+    "preversion": "npm run lint"
   },
   "dependencies": {
     "@pwa-manifest/core": "file:../core"

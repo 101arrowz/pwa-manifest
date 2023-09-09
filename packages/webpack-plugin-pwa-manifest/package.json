@@ -3,6 +3,7 @@
   "version": "1.1.1",
   "description": "A Webpack plugin that generates a Web App Manifest, creates all necessary icons, and more!",
   "main": "lib/index.js",
+  "source": "./index.ts",
   "homepage": "https://github.com/101arrowz/pwa-manifest/tree/master/packages/webpack-plugin-pwa-manifest",
   "repository": {
     "type": "git",
@@ -17,11 +18,11 @@
   "scripts": {
     "lint": "eslint --fix index.ts __tests__/*.ts",
     "test": "jest",
-    "test-cov": "yarn test && cat __tests__/coverageReport/lcov.info | coveralls",
-    "build": "tsc && yarn lint && yarn test && yarn build-unchecked",
-    "build-unchecked": "parcel build index.ts -t node --out-dir lib/ --detailed-report --no-source-maps",
-    "prepack": "yarn build",
-    "preversion": "yarn lint && yarn test"
+    "test-cov": "npm test && cat __tests__/coverageReport/lcov.info | coveralls",
+    "build": "tsc --build && npm run lint && npm test && npm run build-unchecked",
+    "build-unchecked": "parcel build --no-source-maps",
+    "prepack": "npm run build",
+    "preversion": "npm run lint && npm test"
   },
   "dependencies": {
     "@pwa-manifest/core": "file:../core",

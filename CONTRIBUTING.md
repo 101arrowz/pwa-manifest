@@ -9,7 +9,7 @@ Steps for creating an issue:
 
 Steps for creating a PR:
 1. Clone the repo: `git clone https://github.com/101arrowz/pwa-manifest.git`
-2. `yarn install`, then make some changes. Make sure to lint and test with `yarn lint` and `yarn test` after you're done.
+2. `npm install`, then make some changes. Make sure to lint and test with `npm run lint` and `npm test` after you're done.
 3. Push your changes to a fork of this repo.
 4. Go to the "Pull requests" tab in GitHub and click on "New pull request".
 5. Click "compare across forks" and select your fork.

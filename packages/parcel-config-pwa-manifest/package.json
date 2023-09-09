@@ -1,6 +1,6 @@
 {
   "name": "parcel-config-pwa-manifest",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "A Parcel 2 plugin that generates a Web App Manifest, creates all necessary icons, and more!",
   "main": "index.json",
   "author": "Arjun Barrett <arjunbarrett@gmail.com>",
@@ -14,7 +14,7 @@
     "icon"
   ],
   "engines": {
-    "node": ">=10",
+    "node": ">=16",
     "parcel": ">=2"
   },
   "homepage": "https://github.com/101arrowz/pwa-manifest/tree/master/packages/parcel-config-pwa-manifest",
@@ -24,12 +24,12 @@
   },
   "scripts": {
     "lint": "eslint --fix \"__tests__/*.ts\"",
-    "build-namer": "yarn workspace parcel-namer-pwa-manifest build-unchecked",
-    "build-transformer": "yarn workspace parcel-transformer-pwa-manifest build-unchecked",
-    "pretest": "yarn build-namer && yarn build-transformer",
+    "build-namer": "npm run --workspace parcel-namer-pwa-manifest build-unchecked",
+    "build-transformer": "npm run --workspace parcel-transformer-pwa-manifest build-unchecked",
+    "pretest": "npm run build-namer && npm run build-transformer",
     "test": "jest",
-    "preversion": "yarn lint && yarn test",
-    "prepack": "yarn preversion"
+    "preversion": "npm run lint && npm test",
+    "prepack": "npm run preversion"
   },
   "bugs": {
     "email": "arjunbarrett@gmail.com",

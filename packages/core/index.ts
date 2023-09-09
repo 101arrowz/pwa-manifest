@@ -492,7 +492,7 @@ export default class PWAManifestGenerator extends EventEmitter {
     let formats: FormatOptions = {
       webp: {
         quality: 85,
-        reductionEffort: 6
+        effort: 6
       },
       png
     };

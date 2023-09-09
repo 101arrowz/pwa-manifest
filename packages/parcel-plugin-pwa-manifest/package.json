@@ -29,11 +29,11 @@
   "scripts": {
     "lint": "eslint --fix index.ts types/*.ts __tests__/*.ts",
     "test": "jest",
-    "test-cov": "yarn test && cat __tests__/coverageReport/lcov.info | coveralls",
-    "build": "yarn build-unchecked && yarn lint && yarn test",
-    "build-unchecked": "tsc",
-    "prepack": "yarn build",
-    "preversion": "yarn lint && yarn test"
+    "test-cov": "npm test && cat __tests__/coverageReport/lcov.info | coveralls",
+    "build": "npm run build-unchecked && npm run lint && npm test",
+    "build-unchecked": "tsc --build",
+    "prepack": "npm run build",
+    "preversion": "npm run lint && npm test"
   },
   "dependencies": {
     "@pwa-manifest/core": "file:../core"

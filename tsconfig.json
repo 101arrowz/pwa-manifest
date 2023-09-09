@@ -10,6 +10,11 @@
     "esModuleInterop": true,
     "pretty": true,
     "preserveSymlinks": true,
-    "skipLibCheck": true
-  }
+    "skipLibCheck": true,
+  },
+  "references": [{
+    "path": "workspaces/core"
+  }, {
+    "path": "workspaces/potrace"
+  }]
 }

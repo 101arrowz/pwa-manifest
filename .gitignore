@@ -3,4 +3,4 @@ packages/*/lib/
 **/tmp/
 **/node_modules/
 **/.cache/
-**/yarn-error.log
+**/.parcel-cache
