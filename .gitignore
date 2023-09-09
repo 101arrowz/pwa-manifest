@@ -4,3 +4,4 @@ packages/*/lib/
 **/node_modules/
 **/.cache/
 **/.parcel-cache
+**/*.log

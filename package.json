@@ -30,7 +30,7 @@
   "scripts": {
     "pretest": "npm run --workspace @pwa-manifest/core build-unchecked && npm run --workspace parcel-transformer-pwa-manifest build-unchecked && npm run --workspace parcel-namer-pwa-manifest build-unchecked",
     "test": "jest && cat ./coverageReport/lcov.info | coveralls",
-    "publish-all": "lerna publish"
+    "publish-all": "lerna publish from-package"
   },
   "dependencies": {
     "@pwa-manifest/core": "link:packages/core",
