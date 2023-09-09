@@ -1,6 +1,6 @@
 {
   "name": "@pwa-manifest/core",
-  "version": "1.5.3",
+  "version": "1.5.4",
   "description": "Core generation for a Web App Manifest, all necessary icons, and more!",
   "source": "./index.ts",
   "main": "lib/index.js",
